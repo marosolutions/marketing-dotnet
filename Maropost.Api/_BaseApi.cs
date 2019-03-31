@@ -4,11 +4,11 @@ namespace Maropost.Api
 {
     public abstract class _BaseApi
     {
-        protected string AccountId { get; }
+        protected int AccountId { get; }
         protected string AuthToken { get; }
         protected string UrlPathRoot { get; }
 
-        public _BaseApi(string accountId, string authToken, string urlPathRoot)
+        public _BaseApi(int accountId, string authToken, string urlPathRoot)
         {
             AccountId = accountId;
             AuthToken = authToken;

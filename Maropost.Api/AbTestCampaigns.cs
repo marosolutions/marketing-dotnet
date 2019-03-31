@@ -6,7 +6,7 @@ namespace Maropost.Api
 {
     public class AbTestCampaigns : _BaseApi
     {
-        public AbTestCampaigns(string accountId, string authToken)
+        public AbTestCampaigns(int accountId, string authToken)
             :base(accountId, authToken, "campaigns")
         { }
     }
