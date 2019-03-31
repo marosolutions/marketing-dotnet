@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appSettings.json" />
     <None Remove="appSettings.json.template" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="appSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="appSettings.json.template">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
