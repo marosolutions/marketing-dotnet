@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Net.Http;
 using Xunit;
 
 namespace Maropost.Api.UnitTesting
@@ -8,6 +9,7 @@ namespace Maropost.Api.UnitTesting
     {
         protected int AccountId { get; }
         protected string AuthToken { get; }
+        protected HttpClient HttpClient { get; }
 
         public _BaseTests()
         {

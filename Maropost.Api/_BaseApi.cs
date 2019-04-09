@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Maropost.Api
@@ -12,12 +14,32 @@ namespace Maropost.Api
         protected int AccountId { get; }
         protected string AuthToken { get; }
         protected string UrlPathRoot { get; }
+        protected HttpClient HttpClient { get; }
 
-        public _BaseApi(int accountId, string authToken, string urlPathRoot)
+        public _BaseApi(int accountId, string authToken, string urlPathRoot, HttpClient httpClient)
         {
             AccountId = accountId;
             AuthToken = authToken;
             UrlPathRoot = urlPathRoot;
+            HttpClient = httpClient;
+        }
+
+        private string GetUrl(string resource = null, string overrideResource = null)
+        {
+            string rootPath = string.IsNullOrEmpty(overrideResource) ? UrlPathRoot : overrideResource;
+            rootPath = string.IsNullOrEmpty(rootPath) ? $"{AccountId}" : $"{AccountId}/{overrideResource}/{resource}";
+            return $"https://api.maropost.com/accounts/{rootPath}";
+        }
+
+        private string GetQueryString(IEnumerable<KeyValuePair<string, string>> keyValuePairs)
+        {
+            string queryStr = $"?auth_token={AuthToken}";
+            foreach (var keyValuePair in keyValuePairs)
+            {
+                queryStr += $"&{keyValuePair.Key}={keyValuePair.Value}";
+            }
+            queryStr = queryStr.Replace(' ', '+');
+            return queryStr;
         }
 
         /// <summary>
@@ -25,23 +47,25 @@ namespace Maropost.Api
         /// <remarks>We use IEnumerable instead of Dictionary, because Dictionary builds hash table and enforces unique key, which may or may not be desirable.</remarks>
         public IOperationResult<dynamic> Get(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, string overrideUrlPathRoot = null)
         {
-            var url = new StringBuilder("");
-
             // build the httpClient, and setup everything, for an http GET operation.
             // See the "_get" function at
             // https://github.com/marosolutions/marketing-php/blob/master/src/Abstractions/Api.php
-
+            var responseBody = (dynamic)null;
             try
             {
                 // the only thing in here should be the actual http GET execution.
+                var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
+                HttpClient.BaseAddress = new Uri(url);
+                HttpClient.DefaultRequestHeaders.Accept.Clear();
+                HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = HttpClient.GetAsync(url).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             }
             catch (Exception e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
-
-            var responseBody = (dynamic)null; // Json.Deserialize( httpClient.Response.Body )
-
             return new OperationResult<dynamic>(responseBody);
         }
     }

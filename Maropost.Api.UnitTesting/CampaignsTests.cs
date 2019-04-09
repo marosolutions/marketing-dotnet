@@ -10,7 +10,7 @@ namespace Maropost.Api.UnitTesting
         public void Get_ReturnsProperPagedResults()
         {
             // Arrange
-            var api = new Campaigns(AccountId, AuthToken);
+            var api = new Campaigns(AccountId, AuthToken, HttpClient);
             // Act
             // Assert
             Assert.True(true);
