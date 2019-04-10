@@ -42,9 +42,12 @@ namespace Maropost.Api
         private string GetQueryString(IEnumerable<KeyValuePair<string, string>> keyValuePairs)
         {
             string queryStr = $"?auth_token={AuthToken}";
-            foreach (var keyValuePair in keyValuePairs)
+            if (keyValuePairs != null)
             {
-                queryStr += $"&{keyValuePair.Key}={keyValuePair.Value}";
+                foreach (var keyValuePair in keyValuePairs)
+                {
+                    queryStr += $"&{keyValuePair.Key}={keyValuePair.Value}";
+                }
             }
             queryStr = queryStr.Replace(' ', '+');
             return queryStr;
@@ -58,15 +61,15 @@ namespace Maropost.Api
             // build the httpClient, and setup everything, for an http GET operation.
             // See the "_get" function at
             // https://github.com/marosolutions/marketing-php/blob/master/src/Abstractions/Api.php
-            var responseBody = (dynamic)null;
+            dynamic responseBody = null;
             try
             {
                 // the only thing in here should be the actual http GET execution.
                 var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
-                HttpClient.BaseAddress = new Uri(url);
-                HttpClient.DefaultRequestHeaders.Accept.Clear();
-                HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = HttpClient.GetAsync(url).Result;
+                var request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.Accept.Clear();
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = HttpClient.SendAsync(request).Result;
                 var data = response.Content.ReadAsStringAsync().Result;
                 responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             }

@@ -19,6 +19,7 @@ namespace Maropost.Api.UnitTesting
 
             AccountId = int.Parse(config["AppSettings:AccountId"]);
             AuthToken = config["AppSettings:AuthToken"];
+            HttpClient = new HttpClient();
         }
     }
 }
