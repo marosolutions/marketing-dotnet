@@ -26,9 +26,17 @@ namespace Maropost.Api
 
         private string GetUrl(string resource = null, string overrideResource = null)
         {
-            string rootPath = string.IsNullOrEmpty(overrideResource) ? UrlPathRoot : overrideResource;
-            rootPath = string.IsNullOrEmpty(rootPath) ? $"{AccountId}" : $"{AccountId}/{overrideResource}/{resource}";
-            return $"https://api.maropost.com/accounts/{rootPath}";
+            string url = $"https://api.maropost.com/accounts/{AccountId}/";
+            if (string.IsNullOrEmpty(overrideResource))
+            {
+                url += string.IsNullOrEmpty(UrlPathRoot) ? "" : $"{UrlPathRoot}";
+                url += string.IsNullOrEmpty(resource) ? "" : $"/{resource}";
+            }
+            else
+            {
+                url += overrideResource;
+            }
+            return url;
         }
 
         private string GetQueryString(IEnumerable<KeyValuePair<string, string>> keyValuePairs)
