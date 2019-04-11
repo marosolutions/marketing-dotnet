@@ -49,7 +49,12 @@ namespace Maropost.Api
         /// <returns></returns>
         public IOperationResult<dynamic> GetClickReports(int id, int page, bool? unique = null)
         {
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/click_report");
+            var keyValuePair = new KeyValueList { { "page", $"{page}" } };
+            if (unique != null && unique == true)
+            {
+                keyValuePair.Add("unique", $"{unique}");
+            }
+            var result = base.Get(null, keyValuePair, $"campaigns/{id}/click_report");
             return result;
         }
         /// <summary>
@@ -94,8 +99,12 @@ namespace Maropost.Api
         /// <returns></returns>
         public IOperationResult<dynamic> GetLinkReports(int id, int page, bool? unique = null)
         {
-            string isUnique = unique == null ? "false" : unique.ToString();
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() }, { "unique", isUnique } }, $"campaigns/{id}/link_report");
+            var keyValuePair = new KeyValueList { { "page", $"{page}" } };
+            if (unique != null && unique == true)
+            {
+                keyValuePair.Add("unique", $"{unique}");
+            }
+            var result = base.Get(null, keyValuePair, $"campaigns/{id}/link_report");
             return result;
         }
         /// <summary>
@@ -107,8 +116,12 @@ namespace Maropost.Api
         /// <returns></returns>
         public IOperationResult<dynamic> GetOpenReports(int id, int page, bool? unique = null)
         {
-            string isUnique = unique == null ? "false" : unique.ToString();
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() }, { "unique", isUnique } }, $"campaigns/{id}/open_report");
+            var keyValuePair = new KeyValueList { { "page", $"{page}" } };
+            if (unique != null && unique == true)
+            {
+                keyValuePair.Add("unique", $"{unique}");
+            }
+            var result = base.Get(null, keyValuePair, $"campaigns/{id}/open_report");
             return result;
         }
         /// <summary>
