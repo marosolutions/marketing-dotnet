@@ -56,46 +56,55 @@ The specific APIs contained are:
 ## Campaigns
 ### Instantiation:
 
-    new Maropost.Api.Campaigns($myAccountId, $myAuthToken)
+    new Maropost.Api.Campaigns(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
 
- - `get(int $page)`
+ - `public IOperationResult<dynamic> Get(int page)`
    - returns the list of campaigns for the account
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
- - `getCampaign(int $campaignId)`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+ - `public IOperationResult<dynamic> GetCampaign(int id)`
    - returns the given campaign
-   - `$campaignId`
- - `getBounceReports(int $id, int $page)`
+   - `id: campaign id`
+ - `public IOperationResult<dynamic> GetBounceReports(int id, int page)`
    - returns the list of bounce reports for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
- - `getClickReports(int $id, int $page, bool unique = null)`
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+ - `public IOperationResult<dynamic> GetClickReports(int id, int page, bool? unique = null)`
    - returns the list of click reports for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
-   - `$unique`: `true` = get for unique contacts. Otherwise, `false`. 
- - `getComplaintReports(int $id, int $page)`
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+   - `unique`: `true` = get for unique contacts. Otherwise, `false`. 
+ - `public IOperationResult<dynamic> GetComplaintReports(int id, int page)`
    - returns the list of complaint reports for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
- - `getDeliveredReports(int $id, int $page)`
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+ - `public IOperationResult<dynamic> GetDeliveredReports(int id, int page)`
    - returns the list of delivered reports for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
- - `getHardBounceReports(int $id, int $page)`
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+ - `public IOperationResult<dynamic> GetHardBounceReports(int id, int page)`
    - returns the list of hard bounces for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
- - `getLinkReports(int $id, int $page, bool unique = null)`
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+ - `public IOperationResult<dynamic> GetLinkReports(int id, int page, bool? unique = null)`
    - returns the list of link reports for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
-   - `$unique`: `true` = get for unique contacts. Otherwise, `false`. 
- - `getOpenReports(int $id, int $page, bool unique = null)`
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+   - `unique`: `true` = get for unique contacts. Otherwise, `false`. 
+ - `public IOperationResult<dynamic> GetOpenReports(int id, int page, bool? unique = null)`
    - returns the list of open reports for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
-   - `$unique`: `true` = get for unique contacts. Otherwise, `false`. 
- - `getSoftBounceReports(int $id, int $page)`
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+   - `unique`: `true` = get for unique contacts. Otherwise, `false`. 
+ - `public IOperationResult<dynamic> GetSoftBounceReports(int id, int page)`
    - returns the list of soft bounce reports for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
- - `getUnsubscribeReports(int $id, int $page)`
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+ - `public IOperationResult<dynamic> GetUnsubscribeReports(int id, int page)`
    - returns the list of unsubscribe reports for the given campaign ID
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
+   - `id: campaign id`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
    
 ## AB Test Campaigns
 ### Instantiation:
