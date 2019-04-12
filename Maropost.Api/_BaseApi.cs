@@ -35,6 +35,7 @@ namespace Maropost.Api
             else
             {
                 url += overrideResource;
+                url += string.IsNullOrEmpty(resource) ? $"/{resource}" : "";
             }
             return url;
         }
