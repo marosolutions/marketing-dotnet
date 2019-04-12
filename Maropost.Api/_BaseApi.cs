@@ -57,7 +57,7 @@ namespace Maropost.Api
         /// <summary>
         /// </summary>
         /// <remarks>We use IEnumerable instead of Dictionary, because Dictionary builds hash table and enforces unique key, which may or may not be desirable.</remarks>
-        public IOperationResult<dynamic> Get(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Get(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, string overrideUrlPathRoot = null)
         {
             // build the httpClient, and setup everything, for an http GET operation.
             // See the "_get" function at
@@ -70,6 +70,50 @@ namespace Maropost.Api
                 var request = new HttpRequestMessage(HttpMethod.Get, url);
                 request.Headers.Accept.Clear();
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = HttpClient.SendAsync(request).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            }
+            catch (Exception e)
+            {
+                return new OperationResult<dynamic>(null, e);
+            }
+            return new OperationResult<dynamic>(responseBody);
+        }
+
+        protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj, string overrideUrlPathRoot = null)
+        {
+            dynamic responseBody = null;
+            try
+            {
+                var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
+                var request = new HttpRequestMessage(HttpMethod.Post, url);
+                request.Headers.Accept.Clear();
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = HttpClient.SendAsync(request).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            }
+            catch (Exception e)
+            {
+                return new OperationResult<dynamic>(null, e);
+            }
+            return new OperationResult<dynamic>(responseBody);
+        }
+
+        protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj, string overrideUrlPathRoot = null)
+        {
+            dynamic responseBody = null;
+            try
+            {
+                var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
+                var request = new HttpRequestMessage(HttpMethod.Put, url);
+                request.Headers.Accept.Clear();
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                 var response = HttpClient.SendAsync(request).Result;
                 var data = response.Content.ReadAsStringAsync().Result;
                 responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
