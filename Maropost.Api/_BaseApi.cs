@@ -1,4 +1,5 @@
 ﻿using Maropost.Api.Dto;
+using Maropost.Api.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -81,7 +82,7 @@ namespace Maropost.Api
             return new OperationResult<dynamic>(responseBody);
         }
 
-        protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             try
@@ -103,7 +104,7 @@ namespace Maropost.Api
             return new OperationResult<dynamic>(responseBody);
         }
 
-        protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             try
@@ -123,6 +124,41 @@ namespace Maropost.Api
                 return new OperationResult<dynamic>(null, e);
             }
             return new OperationResult<dynamic>(responseBody);
+        }
+
+        protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
+        {
+            dynamic responseBody = null;
+            try
+            {
+                var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
+                var request = new HttpRequestMessage(HttpMethod.Delete, url);
+                request.Headers.Accept.Clear();
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = HttpClient.SendAsync(request).Result;
+                var data = response.Content.ReadAsStringAsync().Result;
+                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            }
+            catch (Exception e)
+            {
+                return new OperationResult<dynamic>(null, e);
+            }
+            return new OperationResult<dynamic>(responseBody);
+        }
+
+        protected List<KeyValuePair<string, object>> DiscardNullAndEmptyValues(IEnumerable<KeyValuePair<string, object>> keyValuePairs)
+        {
+            var transformKeyValueParis = new List<KeyValuePair<string, object>>();
+            foreach (var keyValuePair in keyValuePairs)
+            {
+                if (string.IsNullOrEmpty(keyValuePair.Value.ToString()))
+                {
+                    transformKeyValueParis.Add(new KeyValuePair<string, object>(keyValuePair.Key, keyValuePair.Value));
+                }
+            }
+            return transformKeyValueParis;
         }
     }
 }
