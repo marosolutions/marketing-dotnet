@@ -79,7 +79,7 @@ namespace Maropost.Api
             {
                 return new OperationResult<dynamic>(null, e);
             }
-            return new OperationResult<dynamic>(responseBody);
+            return new OperationResult<dynamic>(responseBody, "");
         }
 
         protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
@@ -101,7 +101,7 @@ namespace Maropost.Api
             {
                 return new OperationResult<dynamic>(null, e);
             }
-            return new OperationResult<dynamic>(responseBody);
+            return new OperationResult<dynamic>(responseBody, "");
         }
 
         protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
@@ -123,7 +123,7 @@ namespace Maropost.Api
             {
                 return new OperationResult<dynamic>(null, e);
             }
-            return new OperationResult<dynamic>(responseBody);
+            return new OperationResult<dynamic>(responseBody, "");
         }
 
         protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
@@ -145,7 +145,7 @@ namespace Maropost.Api
             {
                 return new OperationResult<dynamic>(null, e);
             }
-            return new OperationResult<dynamic>(responseBody);
+            return new OperationResult<dynamic>(responseBody, "");
         }
 
         protected List<KeyValuePair<string, object>> DiscardNullAndEmptyValues(IEnumerable<KeyValuePair<string, object>> keyValuePairs)
