@@ -94,25 +94,26 @@ namespace Maropost.Api
                                                                string phone = null,
                                                                string fax = null,
                                                                string uid = null,
-                                                               Array customField = null,
-                                                               Array addTags = null,
-                                                               Array removeTags = null,
+                                                               object customField = null,
+                                                               object addTags = null,
+                                                               object removeTags = null,
                                                                bool removeFromDNM = true,
                                                                bool subscribe = true)
         {
-            var contact = new List<KeyValuePair<string, object>>
+            var contact = new
             {
-                new KeyValuePair<string, object>("email", $"{email}"),
-                new KeyValuePair<string, object>("first_name", $"{firstName}"),
-                new KeyValuePair<string, object>("last_name", $"{lastName}"),
-                new KeyValuePair<string, object>("phone", $"{phone}"),
-                new KeyValuePair<string, object>("fax", $"{fax}"),
-                new KeyValuePair<string, object>("uid", $"{uid}"),
-                new KeyValuePair<string, object>("custom_field", $"{customField}"),
-                new KeyValuePair<string, object>("add_tags", $"{addTags}"),
-                new KeyValuePair<string, object>("remove_tags", $"{removeTags}")
+                email,
+                first_name = firstName,
+                last_name = lastName,
+                phone,
+                fax,
+                uid,
+                custom_field = customField,
+                add_tags = addTags,
+                remove_tags = removeTags,
+                removeFromDNM,
+                subscribe
             };
-            contact = base.DiscardNullAndEmptyValues(contact);
             string overrideResource = $"lists/{listId}";
             var getResult = this.GetForEmail(email);
             if (getResult.Success)
@@ -150,27 +151,26 @@ namespace Maropost.Api
                                                                  string phone = null,
                                                                  string fax = null,
                                                                  string uid = null,
-                                                                 Array customField = null,
-                                                                 Array addTags = null,
-                                                                 Array removeTags = null,
+                                                                 object customField = null,
+                                                                 object addTags = null,
+                                                                 object removeTags = null,
                                                                  bool removeFromDNM = true,
                                                                  bool subscribe = true)
         {
-            var contact = new List<KeyValuePair<string, object>>
+            var contact = new
             {
-                new KeyValuePair<string, object>("email", $"{email}"),
-                new KeyValuePair<string, object>("first_name", $"{firstName}"),
-                new KeyValuePair<string, object>("last_name", $"{lastName}"),
-                new KeyValuePair<string, object>("phone", $"{phone}"),
-                new KeyValuePair<string, object>("fax", $"{fax}"),
-                new KeyValuePair<string, object>("uid", $"{uid}"),
-                new KeyValuePair<string, object>("custom_field", $"{customField}"),
-                new KeyValuePair<string, object>("add_tags", $"{addTags}"),
-                new KeyValuePair<string, object>("remove_tags", $"{removeTags}"),
-                new KeyValuePair<string, object>("subscribe", $"{subscribe}"),
-                new KeyValuePair<string, object>("remove_from_dnm", $"{removeFromDNM}")
+                email,
+                first_name = firstName,
+                last_name = lastName,
+                phone,
+                fax,
+                uid,
+                custom_field = customField,
+                add_tags = addTags,
+                remove_tags = removeTags,
+                removeFromDNM,
+                subscribe
             };
-            contact = base.DiscardNullAndEmptyValues(contact);
             string overrideResource = $"lists/{listId}";
             return base.Put($"contacts/{contactId}", null, contact, overrideResource);
         }
@@ -195,25 +195,26 @@ namespace Maropost.Api
                                                                string phone = null,
                                                                string fax = null,
                                                                string uid = null,
-                                                               Array customField = null,
-                                                               Array addTags = null,
-                                                               Array removeTags = null,
+                                                               object customField = null,
+                                                               object addTags = null,
+                                                               object removeTags = null,
                                                                bool removeFromDNM = true,
                                                                bool subscribe = true)
         {
-            var contact = new List<KeyValuePair<string, object>>
+            var contact = new
             {
-                new KeyValuePair<string, object>("email", $"{email}"),
-                new KeyValuePair<string, object>("first_name", $"{firstName}"),
-                new KeyValuePair<string, object>("last_name", $"{lastName}"),
-                new KeyValuePair<string, object>("phone", $"{phone}"),
-                new KeyValuePair<string, object>("fax", $"{fax}"),
-                new KeyValuePair<string, object>("uid", $"{uid}"),
-                new KeyValuePair<string, object>("custom_field", $"{customField}"),
-                new KeyValuePair<string, object>("add_tags", $"{addTags}"),
-                new KeyValuePair<string, object>("remove_tags", $"{removeTags}")
+                email,
+                first_name = firstName,
+                last_name = lastName,
+                phone,
+                fax,
+                uid,
+                custom_field = customField,
+                add_tags = addTags,
+                remove_tags = removeTags,
+                removeFromDNM,
+                subscribe
             };
-            contact = base.DiscardNullAndEmptyValues(contact);
             var getResult = this.GetForEmail(email);
             if (getResult.Success)
             {
@@ -249,38 +250,36 @@ namespace Maropost.Api
                                                                            string phone = null,
                                                                            string fax = null,
                                                                            string uid = null,
-                                                                           Array customField = null,
-                                                                           Array addTags = null,
-                                                                           Array removeTags = null,
+                                                                           object customField = null,
+                                                                           object addTags = null,
+                                                                           object removeTags = null,
                                                                            bool removeFromDNM = false,
-                                                                           Array subscribeListIds = null,
-                                                                           Array unsubscriveListIds = null,
-                                                                           Array unsubscribeWorkflowIds = null,
+                                                                           int[] subscribeListIds = null,
+                                                                           int[] unsubscriveListIds = null,
+                                                                           int[] unsubscribeWorkflowIds = null,
                                                                            string unsubscriveCamaign = null)
         {
-            var contact = new List<KeyValuePair<string, object>>
+            var options = new
             {
-                new KeyValuePair<string, object>("email", $"{email}"),
-                new KeyValuePair<string, object>("first_name", $"{firstName}"),
-                new KeyValuePair<string, object>("last_name", $"{lastName}"),
-                new KeyValuePair<string, object>("phone", $"{phone}"),
-                new KeyValuePair<string, object>("fax", $"{fax}"),
-                new KeyValuePair<string, object>("uid", $"{uid}"),
-                new KeyValuePair<string, object>("custom_field", $"{customField}"),
-                new KeyValuePair<string, object>("add_tags", $"{addTags}"),
-                new KeyValuePair<string, object>("remove_tags", $"{removeTags}"),
-                new KeyValuePair<string, object>("remove_from_dnm", $"{removeFromDNM}")
+                subscribe_list_ids = string.Join(",", subscribeListIds),
+                unsubscribe_list_ids = string.Join(",", unsubscriveListIds),
+                unsubscribe_workflow_ids = string.Join(",", unsubscribeWorkflowIds),
+                unsubscribe_campaign = unsubscriveCamaign
             };
-            contact = base.DiscardNullAndEmptyValues(contact);
-            var options = new List<KeyValuePair<string, object>>
+            var contact = new
             {
-                new KeyValuePair<string, object>("subscribe_list_ids", string.Join(",", subscribeListIds)),
-                new KeyValuePair<string, object>("unsubscribe_list_ids", string.Join(",", unsubscriveListIds)),
-                new KeyValuePair<string, object>("unsubscribe_workflow_ids", string.Join(",", unsubscribeWorkflowIds)),
-                new KeyValuePair<string, object>("unsubscribe_campaign", unsubscriveCamaign)
+                email,
+                first_name = firstName,
+                last_name = lastName,
+                phone,
+                fax,
+                uid,
+                custom_field = customField,
+                add_tags = addTags,
+                remove_tags = removeTags,
+                removeFromDNM,
+                options
             };
-            options = base.DiscardNullAndEmptyValues(options);
-            contact.Add(new KeyValuePair<string, object>("options", options));
             var getResult = this.GetForEmail(email);
             if (getResult.Success)
             {
@@ -308,7 +307,7 @@ namespace Maropost.Api
         /// <param name="contactId"></param>
         /// <param name="listIds"></param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteFromLists(int contactId, Array listIds = null)
+        public IOperationResult<dynamic> DeleteFromLists(int contactId, int[] listIds = null)
         {
             var keyValuePair = new KeyValueList();
             if (listIds != null)

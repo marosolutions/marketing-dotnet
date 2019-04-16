@@ -36,7 +36,7 @@ namespace Maropost.Api
             else
             {
                 url += overrideResource;
-                url += string.IsNullOrEmpty(resource) ? $"/{resource}" : "";
+                url += string.IsNullOrEmpty(resource) ? "" : $"/{resource}";
             }
             return url;
         }
@@ -60,105 +60,92 @@ namespace Maropost.Api
         /// <remarks>We use IEnumerable instead of Dictionary, because Dictionary builds hash table and enforces unique key, which may or may not be desirable.</remarks>
         protected IOperationResult<dynamic> Get(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, string overrideUrlPathRoot = null)
         {
-            // build the httpClient, and setup everything, for an http GET operation.
-            // See the "_get" function at
-            // https://github.com/marosolutions/marketing-php/blob/master/src/Abstractions/Api.php
-            dynamic responseBody = null;
+            var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            dynamic responseBody;
+            request.Headers.Accept.Clear();
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage apiResponse;
             try
             {
-                // the only thing in here should be the actual http GET execution.
-                var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
-                var request = new HttpRequestMessage(HttpMethod.Get, url);
-                request.Headers.Accept.Clear();
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = HttpClient.SendAsync(request).Result;
-                var data = response.Content.ReadAsStringAsync().Result;
+                apiResponse = HttpClient.SendAsync(request).Result;
+                var data = apiResponse.Content.ReadAsStringAsync().Result;
                 responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             }
             catch (Exception e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
-            return new OperationResult<dynamic>(responseBody, "");
+            return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
         protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
+            var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
+            var request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Headers.Accept.Clear();
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            HttpResponseMessage apiResponse;
             try
             {
-                var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
-                var request = new HttpRequestMessage(HttpMethod.Post, url);
-                request.Headers.Accept.Clear();
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
-                request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                var response = HttpClient.SendAsync(request).Result;
-                var data = response.Content.ReadAsStringAsync().Result;
+                apiResponse = HttpClient.SendAsync(request).Result;
+                var data = apiResponse.Content.ReadAsStringAsync().Result;
                 responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             }
             catch (Exception e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
-            return new OperationResult<dynamic>(responseBody, "");
+            return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
         protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
+            var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
+            var request = new HttpRequestMessage(HttpMethod.Put, url);
+            request.Headers.Accept.Clear();
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            HttpResponseMessage apiResponse;
             try
             {
-                var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
-                var request = new HttpRequestMessage(HttpMethod.Put, url);
-                request.Headers.Accept.Clear();
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
-                request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                var response = HttpClient.SendAsync(request).Result;
-                var data = response.Content.ReadAsStringAsync().Result;
+                apiResponse = HttpClient.SendAsync(request).Result;
+                var data = apiResponse.Content.ReadAsStringAsync().Result;
                 responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             }
             catch (Exception e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
-            return new OperationResult<dynamic>(responseBody, "");
+            return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
         protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
+            var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
+            var request = new HttpRequestMessage(HttpMethod.Delete, url);
+            request.Headers.Accept.Clear();
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+            request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            HttpResponseMessage apiResponse;
             try
             {
-                var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
-                var request = new HttpRequestMessage(HttpMethod.Delete, url);
-                request.Headers.Accept.Clear();
-                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var jsonContent = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
-                request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                var response = HttpClient.SendAsync(request).Result;
-                var data = response.Content.ReadAsStringAsync().Result;
+                apiResponse = HttpClient.SendAsync(request).Result;
+                var data = apiResponse.Content.ReadAsStringAsync().Result;
                 responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             }
             catch (Exception e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
-            return new OperationResult<dynamic>(responseBody, "");
-        }
-
-        protected List<KeyValuePair<string, object>> DiscardNullAndEmptyValues(IEnumerable<KeyValuePair<string, object>> keyValuePairs)
-        {
-            var transformKeyValueParis = new List<KeyValuePair<string, object>>();
-            foreach (var keyValuePair in keyValuePairs)
-            {
-                if (string.IsNullOrEmpty(keyValuePair.Value.ToString()))
-                {
-                    transformKeyValueParis.Add(new KeyValuePair<string, object>(keyValuePair.Key, keyValuePair.Value));
-                }
-            }
-            return transformKeyValueParis;
+            return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
     }
 }

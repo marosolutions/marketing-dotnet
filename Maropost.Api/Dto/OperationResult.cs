@@ -69,9 +69,8 @@ namespace Maropost.Api.Dto
             }
             else
             {
-                var body = apiResponse["body"];
-                ErrorMessage = string.IsNullOrEmpty(errorMessage) ? apiResponse["body"]["error"] ?? "" : errorMessage;
-                if (apiResponse["code"] >= 200 && apiResponse["code"] < 300)
+                int statusCode = (int)apiResponse.StatusCode;
+                if (statusCode >= 200 && statusCode < 300)
                 {
                     ErrorMessage = string.Empty;
                 }
@@ -79,27 +78,21 @@ namespace Maropost.Api.Dto
                 {
                     if (string.IsNullOrEmpty(ErrorMessage))
                     {
-                        string message = apiResponse["body"]["message"] ?? "";
-                        int code = apiResponse["code"];
-                        if (string.IsNullOrEmpty(message))
+                        if (statusCode >= 500)
                         {
-                            ErrorMessage = apiResponse["body"]["message"];
+                            ErrorMessage = $"{statusCode}: Maropost experienced a server error and could not complete your request.";
                         }
-                        else if (code >= 500)
+                        else if (statusCode >= 400)
                         {
-                            ErrorMessage = $"{code}: Maropost experienced a server error and could not complete your request.";
+                            ErrorMessage = $"{statusCode}: Either your accountId, authToken, or one (or more) of your function arguments are invalid.";
                         }
-                        else if (code >= 400)
+                        else if (statusCode >= 300)
                         {
-                            ErrorMessage = $"{code}: Either your accountId, authToken, or one (or more) of your function arguments are invalid.";
-                        }
-                        else if (code >= 300)
-                        {
-                            ErrorMessage = $"{code}: This Maropost API function is currently unavailable.";
+                            ErrorMessage = $"{statusCode}: This Maropost API function is currently unavailable.";
                         }
                         else
                         {
-                            ErrorMessage = $"{code}: Unexpected final response from Maropost.";
+                            ErrorMessage = $"{statusCode}: Unexpected final response from Maropost.";
                         }
                     }
                 }
@@ -117,10 +110,10 @@ namespace Maropost.Api.Dto
             ResultData = resultData;
         }
 
-        public OperationResult(T apiResponse, string errorMessage)
+        public OperationResult(T responseBody, T apiResponse, string errorMessage)
             : base(apiResponse, errorMessage)
         {
-            ResultData = apiResponse;
+            ResultData = responseBody;
         }
     }
 }
