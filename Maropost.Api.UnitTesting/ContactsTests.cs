@@ -281,7 +281,22 @@ namespace Maropost.Api.UnitTesting
         [Fact]
         public void DeleteFromAllLists()
         {
-
+            //Arrange
+            var api = new Contacts(AccountId, AuthToken, HttpClient);
+            string email = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
+            var tags = new[] { "tag1", "tag2", "tag3" };
+            var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
+            var subscribeListIds = new[] { 21, 94, 95 };
+            var unsubscribeWorkflowIds = new[] { 7, 45 };
+            var createResult = api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
+            int contactId = createResult.ResultData["id"];
+            //Act
+            var deleteResult = api.DeleteFromAllLists(email);
+            //Assert
+            Assert.True(deleteResult.Success);
+            Assert.True(string.IsNullOrEmpty(deleteResult.ErrorMessage));
+            Assert.Null(deleteResult.Exception);
         }
 
         [Fact]
@@ -314,10 +329,9 @@ namespace Maropost.Api.UnitTesting
             var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
             var tags = new[] { "tag1", "tag2", "tag3" };
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
-            var subscribeListIds = new[] { 21, 94, 95 };
-            var unsubscribeWorkflowIds = new[] { 7, 45 };
-            var createResult = api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
-            string uid = createResult.ResultData["uid"];
+            var createResult = api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
+            var getResult = api.GetForEmail(email);
+            string uid = getResult.ResultData["uid"];
             //Act
             var deleteResult = api.DeleteContactForUid(uid);
             //Assert
@@ -329,13 +343,38 @@ namespace Maropost.Api.UnitTesting
         [Fact]
         public void DeleteListContact()
         {
-
+            //Arrange
+            var api = new Contacts(AccountId, AuthToken, HttpClient);
+            string email = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
+            var tags = new[] { "tag1", "tag2", "tag3" };
+            var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
+            var createResult = api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
+            int contactId = createResult.ResultData["id"];
+            //Act
+            var deleteResult = api.DeleteListContact(1, contactId);
+            //Assert
+            Assert.True(deleteResult.Success);
+            Assert.True(string.IsNullOrEmpty(deleteResult.ErrorMessage));
+            Assert.Null(deleteResult.Exception);
         }
 
         [Fact]
         public void UnsubscribeAll()
         {
-
+            //Arrange
+            var api = new Contacts(AccountId, AuthToken, HttpClient);
+            string email = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
+            var tags = new[] { "tag1", "tag2", "tag3" };
+            var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
+            var createResult = api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
+            //Act
+            var unsubscribeResult = api.UnsubscribeAll(email);
+            //Assert
+            Assert.True(unsubscribeResult.Success);
+            Assert.True(string.IsNullOrEmpty(unsubscribeResult.ErrorMessage));
+            Assert.Null(unsubscribeResult.Exception);
         }
     }
 }
