@@ -7,7 +7,6 @@ using System.Net.Http;
 namespace Maropost.Api
 {
     public class Contacts : _BaseApi
-
     {
         public Contacts(int accountId, string authToken, HttpClient httpClient)
             : base(accountId, authToken, "contacts", httpClient)

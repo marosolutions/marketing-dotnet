@@ -207,170 +207,168 @@ The specific APIs contained are:
 ## Contacts
 
 ### Instantiation:
-
-    new Maropost.Api.Contacts($myAccountId, $myAuthToken)
+	
+	new Maropost.Api.Contacts(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
 
- - `getForEmail(string $email)`
+ - `public IOperationResult<dynamic> GetForEmail(string email)`
    * Gets the contact according to email address 
-   * `$email`: email address of the contact
+   - `$email`: email address of the contact
 
- - `getOpens(int $contactId, int $page)`
+ - `public IOperationResult<dynamic> GetOpens(int contactId, int page)`
    * Gets the list of opens for the specified contact
+   - `contactId`: contact id of contact to for which the contact is being retrieved
    - `$page`: page # (>= 1). Up to 200 records returned per page.
 
- - `getClicks(int $contactId, int $page)`
+ - `public IOperationResult<dynamic> GetClicks(int contactId, int page)`
    * Gets the list of clicks for the specified contact
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
+   - `contactId`: contact id of contact to for which the contact is being retrieved
+   - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `getForList(int $listId, int $page)`
+ - `public IOperationResult<dynamic> GetForList(int listId, int page)`
    * Gets the list of contacts for the specified list
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
+   - `listId`: ID of the list to which the contact being retrieved
+   - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `getContactForList(int $listId, int $contactId)`
+ - `public IOperationResult<dynamic> GetContactForList(int listId, int contactId)`
    - Gets the specified contact from the specified list
-   - `$listId`
-   - `$contactId`
+   - `listId`: ID of the list to which the contact is being retrieved
+   - `contactId`: contact id of contact to for which the contact is being retrieved
 
- - `public function updateForListAndContact(
-        int $listId,
-        int $contactId,
-        string $email,
-        string $firstName = null,
-        string $lastName = null,
-        string $phone = null,
-        string $fax = null,
-        string $uid = null,
-        array $customField = [],
-        array $addTags = [],
-        array $removeTags = [],
-        bool $removeFromDNM = true,
-        bool $subscribe = true
-    )`
+ - `public IOperationResult<dynamic> CreateOrUpdateForList(int listId,
+														   string email,
+														   string firstName = null,
+														   string lastName = null,
+														   string phone = null,
+														   string fax = null,
+														   string uid = null,
+														   object customField = null,
+														   object addTags = null,
+														   object removeTags = null,
+														   bool removeFromDNM = true,
+														   bool subscribe = true)`
      * Creates a contact within a list. Updates if previous contact is matched by email
-     * `$listId`: ID of the list to which the contact being updated belongs
-     * `$contactId`: ID of the contact being updated
-     * `$email`: Email address for the contact to be updated
-     * `$firstName`: first name of Contact
-     * `$lastName`: last name of Contact
-     * `$phone`: phone number of Contact
-     * `$fax`: fax number of Contact
-     * `$uid`: UID for the Contact
-     * `$customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
-     * `$addTags`: tags to add to the contact. Simple array of tag names
-     * `$removeTags`: tags to remove from the contact. Simple array of tag names
-     * `$removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM)
-     * `$subscribe`: set this true to subscribe contact to the list; false otherwise
+     * `listId`: ID of the list to which the contact being updated belongs
+     * `contactId`: ID of the contact being updated
+     * `email`: Email address for the contact to be updated
+     * `firstName`: first name of Contact
+     * `lastName`: last name of Contact
+     * `phone`: phone number of Contact
+     * `fax`: fax number of Contact
+     * `uid`: UID for the Contact
+     * `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
+     * `addTags`: tags to add to the contact. Simple array of tag names
+     * `removeTags`: tags to remove from the contact. Simple array of tag names
+     * `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM)
+     * `subscribe`: set this true to subscribe contact to the list; false otherwise
   
- - `createOrUpdateForList(
-        int $listId,
-        string $email,
-        string $firstName = null,
-        string $lastName = null,
-        string $phone = null,
-        string $fax = null,
-        string $uid = null,
-        array $customField = [],
-        array $addTags = [],
-        array $removeTags = [],
-        bool $removeFromDNM = true,
-        bool $subscribe = true
-    )`
+ - `public IOperationResult<dynamic> UpdateForListAndContact(int listId,
+															 string contactId,
+															 string email,
+															 string firstName = null,
+															 string lastName = null,
+															 string phone = null,
+															 string fax = null,
+															 string uid = null,
+															 object customField = null,
+															 object addTags = null,
+															 object removeTags = null,
+															 bool removeFromDNM = true,
+															 bool subscribe = true)`
      * Creates a contact within a list. Updates if previous contact is matched by email.
-     * `$listId`: ID of the list for which the contact is being created
-     * `$email`: email address for the contact to be created|updated
-     * `$firstName`: first name of Contact
-     * `$lastName`: last Name of Contact
-     * `$phone`: phone number of Contact
-     * `$fax`: fax number of Contact
-     * `$uid`: UID for the contact
-     * `$customField`: custom fields passed as associative array. Keys represent the field names while values represent the values.
-     * `$addTags`: tags to add to the contact. Simple array of tag names (strings).
-     * `$removeTags`: tags to remove from the contact. Simple array of tag names (strings).
-     * `$removeFromDNM`: Set this true to subscribe contact to the list, and remove it from DNM.
-     * `$subscribe`: true to subscribe the contact to the list; false otherwise.
+     * `listId`: ID of the list for which the contact is being created
+     * `email`: email address for the contact to be created|updated
+     * `firstName`: first name of Contact
+     * `lastName`: last Name of Contact
+     * `phone`: phone number of Contact
+     * `fax`: fax number of Contact
+     * `uid`: UID for the contact
+     * `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values.
+     * `addTags`: tags to add to the contact. Simple array of tag names (strings).
+     * `removeTags`: tags to remove from the contact. Simple array of tag names (strings).
+     * `removeFromDNM`: Set this true to subscribe contact to the list, and remove it from DNM.
+     * `subscribe`: true to subscribe the contact to the list; false otherwise.
 
- - `createOrUpdateContact(
-        int $contactId,
-        string $email,
-        string $firstName = null,
-        string $lastName = null,
-        string $phone = null,
-        string $fax = null,
-        string $uid = null,
-        array $customField = [],
-        array $addTags = [],
-        array $removeTags = [],
-        bool $removeFromDNM = true,
-        bool $subscribe = true
-    )`
+ - `public IOperationResult<dynamic> CreateOrUpdateContact(string email,
+														   string firstName = null,
+														   string lastName = null,
+														   string phone = null,
+														   string fax = null,
+														   string uid = null,
+														   object customField = null,
+														   object addTags = null,
+														   object removeTags = null,
+														   bool removeFromDNM = true,
+														   bool subscribe = true)`
      * Creates a contact without a list. Updates if already existing email is passed.
-     * `$contactId`: ID of the contact
-     * `$email`: Email address for the contact to be created|updated
-     * `$firstName`: first name of Contact
-     * `$lastName`: last Name of Contact
-     * `$phone`: phone number of Contact
-     * `$fax`: fax number of Contact
-     * `$uid`: UID for the contact
-     * `$customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
-     * `$addTags`: tags to add to the contact. Simple array of tag names (strings).
-     * `$removeTags`: tags to remove from the contact. Simple array of tag names (strings).
-     * `$removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
+     * `contactId`: ID of the contact
+     * `email`: Email address for the contact to be created|updated
+     * `firstName`: first name of Contact
+     * `lastName`: last Name of Contact
+     * `phone`: phone number of Contact
+     * `fax`: fax number of Contact
+     * `uid`: UID for the contact
+     * `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
+     * `addTags`: tags to add to the contact. Simple array of tag names (strings).
+     * `removeTags`: tags to remove from the contact. Simple array of tag names (strings).
+     * `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
+	 * `subscribe`: true to subscribe the contact to the list; false otherwise.
 
- - `createOrUpdateForListsAndWorkflows(
-        string $email,
-        string $firstName = null,
-        string $lastName = null,
-        string $phone = null,
-        string $fax = null,
-        string $uid = null,
-        array $customField = [],
-        array $addTags = [],
-        array $removeTags = [],
-        bool $removeFromDNM = false,
-        array $subscribeListIds = [],
-        array $unsubscribeListIds = [],
-        array $unsubscribeWorkflowIds = [],
-        string $unsubscribeCampaign = null
-    )`
+ - `public IOperationResult<dynamic> CreateOrUpdateForListAndWorkflows(string email,
+																	   string firstName = null,
+																	   string lastName = null,
+																	   string phone = null,
+																	   string fax = null,
+																	   string uid = null,
+																	   object customField = null,
+																	   object addTags = null,
+																	   object removeTags = null,
+																	   bool removeFromDNM = false,
+																	   int[] subscribeListIds = null,
+																	   int[] unsubscribeListIds = null,
+																	   int[] unsubscribeWorkflowIds = null,
+																	   string unsubscribeCampaign = null)`
      * Creates or updates Contact
         - Multiple lists can be subscribed, unsubscribed. 
         - Multiple workflows can be unsubscribed.
-     * `$email`: email address for the contact to be created|updated
-     * `$firstName`: first name of Contact
-     * `$lastName`: last name of Contact
-     * `$phone`: phone number of Contact
-     * `$fax`: fax number of Contact
-     * `$uid`: UID for the Contact
-     * `$customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
-     * `$addTags`: tags to add to the contact. Simple array of tag names (strings)
-     * `$removeTags`: tags to remove from the contact. Simple array of tag names (strings)
-     * `$removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
-     * `$subscribeListIds`: simple array of IDs of lists to subscribe the contact to
-     * `$unsubscribeListIds`: simple array of IDs of Lists to unsubscribe the contact from
-     * `$unsubscribeWorkflowIds`: simple array of list of IDs of workflows to unsubscribe the contact from
-     * `$unsubscribeCampaign`: campaignID to unsubscribe the contact from
+     * `email`: email address for the contact to be created|updated
+     * `firstName`: first name of Contact
+     * `lastName`: last name of Contact
+     * `phone`: phone number of Contact
+     * `fax`: fax number of Contact
+     * `uid`: UID for the Contact
+     * `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
+     * `addTags`: tags to add to the contact. Simple array of tag names (strings)
+     * `removeTags`: tags to remove from the contact. Simple array of tag names (strings)
+     * `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
+     * `subscribeListIds`: simple array of IDs of lists to subscribe the contact to
+     * `unsubscribeListIds`: simple array of IDs of Lists to unsubscribe the contact from
+     * `unsubscribeWorkflowIds`: simple array of list of IDs of workflows to unsubscribe the contact from
+     * `unsubscribeCampaign`: campaignID to unsubscribe the contact from
 
- - `deleteFromAllLists(string $email)`
+ - `public IOperationResult<dynamic> DeleteFromAllLists(string email)`
      * Deletes specified contact from all lists
-     * `$email`: email address of the contact
+     * `email`: email address of the contact
 
- - `deleteFromLists(int $contactId, array $listIds = [])`
+ - `public IOperationResult<dynamic> DeleteFromLists(int contactId, int[] listIds = null)`
      * Deletes the specified contact from the specified lists
-     * `$contactId`: id of the contact
-     * `$listIds`: simple array of ids of the lists
+     * `contactId`: id of the contact
+     * `listIds`: simple array of ids of the lists
 
- - `deleteContactForUid(string $uid)`
+ - `public IOperationResult<dynamic> DeleteContactForUid(string uid)`
      * Deletes contact having the specified UID
+	 * `uid`: UID of the Contact for which the contact is being deleted
 
- - `deleteListContact(int $listId, int $contactId)`
+ - `public IOperationResult<dynamic> DeleteListContact(int listId, int contactId)`
      * Deletes specified contact from the specified list
+	 * `listId`: ID of the list for which the contact is being deleted
+	 * `contactId`: contact id of the list for which the contact is being deleted
 
- - `unsubscribeAll(string $contactFieldValue, string $contactFieldName = 'email')`
+ - `public IOperationResult<dynamic> UnsubscribeAll(string contactFieldValue, string contactFieldName = "email")`
      * Unsubscribes contact having the specified field name/value.
-     * `$contactFieldValue`: the value of the field for the contact(s) being unsubscribed
-     * `$contactFieldName`: the name of the field being checked for the value. At present, the 
+     * `contactFieldValue`: the value of the field for the contact(s) being unsubscribed
+     * `contactFieldName`: the name of the field being checked for the value. At present, the 
      accepted field names are: 'email' or 'uid'
 
 ## Journeys
