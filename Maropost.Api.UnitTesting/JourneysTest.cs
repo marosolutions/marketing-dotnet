@@ -77,22 +77,33 @@ namespace Maropost.Api.UnitTesting
         public void StopAll()
         {
             //Arrange
-            var contactApi = new Contacts(AccountId, AuthToken, HttpClient);
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = contactApi.GetForList(1, 1);
+            var getResult = api.Get(1);
+            int journeyId = 0, contactId = 0;
+            bool isTested = false;
             //Act
             foreach (var resultData in getResult.ResultData)
             {
-                int contactId = resultData["id"];
-                string email = resultData["email"];
-                string uid = resultData["uid"];
-                var stopResult = api.StopAll(contactId, email, uid, 1);
-                if (stopResult.Success)
+                journeyId = resultData["id"];
+                var contactResult = api.GetContacts(journeyId, 1);
+                foreach (var contact in contactResult.ResultData)
                 {
-                    //Assert
-                    Assert.True(stopResult.Success);
-                    Assert.True(string.IsNullOrEmpty(stopResult.ErrorMessage));
-                    Assert.Null(stopResult.Exception);
+                    contactId = resultData["contact_id"];
+                    string email = resultData["email"];
+                    string uid = resultData["uid"];
+                    var stopResult = api.StopAll(contactId, email, uid, 1);
+                    if (stopResult.Success)
+                    {
+                        //Assert
+                        Assert.True(stopResult.Success);
+                        Assert.True(string.IsNullOrEmpty(stopResult.ErrorMessage));
+                        Assert.Null(stopResult.Exception);
+                        isTested = true;
+                        break;
+                    }
+                }
+                if (isTested)
+                {
                     break;
                 }
             }
@@ -134,31 +145,166 @@ namespace Maropost.Api.UnitTesting
         [Fact]
         public void PauseJourneyForUid()
         {
+            //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
+            var getResult = api.Get(1);
+            int journeyId = 0;
+            bool isTested = false;
+            foreach (var resultData in getResult.ResultData)
+            {
+                journeyId = resultData["id"];
+                var contactResult = api.GetContacts(journeyId, 1);
+                foreach (var contact in contactResult.ResultData)
+                {
+                    string uid = resultData["uid"];
+                    //Act
+                    var pauseResult = api.PauseJourneyForUid(journeyId, uid);
+                    if (pauseResult.Success)
+                    {
+                        //Assert
+                        Assert.True(pauseResult.Success);
+                        Assert.True(string.IsNullOrEmpty(pauseResult.ErrorMessage));
+                        Assert.Null(pauseResult.Exception);
+                        isTested = true;
+                    }
+                }
+                if (isTested)
+                {
+                    break;
+                }
+            }
         }
 
         [Fact]
         public void ResetJourneyForContact()
         {
+            //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
+            var getResult = api.Get(1);
+            int journeyId = 0, contactId = 0;
+            bool isTested = false;
+            foreach (var resultData in getResult.ResultData)
+            {
+                journeyId = resultData["id"];
+                var contactResult = api.GetContacts(journeyId, 1);
+                foreach (var contact in contactResult.ResultData)
+                {
+                    contactId = contact["contact_id"];
+                    //Act
+                    var pauseResult = api.ResetJourneyForContact(journeyId, contactId);
+                    if (pauseResult.Success)
+                    {
+                        //Assert
+                        Assert.True(pauseResult.Success);
+                        Assert.True(string.IsNullOrEmpty(pauseResult.ErrorMessage));
+                        Assert.Null(pauseResult.Exception);
+                        isTested = true;
+                    }
+                }
+                if (isTested)
+                {
+                    break;
+                }
+            }
         }
 
         [Fact]
         public void ResetJourneyForUid()
         {
+            //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
+            var getResult = api.Get(1);
+            int journeyId = 0;
+            bool isTested = false;
+            foreach (var resultData in getResult.ResultData)
+            {
+                journeyId = resultData["id"];
+                var contactResult = api.GetContacts(journeyId, 1);
+                foreach (var contact in contactResult.ResultData)
+                {
+                    string uid = resultData["uid"];
+                    //Act
+                    var pauseResult = api.ResetJourneyForUid(journeyId, uid);
+                    if (pauseResult.Success)
+                    {
+                        //Assert
+                        Assert.True(pauseResult.Success);
+                        Assert.True(string.IsNullOrEmpty(pauseResult.ErrorMessage));
+                        Assert.Null(pauseResult.Exception);
+                        isTested = true;
+                    }
+                }
+                if (isTested)
+                {
+                    break;
+                }
+            }
         }
 
         [Fact]
         public void StartJourneyForContact()
         {
+            //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
+            var getResult = api.Get(1);
+            int journeyId = 0, contactId = 0;
+            bool isTested = false;
+            foreach (var resultData in getResult.ResultData)
+            {
+                journeyId = resultData["id"];
+                var contactResult = api.GetContacts(journeyId, 1);
+                foreach (var contact in contactResult.ResultData)
+                {
+                    contactId = contact["contact_id"];
+                    //Act
+                    var pauseResult = api.StartJourneyForContact(journeyId, contactId);
+                    if (pauseResult.Success)
+                    {
+                        //Assert
+                        Assert.True(pauseResult.Success);
+                        Assert.True(string.IsNullOrEmpty(pauseResult.ErrorMessage));
+                        Assert.Null(pauseResult.Exception);
+                        isTested = true;
+                    }
+                }
+                if (isTested)
+                {
+                    break;
+                }
+            }
         }
 
         [Fact]
         public void StartJourneyForUid()
         {
+            //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
+            var getResult = api.Get(1);
+            int journeyId = 0;
+            bool isTested = false;
+            foreach (var resultData in getResult.ResultData)
+            {
+                journeyId = resultData["id"];
+                var contactResult = api.GetContacts(journeyId, 1);
+                foreach (var contact in contactResult.ResultData)
+                {
+                    string uid = resultData["uid"];
+                    //Act
+                    var pauseResult = api.StartJourneyForUid(journeyId, uid);
+                    if (pauseResult.Success)
+                    {
+                        //Assert
+                        Assert.True(pauseResult.Success);
+                        Assert.True(string.IsNullOrEmpty(pauseResult.ErrorMessage));
+                        Assert.Null(pauseResult.Exception);
+                        isTested = true;
+                    }
+                }
+                if (isTested)
+                {
+                    break;
+                }
+            }
         }
     }
 }

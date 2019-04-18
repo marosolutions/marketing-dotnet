@@ -84,7 +84,7 @@ namespace Maropost.Api
         /// <param name="journeyId">journey id of contact to pause for</param>
         /// <param name="uid">uid of contact to pause for</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> PauseJourneyForUid(int journeyId, int uid)
+        public IOperationResult<dynamic> PauseJourneyForUid(int journeyId, string uid)
         {
             var result = base.Put($"{journeyId}/stop/uid", new KeyValueList { { "uid", $"{uid}" } });
             return result;
