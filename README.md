@@ -375,55 +375,80 @@ The specific APIs contained are:
 
 ### Instantiation:
 
-    new Maropost.Api.Journeys($myAccountId, $myAuthToken)
+    new Maropost.Api.Journeys(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
 
- - `get(int $page)`
+ - `public IOperationResult<dynamic> Get(int page)`
      * Gets the list of journeys
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
+   - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `getCampaigns(int $journeyId, int $page)`
+ - `public IOperationResult<dynamic> GetCampaigns(int journeyId, int page)`
      * Gets the list of all campaigns for the specified journey
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
+	 * 'journeyId':get campaigns filtered with journeyid
+     * `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `getContacts(int $journeyId, int $page)`
+ - `public IOperationResult<dynamic> GetContacts(int journeyId, int page)`
      * Gets the list of all contacts for the specified journey
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
+	 * 'journeyId': get contacts filtered with journeyid
+     * `page` : page # (>= 1). Up to 200 records returned per page.
 
- - `stopAll(int $contactId, string $recipientEmail, string $uid)`
+ - `public IOperationResult<dynamic> StopAll(int contactId, string recipientEmail, string uid, int page)`
      * Stops all journeys, filtered for the matching parameters
-     * `$contactId`: this filter ignored unless greater than 0
-     * `$recipientEmail`: this filter ignored if null
-     * `$uid`: this filter ignored if null
+     * `contactId`: this filter ignored unless greater than 0
+     * `recipientEmail`: this filter ignored if null
+     * `uid`: this filter ignored if null
+	 * 'page': page # (>= 1). Up to 200 record returned per page.
 
- - `pauseJourneyForContact(int $journeyId, int $contactId)`
+ - `public IOperationResult<dynamic> PauseJourneyForContact(int journeyId, int contactId)`
      * Pause the specified journey for the specified contact
+	 * 'journeyId': pause journey for speficied journey id
+	 * 'contactId': pause journey for speficied contact id
 
- - `pauseJourneyForUid(int $journeyId, string $uid)`
+ - `public IOperationResult<dynamic> PauseJourneyForUid(int journeyId, string uid)`
      * Pause the specified journey for the contact having the specified UID
+	 * 'journeyId': pause journey for specified journey id
+	 * 'uid': pause journey for speficified uid
 
- - `resetJourneyForContact(int $journeyId, int $contactId)`
+ - `public IOperationResult<dynamic> ResetJourneyForContact(int journeyId, int contactId)`
      * Reset the specified journey for the specified active/paused contact. 
      Resetting a contact to the beginning of the journeys will result in 
      sending of the same journey campaigns as originally sent.
+	 * 'journeyId': reset journey for contact with specified journey id
+	 * 'contactId': reset journey for specified contact id
 
- - `public function resetJourneyForUid(int $journeyId, string $uid)`
+ - `public function resetJourneyForUid(int journeyId, string uid)`
      * Reset the specified journey for the active/paused contact having the 
      specified UID. Resetting a contact to the beginning of the journeys 
      will result in sending of the same journey campaigns as originally sent.
+	 * 'journeyId': reset journey for specified journey id
+	 * 'uid': reset journey for specified uid
 
- - `public function startJourneyForContact(int $journeyId, int $contactId)`
+ - `public function startJourneyForContact(int journeyId, int contactId)`
      * Restarts a journey for a paused contact. Adds a new contact in 
      journey. Retriggers the journey for a contact who has finished its 
      journey once. (To retrigger, *make sure* that "Retrigger Journey" option 
      is enabled.)
+	 * 'journeyId': start journey for contact with specified journey id
+	 * 'contactId': start journey for specified journey id
 
- - `startJourneyForUid(int $journeyId, string $uid)`
+ - `public IOperationResult<dynamic> ResetJourneyForUid(int journeyId, string uid)`
      * Restarts a journey for a paused contact having the specified UID. 
      Adds a new contact in journey. Retriggers the journey for a contact 
      who has finished its journey once. (To retrigger, *make sure* that 
      "Retrigger Journey" option is enabled.)
+	 * 'journeyId': reset journey for specified journey id
+	 * 'uid': reste journey for specified uid
+
+- 'public IOperationResult<dynamic> StartJourneyForContact(int journeyId, int contactId)'
+	* Starts a journey for contact having specified journeyId
+	* 'journeyId': start journey for specified journey id
+	* 'contactId': contact id of contact to start journey
+
+- 'public IOperationResult<dynamic> StartJourneyForUid(int journeyId, string uid)'
+	* Starts a journey for contact having specified uid and journeyId
+	* 'journeyId': journey id to start journey
+	* 'uid': uid of contact to start journey
 
 ## Product and Revenue
 
