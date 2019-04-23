@@ -79,7 +79,7 @@ namespace Maropost.Api
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
-        protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
@@ -102,7 +102,7 @@ namespace Maropost.Api
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
-        protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
@@ -125,7 +125,7 @@ namespace Maropost.Api
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
-        protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams, object obj = null, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
