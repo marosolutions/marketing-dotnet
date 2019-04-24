@@ -1,6 +1,7 @@
 ﻿using Maropost.Api.Dto;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -57,6 +58,27 @@ namespace Maropost.Api
                 }
             }
             return operation;
+        }
+
+        internal static IDictionary<string, object> DiscardNullAndEmptyValues(this IDictionary<string, object> keyValuePairs)
+        {
+            var keyValues = new ExpandoObject() as IDictionary<string, object>;
+            foreach (var keyValuePair in keyValuePairs)
+            {
+                if (keyValuePair.Value != null)
+                {
+                    keyValues.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+            }
+            return keyValues;
+        }
+
+        internal static bool IsValidEmail(this string email)
+        {
+            bool result = false;
+            string emailPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+            result = Regex.IsMatch(email, emailPattern, RegexOptions.IgnoreCase);
+            return result;
         }
     }
 }

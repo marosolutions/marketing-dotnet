@@ -14,7 +14,7 @@ namespace Maropost.Api
     {
         protected int AccountId { get; }
         protected string AuthToken { get; }
-        protected string UrlPathRoot { get; }
+        protected string UrlPathRoot { get; set; }
         protected HttpClient HttpClient { get; }
 
         public _BaseApi(int accountId, string authToken, string urlPathRoot, HttpClient httpClient)
@@ -41,7 +41,7 @@ namespace Maropost.Api
             return url;
         }
 
-        private string GetQueryString(IEnumerable<KeyValuePair<string, string>> keyValuePairs)
+        private string GetQueryString(IEnumerable<KeyValuePair<string, object>> keyValuePairs)
         {
             string queryStr = $"?auth_token={AuthToken}";
             if (keyValuePairs != null)
@@ -58,7 +58,7 @@ namespace Maropost.Api
         /// <summary>
         /// </summary>
         /// <remarks>We use IEnumerable instead of Dictionary, because Dictionary builds hash table and enforces unique key, which may or may not be desirable.</remarks>
-        protected IOperationResult<dynamic> Get(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Get(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, string overrideUrlPathRoot = null)
         {
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -79,7 +79,7 @@ namespace Maropost.Api
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
-        protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
@@ -102,7 +102,7 @@ namespace Maropost.Api
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
-        protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
@@ -125,7 +125,7 @@ namespace Maropost.Api
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
 
-        protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, string>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
+        protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
