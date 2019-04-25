@@ -109,100 +109,85 @@ The specific APIs contained are:
 ## AB Test Campaigns
 ### Instantiation:
 
-    new Maropost.Api.AbTestCampaigns($myAccountId, $myAuthToken)
+    new Maropost.Api.AbTestCampaigns(int accountId, string authToken, HttpClient httpClient)
 
 ### Available Methods:
- - `createAbTest(string $name, string $fromEmail, string $replyTo,
-            string $address, string $language, array $campaignGroupsAttributes,
-            string $sendAt)`
-   - `$name`: name of the new campaign
-   - `$fromEmail`: default sender email address for campaign emails
-   - `$replyTo`: default reply-to email address for campaign emails
-   - `$address`: default physical address included on campaign emails
-   - `$language`: ISO 639-1 language code (e.g, `"en"`). 2 characters.
-   - `$campaignGroupsAttributes`: array of attributes. Each attribute is
-   itself an object with the following properties (all strings):
-     - `name`: name of the group
-     - `content_id`: content ID
-     - `subject`: subject line of emails
-     - `from_name`: "from name" on emails
-     - `percentage`: percentage of emails that should be sent with these
-     settings.
-   - `$sendAt`: DateTime string having the format  YYYY-MM-DDTHH:MM:SS-05:00
-
+ - `public IOperationResult<dynamic> CreateAbTest(string name, string fromEmail, string replyTo, string address, string language, string campaignGroupAttributes,`
+                                                  `string commit, DateTime sendAt, int? brandId = null, object[] suppressedListIds = null, object[] suppressedSegmentIds = null,`
+                                                  `object[] suppressedJourneyIds = null, int? emailPreviewLink = null, string decidedBy = null, object[] lists = null,`
+                                                  `object[] cTags = null, object[] segments = null)`
+   * Creates an Ab Test campaign
+   - `name`: name of the new campaign
+   - `fromEmail`: default sender email address for campaign emails
+   - `replyTo`: default reply-to email address for campaign emails
+   - `address`: default physical address included on campaign emails
+   - `language`: ISO 639-1 language code (e.g, `"en"`). 2 characters.
+   - `campaignGroupsAttributes`: array of attributes. Each attribute is
+								 itself an object with the following properties (all strings):
+   - `commit`: Allowed values for commit: 'Save as Draft' or 'Send Test' or 'Schedule'
+   - `sendAt`: send_at should be in "yyyy-mm-dd %H:%M:%S" where %H - Hour of the day, 24-hour clock (00..23), %M - Minute of the hour (00..59), %S - Second of the minute (00..60)
+   - `brandId`:
+   - `supressedListIds`:
+   - `supressedSegmentIds`:
+   - `supressedJourneyIds`:
+   - `emailPreviewLink`:
+   - `decidedBy`: Allowed values for decided_by: ('TopChoice' for Top Choices) or ('Opens' for Highest Open Rate) or ('Clicks' for Highest Click Rate) or ('Manual' for Manual Selection) or ('click_to_open' for Highest Click-to-Open Rate) or ('conversions' for Highest Conversion Rate)
+   - `lists`:
+   - `cTags`:
+   - `segments`:
+   
 ## Transactional Campaigns
 
 ### Instantiation:
 
-    new Maropost.Api.TransactionalCampaigns($myAccountId, $myAuthToken)
+    new Maropost.Api.TransactionalCampaigns(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
- - `get(int $page)`
+ - `public IOperationResult<dynamic> Get(int page)`
      * returns the list of Transaction Campaigns
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
- - `create(string $name, string $subject, string $preheader,
-        string $fromName, string $fromEmail, string $replyTo, 
-        int $contentId, bool $emailPreviewLink, string $address,
-        string $language, string... $ctags)`
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+ - `public IOperationResult<dynamic> Create(string name, string subject, string preheader, string fromName, string fromEmail, string replyTo,`
+                                           `int contentId, bool emailPreviewLink, string address, string language, object[] ctags)`
      * Creates a Transactional Campaign
-     * `$name` campaign name
-     * `$subject` campaign subject
-     * `$preheader` campaign preheader
-     * `$fromName` sender name in the email
-     * `$fromEmail` sender email address
-     * `$replyTo` reply-to email address
-     * `$contentId`
-     * `$emailPreviewLink`
-     * `$address` physical address
-     * `$language` ISO 639-1 language code
-     * `...$ctags` array of campaign tags
+     - `name` campaign name
+     - `subject` campaign subject
+     - `preheader` campaign preheader
+     - `fromName` sender name in the email
+     - `fromEmail` sender email address
+     - `replyTo` reply-to email address
+     - `contentId`
+     - `emailPreviewLink`
+     - `address` physical address
+     - `language` ISO 639-1 language code
+     - `ctags` array of campaign tags
 
- - `sendEmail(int $campaignId, 
-        int $contentId = null,
-        string $contentName = null,
-        string $contentHtmlPart = null,
-        string $contentTextPart = null,
-        int $sendAtHour = null,
-        int $sendAtMinute = null,
-        bool $ignoreDnm = null,
-        int $contactId = null,
-        string $recipientEmail = null,
-        string $recipientFirstName = null,
-        string $recipientLastName = null,
-        array $recipientCustomFields = null,
-        string $bccEmail = null,
-        string $fromName = null,
-        string $fromEmail = null,
-        string $subject = null,
-        string $replyTo = null,
-        string $senderAddress = null,
-        array $tags = null,
-        array $ctags = null
-    )`
-     * Sends a transactional campaign email to a recipient. Sender's 
-     information will be automatically fetched from the transactional 
-     campaign, unless provided in the function arguments.
-     * `$campaignId`: must be a campaign that already exists when you call `$svc->get()`. If you don't have one, first call `$svc->create()`.
-     * `$contentId`: If provided, the transactional campaign's content will be replaced by this content.
-     * `$contentName`: If $contentId is null, the transactional campaign's content name will be replaced by this name.
-     * `$contentHtmlPart`: If $contentId is null, the transactional campaign's content HTML part will be replaced by this HTML part.
-     * `$contentTextPart`: If $contentId is null, the transactional campaign's content Text part will be replaced by this Text part.
-     * `$sendAtHour`: Must be 1-12. Otherwise the email will go out immediately. If the hour is less than the current hour, the email will go out the following day.
-     * `$sendAtMinute`: Must be 0-60. Otherwise will be treated as 0. If the hour and minute combine to less than the current time, the email will go out the following day.
-     * `$ignoreDnm`: If true, ignores the Do Not Mail list for the recipient contact.
-     * `$contactId`: contact ID of the recipient.
-     * `$recipientEmail`: email address. Ignored unless `$contactId` is null. Otherwise, it must be a well-formed email address according to `FILTER_VALIDATE_EMAIL`.
-     * `$recipientFirstName`: recipient's first name. Ignored unless `$contactId` is null.
-     * `$recipientLastName`: recipient's last name. Ignored unless `$contactId` is null.
-     * `$recipientCustomFields`: custom fields for the recipient. Ignored unless `$contactId` is null. Is an associative array where the item key is the name of the custom field, and the item value is the field value. All keys must be strings. All values must be non-null scalars.
-     * `$bccEmail`: BCC recipient. May only pass a single email address, empty string, or null. If provided, it must be a well-formed email address according to `FILTER_VALIDATE_EMAIL`.
-     * `$fromName`: sender's name. If `$fromEmail` is set, it overrides the transactional campaign default sender name. Ignored otherwise.
-     * `$fromEmail`: sender's email address. Overrides the transactional campaign default sender email.
-     * `$subject`: subject line of email. Overrides the transactional campaign default subject.
-     * `$replyTo`: reply-to address. Overrides the transactional campaign default reply-to.
-     * `$senderAddress`: physical address of sender. Overrides the transactional campaign default sender address.
-     * `$tags`: associative array where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All keys must be strings. All values must be non-null scalars.
-     * `$ctags`: campaign tags. Must be a simple array of scalar values.
+ - `public IOperationResult<dynamic> SendEmail(int campaignId, int? contentId = null, string contentName = null, string contentHtmlPart = null, string contentTextPart = null,`
+                                              `int? sendAtHour = null, int? sendAtMinute = null, bool? ignoreDnm = null, int? contactId = null, string recipientEmail = null,`
+                                              `string recipientFirstName = null, string recipientLastName = null, IDictionary<object, object> recipientCustomFields = null,`
+                                              `string bccEmail = null, string fromName = null, string fromEmail = null, string subject = null, string replyTo = null,`
+                                              `string senderAddress = null, IDictionary<object, object> tags = null, object[] ctags = null)`
+     * Sends a transactional campaign email to a recipient. Sender's information will be automatically fetched from the transactional campaign, unless provided in the function arguments.
+     - `campaignId`: must be a campaign that already exists when you call `$svc->get()`. If you don't have one, first call `$svc->create()`.
+     - `contentId`: If provided, the transactional campaign's content will be replaced by this content.
+     - `contentName`: If $contentId is null, the transactional campaign's content name will be replaced by this name.
+     - `contentHtmlPart`: If $contentId is null, the transactional campaign's content HTML part will be replaced by this HTML part.
+     - `contentTextPart`: If $contentId is null, the transactional campaign's content Text part will be replaced by this Text part.
+     - `sendAtHour`: Must be 1-12. Otherwise the email will go out immediately. If the hour is less than the current hour, the email will go out the following day.
+     - `sendAtMinute`: Must be 0-60. Otherwise will be treated as 0. If the hour and minute combine to less than the current time, the email will go out the following day.
+     - `ignoreDnm`: If true, ignores the Do Not Mail list for the recipient contact.
+     - `contactId`: contact ID of the recipient.
+     - `recipientEmail`: email address. Ignored unless `$contactId` is null. Otherwise, it must be a well-formed email address according to `FILTER_VALIDATE_EMAIL`.
+     - `recipientFirstName`: recipient's first name. Ignored unless `$contactId` is null.
+     - `recipientLastName`: recipient's last name. Ignored unless `$contactId` is null.
+     - `recipientCustomFields`: custom fields for the recipient. Ignored unless `$contactId` is null. Is an associative array where the item key is the name of the custom field, and the item value is the field value. All keys must be strings. All values must be non-null scalars.
+     - `bccEmail`: BCC recipient. May only pass a single email address, empty string, or null. If provided, it must be a well-formed email address according to `FILTER_VALIDATE_EMAIL`.
+     - `fromName`: sender's name. If `$fromEmail` is set, it overrides the transactional campaign default sender name. Ignored otherwise.
+     - `fromEmail`: sender's email address. Overrides the transactional campaign default sender email.
+     - `subject`: subject line of email. Overrides the transactional campaign default subject.
+     - `replyTo`: reply-to address. Overrides the transactional campaign default reply-to.
+     - `senderAddress`: physical address of sender. Overrides the transactional campaign default sender address.
+     - `tags`: associative array where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All keys must be strings. All values must be non-null scalars.
+     - `ctags`: campaign tags. Must be a simple array of scalar values.
      
 ## Contacts
 
@@ -214,12 +199,12 @@ The specific APIs contained are:
 
  - `public IOperationResult<dynamic> GetForEmail(string email)`
    * Gets the contact according to email address 
-   - `$email`: email address of the contact
+   - `email`: email address of the contact
 
  - `public IOperationResult<dynamic> GetOpens(int contactId, int page)`
    * Gets the list of opens for the specified contact
    - `contactId`: contact id of contact to for which the contact is being retrieved
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
+   - `page`: page # (>= 1). Up to 200 records returned per page.
 
  - `public IOperationResult<dynamic> GetClicks(int contactId, int page)`
    * Gets the list of clicks for the specified contact
@@ -236,140 +221,99 @@ The specific APIs contained are:
    - `listId`: ID of the list to which the contact is being retrieved
    - `contactId`: contact id of contact to for which the contact is being retrieved
 
- - `public IOperationResult<dynamic> CreateOrUpdateForList(int listId,
-														   string email,
-														   string firstName = null,
-														   string lastName = null,
-														   string phone = null,
-														   string fax = null,
-														   string uid = null,
-														   object customField = null,
-														   object addTags = null,
-														   object removeTags = null,
-														   bool removeFromDNM = true,
-														   bool subscribe = true)`
+ - `public IOperationResult<dynamic> CreateOrUpdateForList(int listId, string email, string firstName = null, string lastName = null, string phone = null,`
+														  `string fax = null, string uid = null, object customField = null, object addTags = null,`
+														  `object removeTags = null, bool removeFromDNM = true, bool subscribe = true)`
      * Creates a contact within a list. Updates if previous contact is matched by email
-     * `listId`: ID of the list to which the contact being updated belongs
-     * `contactId`: ID of the contact being updated
-     * `email`: Email address for the contact to be updated
-     * `firstName`: first name of Contact
-     * `lastName`: last name of Contact
-     * `phone`: phone number of Contact
-     * `fax`: fax number of Contact
-     * `uid`: UID for the Contact
-     * `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
-     * `addTags`: tags to add to the contact. Simple array of tag names
-     * `removeTags`: tags to remove from the contact. Simple array of tag names
-     * `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM)
-     * `subscribe`: set this true to subscribe contact to the list; false otherwise
+     - `listId`: ID of the list to which the contact being updated belongs
+     - `contactId`: ID of the contact being updated
+     - `email`: Email address for the contact to be updated
+     - `firstName`: first name of Contact
+     - `lastName`: last name of Contact
+     - `phone`: phone number of Contact
+     - `fax`: fax number of Contact
+     - `uid`: UID for the Contact
+     - `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
+     - `addTags`: tags to add to the contact. Simple array of tag names
+     - `removeTags`: tags to remove from the contact. Simple array of tag names
+     - `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM)
+     - `subscribe`: set this true to subscribe contact to the list; false otherwise
   
- - `public IOperationResult<dynamic> UpdateForListAndContact(int listId,
-															 string contactId,
-															 string email,
-															 string firstName = null,
-															 string lastName = null,
-															 string phone = null,
-															 string fax = null,
-															 string uid = null,
-															 object customField = null,
-															 object addTags = null,
-															 object removeTags = null,
-															 bool removeFromDNM = true,
-															 bool subscribe = true)`
+ - `public IOperationResult<dynamic> UpdateForListAndContact(int listId, string contactId, string email, string firstName = null, string lastName = null, string phone = null, string fax = null,`
+															`string uid = null, object customField = null, object addTags = null, object removeTags = null, bool removeFromDNM = true, bool subscribe = true)`
      * Creates a contact within a list. Updates if previous contact is matched by email.
-     * `listId`: ID of the list for which the contact is being created
-     * `email`: email address for the contact to be created|updated
-     * `firstName`: first name of Contact
-     * `lastName`: last Name of Contact
-     * `phone`: phone number of Contact
-     * `fax`: fax number of Contact
-     * `uid`: UID for the contact
-     * `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values.
-     * `addTags`: tags to add to the contact. Simple array of tag names (strings).
-     * `removeTags`: tags to remove from the contact. Simple array of tag names (strings).
-     * `removeFromDNM`: Set this true to subscribe contact to the list, and remove it from DNM.
-     * `subscribe`: true to subscribe the contact to the list; false otherwise.
+     - `listId`: ID of the list for which the contact is being created
+     - `email`: email address for the contact to be created|updated
+     - `firstName`: first name of Contact
+     - `lastName`: last Name of Contact
+     - `phone`: phone number of Contact
+     - `fax`: fax number of Contact
+     - `uid`: UID for the contact
+     - `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values.
+     - `addTags`: tags to add to the contact. Simple array of tag names (strings).
+     - `removeTags`: tags to remove from the contact. Simple array of tag names (strings).
+     - `removeFromDNM`: Set this true to subscribe contact to the list, and remove it from DNM.
+     - `subscribe`: true to subscribe the contact to the list; false otherwise.
 
- - `public IOperationResult<dynamic> CreateOrUpdateContact(string email,
-														   string firstName = null,
-														   string lastName = null,
-														   string phone = null,
-														   string fax = null,
-														   string uid = null,
-														   object customField = null,
-														   object addTags = null,
-														   object removeTags = null,
-														   bool removeFromDNM = true,
-														   bool subscribe = true)`
+ - `public IOperationResult<dynamic> CreateOrUpdateContact(string email, string firstName = null, string lastName = null, string phone = null, string fax = null, string uid = null,`
+														  `object customField = null, object addTags = null, object removeTags = null, bool removeFromDNM = true, bool subscribe = true)`
      * Creates a contact without a list. Updates if already existing email is passed.
-     * `contactId`: ID of the contact
-     * `email`: Email address for the contact to be created|updated
-     * `firstName`: first name of Contact
-     * `lastName`: last Name of Contact
-     * `phone`: phone number of Contact
-     * `fax`: fax number of Contact
-     * `uid`: UID for the contact
-     * `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
-     * `addTags`: tags to add to the contact. Simple array of tag names (strings).
-     * `removeTags`: tags to remove from the contact. Simple array of tag names (strings).
-     * `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
-	 * `subscribe`: true to subscribe the contact to the list; false otherwise.
+     - `contactId`: ID of the contact
+     - `email`: Email address for the contact to be created|updated
+     - `firstName`: first name of Contact
+     - `lastName`: last Name of Contact
+     - `phone`: phone number of Contact
+     - `fax`: fax number of Contact
+     - `uid`: UID for the contact
+     - `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
+     - `addTags`: tags to add to the contact. Simple array of tag names (strings).
+     - `removeTags`: tags to remove from the contact. Simple array of tag names (strings).
+     - `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
+	 - `subscribe`: true to subscribe the contact to the list; false otherwise.
 
- - `public IOperationResult<dynamic> CreateOrUpdateForListAndWorkflows(string email,
-																	   string firstName = null,
-																	   string lastName = null,
-																	   string phone = null,
-																	   string fax = null,
-																	   string uid = null,
-																	   object customField = null,
-																	   object addTags = null,
-																	   object removeTags = null,
-																	   bool removeFromDNM = false,
-																	   int[] subscribeListIds = null,
-																	   int[] unsubscribeListIds = null,
-																	   int[] unsubscribeWorkflowIds = null,
-																	   string unsubscribeCampaign = null)`
+ - `public IOperationResult<dynamic> CreateOrUpdateForListAndWorkflows(string email, string firstName = null, string lastName = null, string phone = null, string fax = null, string uid = null,`
+																	  `object customField = null, object addTags = null, object removeTags = null, bool removeFromDNM = false, int[] subscribeListIds = null,`
+																	  `int[] unsubscribeListIds = null, int[] unsubscribeWorkflowIds = null, string unsubscribeCampaign = null)`
      * Creates or updates Contact
         - Multiple lists can be subscribed, unsubscribed. 
         - Multiple workflows can be unsubscribed.
-     * `email`: email address for the contact to be created|updated
-     * `firstName`: first name of Contact
-     * `lastName`: last name of Contact
-     * `phone`: phone number of Contact
-     * `fax`: fax number of Contact
-     * `uid`: UID for the Contact
-     * `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
-     * `addTags`: tags to add to the contact. Simple array of tag names (strings)
-     * `removeTags`: tags to remove from the contact. Simple array of tag names (strings)
-     * `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
-     * `subscribeListIds`: simple array of IDs of lists to subscribe the contact to
-     * `unsubscribeListIds`: simple array of IDs of Lists to unsubscribe the contact from
-     * `unsubscribeWorkflowIds`: simple array of list of IDs of workflows to unsubscribe the contact from
-     * `unsubscribeCampaign`: campaignID to unsubscribe the contact from
+     - `email`: email address for the contact to be created|updated
+     - `firstName`: first name of Contact
+     - `lastName`: last name of Contact
+     - `phone`: phone number of Contact
+     - `fax`: fax number of Contact
+     - `uid`: UID for the Contact
+     - `customField`: custom fields passed as associative array. Keys represent the field names while values represent the values
+     - `addTags`: tags to add to the contact. Simple array of tag names (strings)
+     - `removeTags`: tags to remove from the contact. Simple array of tag names (strings)
+     - `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
+     - `subscribeListIds`: simple array of IDs of lists to subscribe the contact to
+     - `unsubscribeListIds`: simple array of IDs of Lists to unsubscribe the contact from
+     - `unsubscribeWorkflowIds`: simple array of list of IDs of workflows to unsubscribe the contact from
+     - `unsubscribeCampaign`: campaignID to unsubscribe the contact from
 
  - `public IOperationResult<dynamic> DeleteFromAllLists(string email)`
      * Deletes specified contact from all lists
-     * `email`: email address of the contact
+     - `email`: email address of the contact
 
  - `public IOperationResult<dynamic> DeleteFromLists(int contactId, int[] listIds = null)`
      * Deletes the specified contact from the specified lists
-     * `contactId`: id of the contact
-     * `listIds`: simple array of ids of the lists
+     - `contactId`: id of the contact
+     - `listIds`: simple array of ids of the lists
 
  - `public IOperationResult<dynamic> DeleteContactForUid(string uid)`
      * Deletes contact having the specified UID
-	 * `uid`: UID of the Contact for which the contact is being deleted
+	 - `uid`: UID of the Contact for which the contact is being deleted
 
  - `public IOperationResult<dynamic> DeleteListContact(int listId, int contactId)`
      * Deletes specified contact from the specified list
-	 * `listId`: ID of the list for which the contact is being deleted
-	 * `contactId`: contact id of the list for which the contact is being deleted
+	 - `listId`: ID of the list for which the contact is being deleted
+	 - `contactId`: contact id of the list for which the contact is being deleted
 
  - `public IOperationResult<dynamic> UnsubscribeAll(string contactFieldValue, string contactFieldName = "email")`
      * Unsubscribes contact having the specified field name/value.
-     * `contactFieldValue`: the value of the field for the contact(s) being unsubscribed
-     * `contactFieldName`: the name of the field being checked for the value. At present, the 
-     accepted field names are: 'email' or 'uid'
+     - `contactFieldValue`: the value of the field for the contact(s) being unsubscribed
+     - `contactFieldName`: the name of the field being checked for the value. At present, the accepted field names are: 'email' or 'uid'
 
 ## Journeys
 
@@ -381,74 +325,64 @@ The specific APIs contained are:
 
  - `public IOperationResult<dynamic> Get(int page)`
      * Gets the list of journeys
-   - `page`: page # (>= 1). Up to 200 records returned per page.
+     - `page`: page # (>= 1). Up to 200 records returned per page.
 
  - `public IOperationResult<dynamic> GetCampaigns(int journeyId, int page)`
      * Gets the list of all campaigns for the specified journey
-	 * 'journeyId':get campaigns filtered with journeyid
-     * `page`: page # (>= 1). Up to 200 records returned per page.
+	 - `journeyId`: get campaigns filtered with journeyid
+     - `page`: page # (>= 1). Up to 200 records returned per page.
 
  - `public IOperationResult<dynamic> GetContacts(int journeyId, int page)`
      * Gets the list of all contacts for the specified journey
-	 * 'journeyId': get contacts filtered with journeyid
-     * `page` : page # (>= 1). Up to 200 records returned per page.
+	 - `journeyId`: get contacts filtered with journeyid
+     - `page` : page # (>= 1). Up to 200 records returned per page.
 
  - `public IOperationResult<dynamic> StopAll(int contactId, string recipientEmail, string uid, int page)`
      * Stops all journeys, filtered for the matching parameters
-     * `contactId`: this filter ignored unless greater than 0
-     * `recipientEmail`: this filter ignored if null
-     * `uid`: this filter ignored if null
-	 * 'page': page # (>= 1). Up to 200 record returned per page.
+     - `contactId`: this filter ignored unless greater than 0
+     - `recipientEmail`: this filter ignored if null
+     - `uid`: this filter ignored if null
+	 - `page`: page # (>= 1). Up to 200 record returned per page.
 
  - `public IOperationResult<dynamic> PauseJourneyForContact(int journeyId, int contactId)`
      * Pause the specified journey for the specified contact
-	 * 'journeyId': pause journey for speficied journey id
-	 * 'contactId': pause journey for speficied contact id
+	 - `journeyId`: pause journey for speficied journey id
+	 - `contactId`: pause journey for speficied contact id
 
  - `public IOperationResult<dynamic> PauseJourneyForUid(int journeyId, string uid)`
      * Pause the specified journey for the contact having the specified UID
-	 * 'journeyId': pause journey for specified journey id
-	 * 'uid': pause journey for speficified uid
+	 - `journeyId`: pause journey for specified journey id
+	 - `uid`: pause journey for speficified uid
 
  - `public IOperationResult<dynamic> ResetJourneyForContact(int journeyId, int contactId)`
-     * Reset the specified journey for the specified active/paused contact. 
-     Resetting a contact to the beginning of the journeys will result in 
-     sending of the same journey campaigns as originally sent.
-	 * 'journeyId': reset journey for contact with specified journey id
-	 * 'contactId': reset journey for specified contact id
+     * Reset the specified journey for the specified active/paused contact. Resetting a contact to the beginning of the journeys will result in sending of the same journey campaigns as originally sent.
+	 - `journeyId`: reset journey for contact with specified journey id
+	 - `contactId`: reset journey for specified contact id
 
  - `public function resetJourneyForUid(int journeyId, string uid)`
-     * Reset the specified journey for the active/paused contact having the 
-     specified UID. Resetting a contact to the beginning of the journeys 
-     will result in sending of the same journey campaigns as originally sent.
-	 * 'journeyId': reset journey for specified journey id
-	 * 'uid': reset journey for specified uid
+     * Reset the specified journey for the active/paused contact having the specified UID. Resetting a contact to the beginning of the journeys will result in sending of the same journey campaigns as originally sent.
+	 - `journeyId`: reset journey for specified journey id
+	 - `uid`: reset journey for specified uid
 
  - `public function startJourneyForContact(int journeyId, int contactId)`
-     * Restarts a journey for a paused contact. Adds a new contact in 
-     journey. Retriggers the journey for a contact who has finished its 
-     journey once. (To retrigger, *make sure* that "Retrigger Journey" option 
-     is enabled.)
-	 * 'journeyId': start journey for contact with specified journey id
-	 * 'contactId': start journey for specified journey id
+     * Restarts a journey for a paused contact. Adds a new contact in journey. Retriggers the journey for a contact who has finished its journey once. (To retrigger, *make sure* that "Retrigger Journey" option is enabled.)
+	 - `journeyId`: start journey for contact with specified journey id
+	 - `contactId`: start journey for specified journey id
 
  - `public IOperationResult<dynamic> ResetJourneyForUid(int journeyId, string uid)`
-     * Restarts a journey for a paused contact having the specified UID. 
-     Adds a new contact in journey. Retriggers the journey for a contact 
-     who has finished its journey once. (To retrigger, *make sure* that 
-     "Retrigger Journey" option is enabled.)
-	 * 'journeyId': reset journey for specified journey id
-	 * 'uid': reste journey for specified uid
+     * Restarts a journey for a paused contact having the specified UID. Adds a new contact in journey. Retriggers the journey for a contact who has finished its journey once. (To retrigger, *make sure* that "Retrigger Journey" option is enabled.)
+	 - `journeyId`: reset journey for specified journey id
+	 - `uid`: reste journey for specified uid
 
-- 'public IOperationResult<dynamic> StartJourneyForContact(int journeyId, int contactId)'
+ - `public IOperationResult<dynamic> StartJourneyForContact(int journeyId, int contactId)`
 	* Starts a journey for contact having specified journeyId
-	* 'journeyId': start journey for specified journey id
-	* 'contactId': contact id of contact to start journey
+	- `journeyId`: start journey for specified journey id
+	- `contactId`: contact id of contact to start journey
 
-- 'public IOperationResult<dynamic> StartJourneyForUid(int journeyId, string uid)'
+ - `public IOperationResult<dynamic> StartJourneyForUid(int journeyId, string uid)`
 	* Starts a journey for contact having specified uid and journeyId
-	* 'journeyId': journey id to start journey
-	* 'uid': uid of contact to start journey
+	- 'journeyId': journey id to start journey
+	- 'uid': uid of contact to start journey
 
 ## Product and Revenue
 

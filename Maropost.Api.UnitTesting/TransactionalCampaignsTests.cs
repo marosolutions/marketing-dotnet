@@ -7,14 +7,14 @@ namespace Maropost.Api.UnitTesting
 {
     public class TransactionalCampaignsTests : _BaseTests
     {
-        private const string SEND_RECIPIENT = "";
-        private const string SEND_RECIPIENT_FIRST_NAME = "";
-        private const string SEND_RECIPIENT_LAST_NAME = "";
+        private const string SEND_RECIPIENT = "test@maropost.com";
+        private const string SEND_RECIPIENT_FIRST_NAME = "test_receiverFN";
+        private const string SEND_RECIPIENT_LAST_NAME = "test_receiverLN";
         private const string SEND_SENDER_NAME = "user-test sender";
         private const string SEND_SENDER_EMAIL = "info@maropost.com";
         private const string SEND_SENDER_REPLYTO = "noreply@maropost.com";
         private const int SEND_CONTENT_ID = 162;
-        private const int SEND_CAMPAIGN_ID = 0;
+        private const int SEND_CAMPAIGN_ID = 1;
 
         [Fact]
         public void Get()
@@ -53,7 +53,40 @@ namespace Maropost.Api.UnitTesting
         [Fact]
         public void SendEmail()
         {
+            //Arrange
+            var api = new TransactionalCampaigns(AccountId, AuthToken, HttpClient);
+            var customFields = new Dictionary<object, object>
+            {
+                { "city", "San Luis Obispo" },
+                { "state", "California" }
+            };
+            var tags = new Dictionary<object, object>
+            {
+                { "field1", "value1" },
+                { "field2", "value2" }
+            };
+            //Act
+            var result = api.SendEmail(SEND_CAMPAIGN_ID, null, "test content", "<h2>Custom HTML</h2>", "Test Content Text",
+                                       null, null, true, null, SEND_RECIPIENT, SEND_RECIPIENT_FIRST_NAME, SEND_RECIPIENT_LAST_NAME,
+                                       customFields, null, SEND_SENDER_NAME, SEND_SENDER_REPLYTO, "Test Subject", SEND_SENDER_EMAIL,
+                                       "Test Sender Address", tags, new[] { "ctag1", "ctag2" });
+            //Assert
+            Assert.True(result.Success);
+            Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
+            Assert.Null(result.Exception);
+        }
 
+        [Fact]
+        public void SendEmail_BothContentIdContentFields()
+        {
+            //Arrange
+            var api = new TransactionalCampaigns(AccountId, AuthToken, HttpClient);
+            //Act
+            var result = api.SendEmail(SEND_CAMPAIGN_ID, 162, "test content", null, null, null, null, true, null, SEND_RECIPIENT, SEND_RECIPIENT_FIRST_NAME, SEND_RECIPIENT_LAST_NAME);
+            //Assert
+            Assert.False(result.Success);
+            Assert.False(string.IsNullOrEmpty(result.ErrorMessage));
+            Assert.Null(result.Exception);
         }
     }
 }

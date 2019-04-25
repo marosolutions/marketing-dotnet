@@ -16,18 +16,20 @@ namespace Maropost.Api
         protected string AuthToken { get; }
         protected string UrlPathRoot { get; set; }
         protected HttpClient HttpClient { get; }
+        protected string BaseUrl { get; }
 
-        public _BaseApi(int accountId, string authToken, string urlPathRoot, HttpClient httpClient)
+        public _BaseApi(int accountId, string authToken, string urlPathRoot, HttpClient httpClient, string baseUrl = null)
         {
             AccountId = accountId;
             AuthToken = authToken;
             UrlPathRoot = urlPathRoot;
             HttpClient = httpClient;
+            BaseUrl = baseUrl;
         }
 
         private string GetUrl(string resource = null, string overrideResource = null)
         {
-            string url = $"https://api.maropost.com/accounts/{AccountId}/";
+            string url = string.IsNullOrEmpty(BaseUrl) ? $"https://api.maropost.com/accounts/{AccountId}/" : string.Format(BaseUrl, AccountId);
             if (string.IsNullOrEmpty(overrideResource))
             {
                 url += string.IsNullOrEmpty(UrlPathRoot) ? "" : $"{UrlPathRoot}";

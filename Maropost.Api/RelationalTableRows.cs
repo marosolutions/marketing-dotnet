@@ -10,8 +10,8 @@ namespace Maropost.Api
 {
     public class RelationalTableRows : _BaseApi
     {
-        public RelationalTableRows(int accountId, string authToken, string tableName, HttpClient httpClient)
-            : base(accountId, authToken, tableName, httpClient) { }
+        public RelationalTableRows(int accountId, string authToken, string tableName, HttpClient httpClient, string baseUrl = null)
+            : base(accountId, authToken, tableName, httpClient, baseUrl) { }
         /// <summary>
         /// Gets the record from the relational table
         /// </summary>
@@ -29,8 +29,10 @@ namespace Maropost.Api
         /// <returns></returns>
         public IOperationResult<dynamic> Show(string idFieldName, string idFieldVlaue)
         {
-            var keyValuePair = new KeyValueList { { idFieldName, idFieldVlaue } };
-            var result = base.Post("show", null, keyValuePair);
+            var fieldValuePair = new ExpandoObject() as IDictionary<string, object>;
+            fieldValuePair.Add(idFieldName, idFieldVlaue);
+            var record = new { record = fieldValuePair };
+            var result = base.Post("show", null, record);
             return result;
         }
         /// <summary>
@@ -38,7 +40,7 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="keyValues">list of field name/values for the record to be updated</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Create(IList<KeyValuePair<string, object>> keyValues)
+        public IOperationResult<dynamic> Create(IDictionary<string, object> keyValues)
         {
             var records = new ExpandoObject() as IDictionary<string, object>;
             foreach (var keyValue in keyValues)
@@ -57,7 +59,7 @@ namespace Maropost.Api
         /// NOTE: Any datetime strings must be in on of the three formats: "MM/dd/yyyy", "yyyy-MM-dd" or "yyyy-MM-ddThh:mm:ssTZD"
         /// </param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Update(IList<KeyValuePair<string, object>> keyValues)
+        public IOperationResult<dynamic> Update(IDictionary<string, object> keyValues)
         {
             var records = new ExpandoObject() as IDictionary<string, object>;
             foreach (var keyValue in keyValues)
@@ -76,7 +78,7 @@ namespace Maropost.Api
         /// NOTE: Any datetime strings must be in on of the three formats: "MM/dd/yyyy", "yyyy-MM-dd" or "yyyy-MM-ddThh:mm:ssTZD"
         /// </param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Upsert(IList<KeyValuePair<string, object>> keyValues)
+        public IOperationResult<dynamic> Upsert(IDictionary<string, object> keyValues)
         {
             var records = new ExpandoObject() as IDictionary<string, object>;
             foreach (var keyValue in keyValues)

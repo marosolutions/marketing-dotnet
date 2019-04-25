@@ -127,7 +127,7 @@ namespace Maropost.Api
                 emailRecord.Add("content_id", contentId);
                 contentFlag = 1;//contentId provided
             }
-            if (string.IsNullOrEmpty(contentHtmlPart) || string.IsNullOrEmpty(contentTextPart) || string.IsNullOrEmpty(contentName))
+            if (!string.IsNullOrEmpty(contentHtmlPart) || !string.IsNullOrEmpty(contentTextPart) || !string.IsNullOrEmpty(contentName))
             {
                 emailRecord.Add("content", new
                 {
