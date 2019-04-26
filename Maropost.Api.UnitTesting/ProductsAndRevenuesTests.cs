@@ -82,7 +82,7 @@ namespace Maropost.Api.UnitTesting
             var addTags = new[] { "tag_name1", "tag_name2" };
             var removeTags = new[] { "rm_tag_name1", "rm_tag_name2" };
             //Act
-            var result = api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems, customField, addTags, removeTags, "abcd", "12,13", "1234");
+            var result = api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems/*, customField, addTags, removeTags, "abcd", "12,13", "1234"*/);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));

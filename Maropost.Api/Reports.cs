@@ -17,11 +17,22 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="id">report ID</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Get(int id)
+        public IOperationResult<dynamic> Get(int page)
+        {
+            var result = base.Get("", new KeyValueList { { "page", $"{page}" } });
+            return result;
+        }
+        /// <summary>
+        /// Gets the list of reports by report id
+        /// </summary>
+        /// <param name="id">report id</param>
+        /// <returns></returns>
+        public IOperationResult<dynamic> GetReport(int id)
         {
             var result = base.Get($"{id}");
             return result;
         }
+
         /// <summary>
         /// Gets the list of open reports based on filters and fields provided
         /// </summary>
@@ -35,7 +46,7 @@ namespace Maropost.Api
         /// <param name="per">determines how many records per request to receive</param>
         /// <returns></returns>
         public IOperationResult<dynamic> GetOpens(int page,
-                                                  object[] fields,
+                                                  object[] fields = null,
                                                   DateTime? from = null,
                                                   DateTime? to = null,
                                                   bool? unique = null,

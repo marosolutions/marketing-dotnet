@@ -392,77 +392,91 @@ The specific APIs contained are:
 
 ### Available methods:
 
- - `getOrder(int $id)`
+ - `public IOperationResult<dynamic> GetOrder(int id)`
      * Gets the specified order
- - `getOrderForOriginalOrderId(string $originalOrderId)`
+ - `public IOperationResult<dynamic> GetOrderForOriginalOrderId(string originalOrderId)`
      * Gets the specified order
 
- - `createOrder(bool $requireUnique, string $contactEmail, string $contactFirstName, string $contactLastName,
-                string $orderDateTime, string $orderStatus, string $originalOrderId, array $orderItems,
-                array $customFields = null, array $addTags = null, array $removeTags = null,
-                string $uid = null, string $listIds = null, string $grandTotal = null,
-                int $campaignId = null, string $couponCode = null)`
+ - `public IOperationResult<dynamic> CreateOrder(bool requireUnique,`
+                                                `string contactEmail,`
+                                                `string contactFirstName,`
+                                                `string contactLastName,`
+                                                `string orderDateTime,`
+                                                `string orderStatus,`
+                                                `string originalOrderId,`
+                                                `OrderItemInput[] orderItems,`
+                                                `object customFields = null,`
+                                                `object[] addTags = null,`
+                                                `object[] removeTags = null,`
+                                                `string uid = null,`
+                                                `string listIds = null,`
+                                                `string grandTotal = null,`
+                                                `int? campaignId = null,`
+                                                `string couponCode = null)`
      * Creates an order
-     * `$requireUnique`: true to validate that the order has a unique original_order_id for the given contact.
-     * `$contactEmail`
-     * `$contactFirstName`
-     * `$contactLastName`
-     * `$orderDateTime`: uses the format: "YYYY-MM-DDTHH:MM:SS-05:00"
-     * `$orderStatus`
-     * `$originalOrderId`: sets the original_order_id field
-     * `$orderItems` an array of \Maropost\Api\InputTypes\OrderItemInput objects.
-     * `$customFields` associative array where the key (string) represents the field name and the value is the field value
-     * `$addTags` simple array of tags to add (scalar values)
-     * `$removeTags` simple array of tags to remove (scalar values)
-     * `$uid`
-     * `$listIds` CSV list of IDs (e.g, "12,13")
-     * `$grandTotal`
-     * `$campaignId`
-     * `$couponCode`
+     - `requireUnique`: true to validate that the order has a unique original_order_id for the given contact.
+     - `contactEmail`: email address of contact
+     - `contactFirstName`: first name of contact
+     - `contactLastName`: last name of contact
+     - `orderDateTime`: uses the format: "YYYY-MM-DDTHH:MM:SS-05:00"
+     - `orderStatus`: status of order
+     - `originalOrderId`: sets the original_order_id field
+     - `orderItems` an array of \Maropost\Api\InputTypes\OrderItemInput objects.
+     - `customFields` associative array where the key (string) represents the field name and the value is the field value
+     - `addTags` simple array of tags to add (scalar values)
+     - `removeTags` simple array of tags to remove (scalar values)
+     - `uid`: unique id
+     - `listIds` CSV list of IDs (e.g, "12,13")
+     - `grandTotal`: grand total
+     - `campaignId`: campaign id
+     - `couponCode`: coupon code
 
- - `updateOrderForOriginalOrderId(string $originalOrderId, string $orderDateTime, string $orderStatus,
-                                  array $orderItems, int $campaignId = null, string $couponCode = null)`
-     * Updates an existing eCommerce order using unique original_order_id if the details are changed due to partial
-      return or some other update.
-     * `$originalOrderId`: matches the original_order_id field of the order
-     * `$orderDateTime`: uses the format: YYYY-MM-DDTHH:MM:SS-05:00
-     * `$orderStatus`
-     * `$orderItems`: restates the orderItems as as array of OrderItemInput objects.
-     * `$campaignId`
-     * `$couponCode`
+ - `public IOperationResult<dynamic> UpdateOrderForOriginalOrderId(string originalOrderId,`
+                                                                  `string orderDateTime,`
+                                                                  `string orderStatus,`
+                                                                  `object[] orderItems,`
+                                                                  `int? campaignId = null,`
+                                                                  `string couponCode = null)`
+     * Updates an existing eCommerce order using unique original_order_id if the details are changed due to partial return or some other update.
+     - `originalOrderId`: matches the original_order_id field of the order
+     - `orderDateTime`: uses the format: YYYY-MM-DDTHH:MM:SS-05:00
+     - `orderStatus`: order status
+     - `orderItems`: campaign id
+     - `couponCode`: coupon code
 
- - `updateOrderForOrderId(int $orderId, string $orderDateTime, string $orderStatus,
-                          array $orderItems, int $campaignId = null, string $couponCode = null)`
-     * Updates an existing eCommerce order using unique order_id if the details are changed due to partial return or
-     * some other update.
-     * `$orderId`: matches the Maropost order_id field of the order
-     * `$orderDateTime`: uses the format: YYYY-MM-DDTHH:MM:SS-05:00
-     * `$orderStatus`
-     * `$orderItems`: restates the orderItems as as array of OrderItemInput objects.
-     * `$campaignId`
-     * `$couponCode`
+ - `public IOperationResult<dynamic> UpdateOrderForOrderId(int orderId,`
+                                                          `string orderDateTime,`
+                                                          `string orderStatus,`
+                                                          `object[] orderItems,`
+                                                          `int? campaignId = null,`
+                                                          `string couponCode = null)`
+     * Updates an existing eCommerce order using unique order_id if the details are changed due to partial return or some other update.
+     - `orderId`: matches the Maropost order_id field of the order
+     - `orderDateTime`: uses the format: YYYY-MM-DDTHH:MM:SS-05:00
+     - `orderStatus`: order status
+     - `orderItems`: restates the orderItems as as array of OrderItemInput objects.
+     - `campaignId`: campaign id
+     - `couponCode`: coupon code
     
- - `deleteForOriginalOrderId(string $originalOrderId)`
-     * Deletes the complete eCommerce order if the order is cancelled or 
-     returned
-     * `$originalOrderId` matches the original_order_id field of the order
+ - `public IOperationResult<dynamic> DeleteForOriginalOrderId(string originalOrderId)`
+     * Deletes the complete eCommerce order if the order is cancelled or returned
+     - `$originalOrderId` matches the original_order_id field of the order
 
- - `deleteForOrderId(int $id)`
-     * Deletes the complete eCommerce order if the order is cancelled or 
-     returned using Maropost order id
-     * `$id`: Maropost order_id
+ - `public IOperationResult<dynamic> DeleteForOrderId(int id)`
+     * Deletes the complete eCommerce order if the order is cancelled or returned using Maropost order id
+     - `id`: Maropost order_id
 
- - `deleteProductsForOriginalOrderId(string $originalOrderId, array $productIds)`
-     * Deletes the specified product(s) from a complete eCommerce order if 
-     the product(s) is cancelled or returned
-     * `$originalOrderId`: matches the original_order_id field of the order
-     * `$productIds`: the product(s) to delete from the order
+ - `public IOperationResult<dynamic> DeleteProductsForOriginalOrderId(string originalOrderId,`
+                                                                     `object[] productIds)`
+     * Deletes the specified product(s) from a complete eCommerce order if the product(s) is cancelled or returned
+     - `originalOrderId`: matches the original_order_id field of the order
+     - `productIds`: the product(s) to delete from the order
 
- - `deleteProductsForOrderId(int $id, array $productIds)`
-     * Deletes the specified product(s) from a complete eCommerce order if 
-     the product(s) is cancelled or returned
-     * `$id`: Maropost order_id
-     * `$productIds`: the product(s) to delete from the order
+ - `public IOperationResult<dynamic> DeleteProductsForOrderId(int id,`
+                                                             `object[] productIds)`
+     * Deletes the specified product(s) from a complete eCommerce order if the product(s) is cancelled or returned
+     - `id`: Maropost order_id
+     - `productIds`: the product(s) to delete from the order
 
 ## Relational Tables
 

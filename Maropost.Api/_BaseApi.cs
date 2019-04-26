@@ -45,7 +45,7 @@ namespace Maropost.Api
 
         private string GetQueryString(IEnumerable<KeyValuePair<string, object>> keyValuePairs)
         {
-            string queryStr = $"?auth_token={AuthToken}";
+            string queryStr = string.IsNullOrEmpty(AuthToken) ? "" : $"?auth_token={AuthToken}";
             if (keyValuePairs != null)
             {
                 foreach (var keyValuePair in keyValuePairs)
