@@ -388,7 +388,7 @@ The specific APIs contained are:
 
 ### Instantiation:
 
-    new Maropost.Api.ProductAndRevenue($myAccountId, $myAuthToken)
+    new Maropost.Api.ProductsAndRevenues(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
 
@@ -484,7 +484,7 @@ The specific APIs contained are:
 Unlike the other services, the constructor for this requires a third
 parameter: `tableName`. So for example:
 
-    new Maropost.Api.RelationalTableRows(accountId, authToken, tableName, httpClient, baseUrl);
+    new Maropost.Api.RelationalTableRows(int accountId, string authToken, string tableName, HttpClient httpClient, string baseUrl = null)
 
 `tableName` sets which relational table the service's operations should act against.
 To switch tables, you do not need to re-instantiate the service.
@@ -538,7 +538,7 @@ To switch tables, you do not need to re-instantiate the service.
 
 ### Instantiation:
 
-    new Maropost.Api.Reports(accountId, $authToken, httpClient)
+    new Maropost.Api.Reports(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
  - `public IOperationResult<dynamic> Get(int page)`
