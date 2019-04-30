@@ -482,192 +482,176 @@ The specific APIs contained are:
 
 ### Instantiation:
 Unlike the other services, the constructor for this requires a third
-parameter: `$tableName`. So for example:
+parameter: `tableName`. So for example:
 
-    $svc = new Maropost.Api.RelationalTables($myAccountId, $myAuthToken, $tableName);
+    new Maropost.Api.RelationalTableRows(accountId, authToken, tableName, httpClient, baseUrl);
 
-`$tableName` sets which relational table the service's operations should act against.
-To switch tables, you do not need to re-instantiate the service. Instead,
-you can call
-
-    $svc->_setTableName($newTableName);
-
-You can also call `_getTableName()` to determine which table is currently
-set.
+`tableName` sets which relational table the service's operations should act against.
+To switch tables, you do not need to re-instantiate the service.
+`baseUrl` is nullable.
 
 ### Available functions:
 
- - `get()`
+ - `public IOperationResult<dynamic> Get()`
      * Gets the records of the Relational Table
 
- - `show(int $id)`
+ - `public IOperationResult<dynamic> Show(string idFieldName, string idFieldVlaue)`
      * Gets the specified record from the Relational Table
-     * `$id`: ID of the existing record you wish to read
+     * `id`: ID of the existing record you wish to read
 
- - `create(KeyValue... $keyValues)`
+ - `public IOperationResult<dynamic> Create(IDictionary<string, object> keyValues)`
      * Adds a record to the Relational Table
-     * `...$keyValues`: Multiple `Maropost.Api.InputTypes.KeyValue` objects, for the
+     * `keyValues`: Multiple `Dictionary<stringm object>` objects, for the
      record to be created, each item consisting of two fields:
-       - `$key`: string representing the name of the field
-       - `$value`: scalar value representing the new value for the field.
+       - `key`: string representing the name of the field
+       - `value`: scalar value representing the new value for the field.
          - Any DateTime strings must be in one of three formats: "MM/DD/YYYY", 
          "YYYY-MM-DD", or "YYYY-MM-DDThh:mm:ssTZD".
        - NOTE: One of the KeyValues must represent the unique identifier.
 
- - `update(KeyValue... $keyValues)`
+ - `public IOperationResult<dynamic> Update(IDictionary<string, object> keyValues)`
      * Updates a record in the Relational Table.
-     * `...$keyValues`: Multiple `Maropost.Api.InputTypes.KeyValue` objects, for the
-     record to be updated, each item consisting of two fields:
-       - `$key`: string representing the name of the field
-       - `$value`: scalar value representing the new value for the field.
+     * `keyValues`: Multiple `Dictionary<stringm object>` objects, for the
+     record to be created, each item consisting of two fields:
+       - `key`: string representing the name of the field
+       - `value`: scalar value representing the new value for the field.
          - Any DateTime strings must be in one of three formats: "MM/DD/YYYY", 
          "YYYY-MM-DD", or "YYYY-MM-DDThh:mm:ssTZD".
        - NOTE: One of the KeyValues must represent the unique identifier.
 
- - `upsert(KeyValue... $keyValues)`
+ - `public IOperationResult<dynamic> Upsert(IDictionary<string, object> keyValues)`
      * Creates or updates a record in the Relational Table.
-     * `...$keyValues`: Multiple `Maropost.Api.InputTypes.KeyValue` objects, for the
-     record to be created or updated, each item consisting of two fields:
-       - `$key`: string representing the name of the field
-       - `$value`: scalar value representing the new value for the field.
+     * `keyValues`: Multiple `Dictionary<stringm object>` objects, for the
+     record to be created, each item consisting of two fields:
+       - `key`: string representing the name of the field
+       - `value`: scalar value representing the new value for the field.
          - Any DateTime strings must be in one of three formats: "MM/DD/YYYY", 
          "YYYY-MM-DD", or "YYYY-MM-DDThh:mm:ssTZD".
        - NOTE: One of the KeyValues must represent the unique identifier.
 
- - `delete(int $idFieldName, $idFieldValue)`
+ - `public IOperationResult<dynamic> Delete(string idField, object idFieldValue)`
      * Deletes the given record of the Relational Table
-     * `$idFieldName` name of the field representing the unique identifier (E.g., "id", "email")
+     * `$idField` name of the field representing the unique identifier (E.g., "id", "email")
      * `$idFieldValue` value of the identifier field, for the record to delete.
 
 ## Reports
 
 ### Instantiation:
 
-    new Maropost.Api.Reports($myAccountId, $myAuthToken)
+    new Maropost.Api.Reports(accountId, $authToken, httpClient)
 
 ### Available methods:
- - `get(int $page)`
+ - `public IOperationResult<dynamic> Get(int page)`
    - returns the list of reports
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
+   - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `getReport(int $id)`
+ - `public IOperationResult<dynamic> GetReport(int id)`
    - Gets the list of reports
-   - `$id`: report ID
+   - `id`: report ID
 
- - `getOpens(
-        int $page,
-        array $fields = [],
-        string $from = null,
-        string $to = null,
-        bool $unique = null,
-        string $email = null,
-        string $uid = null,
-        int $per = null
-    )`
+ - `public IOperationResult<dynamic> GetOpens(int page,`
+                                             `object[] fields = null,`
+                                             `DateTime? from = null,`
+                                             `DateTime? to = null,`
+                                             `bool? unique = null,`
+                                             `string email = null,`
+                                             `string uid = null,`
+                                             `int? per = null)`
    * returns the list of open reports based on filters and fields provided
-   - `$page`: page # (>= 1). Up to 200 records returned per page.
-   * `$fields`: contact field names to retrieve
-   * `$from`: the beginning of date range filter
-   * `$to`: the end of the date range filter
-   * `$unique`: when true, gets only unique opens
-   * `$email`: filters by provided email in the contact
-   * `$uid`: filters by uid
-   * `$per`: determines how many records per request to receive
+   - `page`: page # (>= 1). Up to 200 records returned per page.
+   * `fields`: contact field names to retrieve
+   * `from`: the beginning of date range filter
+   * `to`: the end of the date range filter
+   * `unique`: when true, gets only unique opens
+   * `email`: filters by provided email in the contact
+   * `uid`: filters by uid
+   * `per`: determines how many records per request to receive
 
- - `getClicks(
-        int $page,
-        array $fields = [],
-        string $from = null,
-        string $to = null,
-        bool $unique = null,
-        string $email = null,
-        string $uid = null,
-        int $per = null
-    )`
+ - `public IOperationResult<dynamic> GetClicks(int page,`
+                                              `object[] fields = null,`
+                                              `DateTime? from = null,`
+                                              `DateTime? to = null,`
+                                              `bool? unique = null,`
+                                              `string email = null,`
+                                              `string uid = null,`
+                                              `int? per = null)`
    * returns the list of click reports
-   * `$page`: page # (>= 1). Up to 200 records returned per page.
-   * `$fields`: plucks these contact fields if they exist
-   * `$from`: start of specific date range filter
-   * `$to`: end of date range filter
-   * `$unique`: if true, gets unique records
-   * `$email`: gets Clicks for specific email
-   * `$uid`: gets Clicks for provided uid
-   * `$per`: gets the specified number of records
+   * `page`: page # (>= 1). Up to 200 records returned per page.
+   * `fields`: plucks these contact fields if they exist
+   * `from`: start of specific date range filter
+   * `to`: end of date range filter
+   * `unique`: if true, gets unique records
+   * `email`: gets Clicks for specific email
+   * `uid`: gets Clicks for provided uid
+   * `per`: gets the specified number of records
 
- - `getBounces(
-        int $page,
-        array $fields = [],
-        string $from = null,
-        string $to = null,
-        bool $unique = null,
-        string $email = null,
-        string $uid = null,
-        string $type = null,
-        int $per = null
-    )`
+ - `public IOperationResult<dynamic> GetBounce(int page,`
+                                              `object[] fields = null,`
+                                              `DateTime? from = null,`
+                                              `DateTime? to = null,`
+                                              `bool? unique = null,`
+                                              `string email = null,`
+                                              `string uid = null,`
+                                              `string type = null,`
+                                              `int? per = null)`
    * returns the list of bounce reports
-   * `$page`: page # (>= 1). Up to 200 records returned per page.
-   * `$fields`: plucks these contact fields if they exist
-   * `$from`: start of specific date range filter
-   * `$to`: end of date range filter
-   * `$unique`: if true, gets unique records
-   * `$email`: gets Bounces for specific email
-   * `$uid`: gets Bounces for provided uid
-   * `$per`: gets the specified number of records
+   * `page`: page # (>= 1). Up to 200 records returned per page.
+   * `fields`: plucks these contact fields if they exist
+   * `from`: start of specific date range filter
+   * `to`: end of date range filter
+   * `unique`: if true, gets unique records
+   * `email`: gets Bounces for specific email
+   * `uid`: gets Bounces for provided uid
+   * `per`: gets the specified number of records
 
- - `getUnsubscribes(
-        int $page,
-        array $fields = [],
-        string $from = null,
-        string $to = null,
-        bool $unique = null,
-        string $email = null,
-        string $uid = null,
-        int $per = null
-    )`
+ - ` public IOperationResult<dynamic> GetUnsubscribes(int page,`
+                                                     `object[] fields = null,`
+                                                     `DateTime? from = null,`
+                                                     `DateTime? to = null,`
+                                                     `bool? unique = null,`
+                                                     `string email = null,`
+                                                     `string uid = null,`
+                                                     `int? per = null)`
    * returns the list of Unsubscribes with provided filter constraints
-   * `$page`: page # (>= 1). Up to 200 records returned per page.
-   * `$fields`: plucks these contact fields if they exist
-   * `$from`: start of specific date range filter
-   * `$to`: end of date range filter
-   * `$unique` if true, gets unique records
-   * `$email` gets Unsubscribes for specific email
-   * `$uid` gets Unsubscribes for provided uid
-   * `$per` gets the specified number of records
+   * `page`: page # (>= 1). Up to 200 records returned per page.
+   * `fields`: plucks these contact fields if they exist
+   * `from`: start of specific date range filter
+   * `to`: end of date range filter
+   * `unique` if true, gets unique records
+   * `email` gets Unsubscribes for specific email
+   * `uid` gets Unsubscribes for provided uid
+   * `per` gets the specified number of records
 
- - `getComplaints(
-        array $fields = [],
-        string $from = null,
-        string $to = null,
-        bool $unique = null,
-        string $email = null,
-        string $uid = null,
-        int $per = null
-    )`
+ - `public IOperationResult<dynamic> GetComplaints(int page,`
+                                                  `object[] fields = null,`
+                                                  `DateTime? from = null,`
+                                                  `DateTime? to = null,`
+                                                  `bool? unique = null,`
+                                                  `string email = null,`
+                                                  `string uid = null,`
+                                                  `int? per = null)`
    * returns the list of complaints filtered by provided params
-   * `$page`: page # (>= 1). Up to 200 records returned per page.
-   * `$fields`: plucks these contact fields if they exist
-   * `$from`: start of specific date range filter
-   * `$to`: end of date range filter
-   * `$unique`: if true, gets unique records
-   * `$email`: gets Complaints for specific email
-   * `$uid`: gets Complaints for provided uid
-   * `$per`: gets the specified number of records
+   * `page`: page # (>= 1). Up to 200 records returned per page.
+   * `fields`: plucks these contact fields if they exist
+   * `from`: start of specific date range filter
+   * `to`: end of date range filter
+   * `unique`: if true, gets unique records
+   * `email`: gets Complaints for specific email
+   * `uid`: gets Complaints for provided uid
+   * `per`: gets the specified number of records
 
- - `getAbReports(
-        string $name,
-        int $page,
-        string $from = null,
-        string $to = null,
-        int $per = null
-    )`
+ - ` public IOperationResult<dynamic> GetAbReports(string name,`
+                                                  `int page,`
+                                                  `DateTime? from = null,`
+                                                  `DateTime? to = null,`
+                                                  `int? per = null)`
    * returns the list of Ab Reports
-   * `$name`: to get ab_reports with mentioned name
-   * `$page`: page # (>= 1). Up to 200 records returned per page.
-   * `$from`: beginning of date range filter
-   * `$to`: end of date range filter
-   * `$per`: gets the mentioned number of reports
+   * `name`: to get ab_reports with mentioned name
+   * `page`: page # (>= 1). Up to 200 records returned per page.
+   * `from`: beginning of date range filter
+   * `to`: end of date range filter
+   * `per`: gets the mentioned number of reports
 
- - `getJourneys(int $page)`
+ - `public IOperationResult<dynamic> GetJourney(int page)`
    * returns the list of all Journeys
-   * `$page`: page # (>= 1). Up to 200 records returned per page.
+   * `page`: page # (>= 1). Up to 200 records returned per page.

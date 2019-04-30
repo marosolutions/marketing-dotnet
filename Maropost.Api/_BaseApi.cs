@@ -1,9 +1,6 @@
 ﻿using Maropost.Api.Dto;
-using Maropost.Api.Helpers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -118,7 +115,14 @@ namespace Maropost.Api
             {
                 apiResponse = HttpClient.SendAsync(request).Result;
                 var data = apiResponse.Content.ReadAsStringAsync().Result;
-                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                try
+                {
+                    responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                }
+                catch
+                {
+                    responseBody = data;
+                }   
             }
             catch (Exception e)
             {
@@ -141,7 +145,14 @@ namespace Maropost.Api
             {
                 apiResponse = HttpClient.SendAsync(request).Result;
                 var data = apiResponse.Content.ReadAsStringAsync().Result;
-                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                try
+                {
+                    responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                }
+                catch
+                {
+                    responseBody = data;
+                }
             }
             catch (Exception e)
             {

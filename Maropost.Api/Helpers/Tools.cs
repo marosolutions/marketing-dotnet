@@ -80,5 +80,15 @@ namespace Maropost.Api
             result = Regex.IsMatch(email, emailPattern, RegexOptions.IgnoreCase);
             return result;
         }
+
+        internal static bool IsScalar(this object value)
+        {
+            bool result = false;
+            if (value is string || value is double || value is int || value is bool)
+            {
+                result = true;
+            }
+            return result;
+        }
     }
 }

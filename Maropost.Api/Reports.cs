@@ -55,7 +55,7 @@ namespace Maropost.Api
                                                   int? per = null)
         {
             var opensParams = new ExpandoObject() as IDictionary<string, object>;
-            opensParams.Add("fields", string.Join(",", fields));
+            opensParams.Add("fields", fields == null ? null : string.Join(",", fields));
             opensParams.Add("from", from == null ? null : ((DateTime)from).ToString("yyyy-MM-dd"));
             opensParams.Add("to", to == null ? null : ((DateTime)to).ToString("yyyy-MM-dd"));
             opensParams.Add("unique", unique);
@@ -85,7 +85,7 @@ namespace Maropost.Api
         /// <param name="per">Gets the specified number of records</param>
         /// <returns></returns>
         public IOperationResult<dynamic> GetClicks(int page,
-                                                   object[] fields,
+                                                   object[] fields = null,
                                                    DateTime? from = null,
                                                    DateTime? to = null,
                                                    bool? unique = null,
@@ -94,7 +94,7 @@ namespace Maropost.Api
                                                    int? per = null)
         {
             var opensParams = new ExpandoObject() as IDictionary<string, object>;
-            opensParams.Add("fields", string.Join(",", fields));
+            opensParams.Add("fields", fields == null ? null : string.Join(",", fields));
             opensParams.Add("from", from == null ? null : ((DateTime)from).ToString("yyyy-MM-dd"));
             opensParams.Add("to", to == null ? null : ((DateTime)to).ToString("yyyy-MM-dd"));
             opensParams.Add("unique", unique);
@@ -125,7 +125,7 @@ namespace Maropost.Api
         /// <param name="per">Gets the specified number of records</param>
         /// <returns></returns>
         public IOperationResult<dynamic> GetBounce(int page,
-                                                   object[] fields,
+                                                   object[] fields = null,
                                                    DateTime? from = null,
                                                    DateTime? to = null,
                                                    bool? unique = null,
@@ -135,7 +135,7 @@ namespace Maropost.Api
                                                    int? per = null)
         {
             var opensParams = new ExpandoObject() as IDictionary<string, object>;
-            opensParams.Add("fields", string.Join(",", fields));
+            opensParams.Add("fields", fields == null ? null : string.Join(",", fields));
             opensParams.Add("from", from == null ? null : ((DateTime)from).ToString("yyyy-MM-dd"));
             opensParams.Add("to", to == null ? null : ((DateTime)to).ToString("yyyy-MM-dd"));
             opensParams.Add("unique", unique);
@@ -150,7 +150,7 @@ namespace Maropost.Api
             {
                 queryString.Add(new KeyValuePair<string, object>(openParam.Key, openParam.Value));
             }
-            var result = base.Get("bounce", queryString);
+            var result = base.Get("bounces", queryString);
             return result;
         }
         /// <summary>
@@ -166,7 +166,7 @@ namespace Maropost.Api
         /// <param name="per">Gets the specified number of records</param>
         /// <returns></returns>
         public IOperationResult<dynamic> GetUnsubscribes(int page,
-                                                         object[] fields,
+                                                         object[] fields = null,
                                                          DateTime? from = null,
                                                          DateTime? to = null,
                                                          bool? unique = null,
@@ -175,7 +175,7 @@ namespace Maropost.Api
                                                          int? per = null)
         {
             var opensParams = new ExpandoObject() as IDictionary<string, object>;
-            opensParams.Add("fields", string.Join(",", fields));
+            opensParams.Add("fields", fields == null ? null : string.Join(",", fields));
             opensParams.Add("from", from == null ? null : ((DateTime)from).ToString("yyyy-MM-dd"));
             opensParams.Add("to", to == null ? null : ((DateTime)to).ToString("yyyy-MM-dd"));
             opensParams.Add("unique", unique);
@@ -205,7 +205,7 @@ namespace Maropost.Api
         /// <param name="per">Gets the specified number of records</param>
         /// <returns></returns>
         public IOperationResult<dynamic> GetComplaints(int page,
-                                                       object[] fields,
+                                                       object[] fields = null,
                                                        DateTime? from = null,
                                                        DateTime? to = null,
                                                        bool? unique = null,
@@ -214,7 +214,7 @@ namespace Maropost.Api
                                                        int? per = null)
         {
             var opensParams = new ExpandoObject() as IDictionary<string, object>;
-            opensParams.Add("fields", string.Join(",", fields));
+            opensParams.Add("fields", fields == null ? null : string.Join(",", fields));
             opensParams.Add("from", from == null ? null : ((DateTime)from).ToString("yyyy-MM-dd"));
             opensParams.Add("to", to == null ? null : ((DateTime)to).ToString("yyyy-MM-dd"));
             opensParams.Add("unique", unique);
@@ -269,7 +269,7 @@ namespace Maropost.Api
         public IOperationResult<dynamic> GetJourney(int page)
         {
             var keyValuePair = new KeyValueList { { "page", $"{page}" } };
-            var result = base.Get("journey", keyValuePair);
+            var result = base.Get("journeys", keyValuePair);
             return result;
         }
     }

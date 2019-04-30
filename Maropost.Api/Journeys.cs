@@ -56,11 +56,11 @@ namespace Maropost.Api
             {
                 keyValuePair.Add("contact_id", $"{contactId}");
             }
-            if (string.IsNullOrEmpty(recipientEmail))
+            if (!string.IsNullOrEmpty(recipientEmail))
             {
                 keyValuePair.Add("email", $"{recipientEmail}");
             }
-            if (string.IsNullOrEmpty(uid))
+            if (!string.IsNullOrEmpty(uid))
             {
                 keyValuePair.Add("uid", $"{uid}");
             }

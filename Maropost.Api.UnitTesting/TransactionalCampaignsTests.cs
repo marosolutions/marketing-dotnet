@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Maropost.Api.UnitTesting
@@ -67,7 +66,7 @@ namespace Maropost.Api.UnitTesting
             };
             //Act
             var result = api.SendEmail(SEND_CAMPAIGN_ID, null, "test content", "<h2>Custom HTML</h2>", "Test Content Text",
-                                       null, null, true, null, SEND_RECIPIENT, SEND_RECIPIENT_FIRST_NAME, SEND_RECIPIENT_LAST_NAME,
+                                       null, null, true, 1, SEND_RECIPIENT, SEND_RECIPIENT_FIRST_NAME, SEND_RECIPIENT_LAST_NAME,
                                        customFields, null, SEND_SENDER_NAME, SEND_SENDER_REPLYTO, "Test Subject", SEND_SENDER_EMAIL,
                                        "Test Sender Address", tags, new[] { "ctag1", "ctag2" });
             //Assert

@@ -157,11 +157,11 @@ namespace Maropost.Api
                 {
                     foreach (var recipientCustomField in recipientCustomFields)
                     {
-                        if (recipientCustomField.Key is string)
+                        if (!(recipientCustomField.Key is string))
                         {
                             return new OperationResult<dynamic>(null, null, "All keys in your recipientCustomFields array must be strings.");
                         }
-                        if (recipientCustomField.Value.GetType().IsPrimitive)
+                        if (!recipientCustomField.Value.IsScalar())
                         {
                             return new OperationResult<dynamic>(null, null, "All values in your recipientCustomFields array must be non-null scalars (string, float, bool, int).");
                         }
@@ -217,11 +217,11 @@ namespace Maropost.Api
             {
                 foreach (var tag in tags)
                 {
-                    if (tag.Key is string)
+                    if (!(tag.Key is string))
                     {
                         return new OperationResult<dynamic>(null, null, "All keys in your tags array must be strings.");
                     }
-                    if (tag.Value.GetType().IsPrimitive)
+                    if (!tag.Value.IsScalar())
                     {
                         return new OperationResult<dynamic>(null, null, "All values in your tags array must be non-null scalars (string, float, bool, int).");
                     }
@@ -232,7 +232,7 @@ namespace Maropost.Api
             {
                 foreach (var ctag in ctags)
                 {
-                    if (ctag.GetType().IsPrimitive)
+                    if (!ctag.IsScalar())
                     {
                         return new OperationResult<dynamic>(null, null, "All values in your ctags array must be non-null scalars (string, float, bool, int).");
                     }

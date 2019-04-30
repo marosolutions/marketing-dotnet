@@ -16,7 +16,7 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = api.Get(1);
             //Assert
-            int accountId = result.ResultData["account_id"];
+            int accountId = result.ResultData[0]["account_id"];
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
             Assert.Null(result.Exception);
@@ -79,34 +79,27 @@ namespace Maropost.Api.UnitTesting
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
             var getResult = api.Get(1);
-            int journeyId = 0, contactId = 0;
-            bool isTested = false;
-            //Act
-            foreach (var resultData in getResult.ResultData)
+            int journeyId = getResult.ResultData[0]["id"];
+            var contactResult = api.GetContacts(journeyId, 1);
+            int contactId = 0;
+            string email = "";
+            string uid = "";
+            foreach (var contact in contactResult.ResultData)
             {
-                journeyId = resultData["id"];
-                var contactResult = api.GetContacts(journeyId, 1);
-                foreach (var contact in contactResult.ResultData)
-                {
-                    contactId = resultData["contact_id"];
-                    string email = resultData["email"];
-                    string uid = resultData["uid"];
-                    var stopResult = api.StopAll(contactId, email, uid, 1);
-                    if (stopResult.Success)
-                    {
-                        //Assert
-                        Assert.True(stopResult.Success);
-                        Assert.True(string.IsNullOrEmpty(stopResult.ErrorMessage));
-                        Assert.Null(stopResult.Exception);
-                        isTested = true;
-                        break;
-                    }
-                }
-                if (isTested)
+                contactId = contact["contact_id"];
+                email = contact["email"];
+                uid = contact["uid"];
+                if (contactId > 0 && !string.IsNullOrEmpty(email))
                 {
                     break;
                 }
             }
+            //Act
+            var result = api.StopAll(contactId, email, uid, 1);
+            //Assert
+            Assert.True(result.Success);
+            Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
+            Assert.Null(result.Exception);
         }
 
         [Fact]

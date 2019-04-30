@@ -86,6 +86,7 @@ namespace Maropost.Api.UnitTesting
                 if (qtyReports > 1)
                 {
                     campaignId = testCampaignId;
+                    break;
                 }
             }
             //Act
@@ -117,6 +118,7 @@ namespace Maropost.Api.UnitTesting
                 if (qtyReports > 1)
                 {
                     campaignId = testCampaignId;
+                    break;
                 }
             }
             //Act
@@ -148,6 +150,7 @@ namespace Maropost.Api.UnitTesting
                 if (qtyReports > 1)
                 {
                     campaignId = testCampaignId;
+                    break;
                 }
             }
             //Act
@@ -241,6 +244,7 @@ namespace Maropost.Api.UnitTesting
                 if (qtyReports > 1)
                 {
                     campaignId = testCampaignId;
+                    break;
                 }
             }
             //Act
