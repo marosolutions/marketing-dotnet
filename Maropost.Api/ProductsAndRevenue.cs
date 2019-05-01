@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Maropost.Api
 {
-    public class ProductsAndRevenues : _BaseApi
+    public class ProductsAndRevenue : _BaseApi
     {
-        public ProductsAndRevenues(int accountId, string authToken, HttpClient httpClient)
+        public ProductsAndRevenue(int accountId, string authToken, HttpClient httpClient)
             : base(accountId, authToken, "orders", httpClient)
         { }
         /// <summary>

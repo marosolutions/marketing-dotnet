@@ -7,13 +7,13 @@ using Xunit;
 
 namespace Maropost.Api.UnitTesting
 {
-    public class ProductsAndRevenuesTests : _BaseTests
+    public class ProductsAndRevenueTests : _BaseTests
     {
         [Fact]
         public void GetOrder()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
@@ -38,7 +38,7 @@ namespace Maropost.Api.UnitTesting
         public void GetOrderForOriginalOrderId()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
@@ -61,7 +61,7 @@ namespace Maropost.Api.UnitTesting
         public void CreateOrder()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
@@ -83,7 +83,7 @@ namespace Maropost.Api.UnitTesting
         public void UpdateOrderForOriginalOrderId()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
@@ -106,7 +106,7 @@ namespace Maropost.Api.UnitTesting
         public void UpdateOrderForOrderId()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
@@ -131,7 +131,7 @@ namespace Maropost.Api.UnitTesting
         public void DeleteForOriginalOrderId()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
@@ -149,7 +149,7 @@ namespace Maropost.Api.UnitTesting
         public void DeleteForOrderId()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
@@ -169,7 +169,7 @@ namespace Maropost.Api.UnitTesting
         public void DeleteProductsForOriginalOrderId()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
@@ -188,7 +188,7 @@ namespace Maropost.Api.UnitTesting
         public void DeleteProductsForOrderId()
         {
             //Arrange
-            var api = new ProductsAndRevenues(AccountId, AuthToken, HttpClient);
+            var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
                                      new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
