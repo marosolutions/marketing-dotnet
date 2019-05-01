@@ -460,7 +460,7 @@ The specific APIs contained are:
     
  - `public IOperationResult<dynamic> DeleteForOriginalOrderId(string originalOrderId)`
      * Deletes the complete eCommerce order if the order is cancelled or returned
-     - `$originalOrderId` matches the original_order_id field of the order
+     - `originalOrderId` matches the original_order_id field of the order
 
  - `public IOperationResult<dynamic> DeleteForOrderId(int id)`
      * Deletes the complete eCommerce order if the order is cancelled or returned using Maropost order id
@@ -531,8 +531,8 @@ To switch tables, you do not need to re-instantiate the service.
 
  - `public IOperationResult<dynamic> Delete(string idField, object idFieldValue)`
      * Deletes the given record of the Relational Table
-     * `$idField` name of the field representing the unique identifier (E.g., "id", "email")
-     * `$idFieldValue` value of the identifier field, for the record to delete.
+     * `idField` name of the field representing the unique identifier (E.g., "id", "email")
+     * `idFieldValue` value of the identifier field, for the record to delete.
 
 ## Reports
 

@@ -14,7 +14,14 @@ namespace Maropost.Api
         protected string UrlPathRoot { get; set; }
         protected HttpClient HttpClient { get; }
         protected string BaseUrl { get; }
-
+        /// <summary>
+        /// Constructor of _BaseAPI
+        /// </summary>
+        /// <param name="accountId">account id of account currently using api</param>
+        /// <param name="authToken">authentication token of account</param>
+        /// <param name="urlPathRoot">url path to be appended on base url</param>
+        /// <param name="httpClient">http client object</param>
+        /// <param name="baseUrl">base url to be override that user wants to be used as</param>
         public _BaseApi(int accountId, string authToken, string urlPathRoot, HttpClient httpClient, string baseUrl = null)
         {
             AccountId = accountId;
@@ -23,7 +30,13 @@ namespace Maropost.Api
             HttpClient = httpClient;
             BaseUrl = baseUrl;
         }
-
+        /// <summary>
+        /// Generate url from provided override resource and resource
+        /// base url is changed if base url is provided else it uses default url
+        /// </summary>
+        /// <param name="resource">resource to be used</param>
+        /// <param name="overrideResource">part of the url to be override when provided</param>
+        /// <returns></returns>
         private string GetUrl(string resource = null, string overrideResource = null)
         {
             string url = string.IsNullOrEmpty(BaseUrl) ? $"https://api.maropost.com/accounts/{AccountId}/" : string.Format(BaseUrl, AccountId);
@@ -39,7 +52,11 @@ namespace Maropost.Api
             }
             return url;
         }
-
+        /// <summary>
+        /// Generate query string from provided key value pair
+        /// </summary>
+        /// <param name="keyValuePairs">collection of key value pair</param>
+        /// <returns></returns>
         private string GetQueryString(IEnumerable<KeyValuePair<string, object>> keyValuePairs)
         {
             string queryStr = string.IsNullOrEmpty(AuthToken) ? "" : $"?auth_token={AuthToken}";
@@ -53,10 +70,13 @@ namespace Maropost.Api
             queryStr = queryStr.Replace(' ', '+');
             return queryStr;
         }
-
         /// <summary>
+        /// Gets data from provided url and request params
         /// </summary>
-        /// <remarks>We use IEnumerable instead of Dictionary, because Dictionary builds hash table and enforces unique key, which may or may not be desirable.</remarks>
+        /// <param name="resource">resource i.e. used to append on url</param>
+        /// <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
+        /// <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
+        /// <returns></returns>
         protected IOperationResult<dynamic> Get(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, string overrideUrlPathRoot = null)
         {
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
@@ -77,7 +97,14 @@ namespace Maropost.Api
             }
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
-
+        /// <summary>
+        /// Post and execute requested operation
+        /// </summary>
+        /// <param name="resource">resource i.e. used to append on url</param>
+        /// <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
+        /// <param name="obj">object to used as request body</param>
+        /// <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
+        /// <returns></returns>
         protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
@@ -100,7 +127,14 @@ namespace Maropost.Api
             }
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
-
+        /// <summary>
+        /// Executes put operation for request url path
+        /// </summary>
+        /// <param name="resource">resource i.e. used to append on url</param>
+        /// <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
+        /// <param name="obj">object to used as request body</param>
+        /// <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
+        /// <returns></returns>
         protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
@@ -122,7 +156,7 @@ namespace Maropost.Api
                 catch
                 {
                     responseBody = data;
-                }   
+                }
             }
             catch (Exception e)
             {
@@ -130,7 +164,14 @@ namespace Maropost.Api
             }
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
-
+        /// <summary>
+        /// Executes delete operation as requested
+        /// </summary>
+        /// <param name="resource">resource i.e. used to append on url</param>
+        /// <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
+        /// <param name="obj">object to used as request body</param>
+        /// <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
+        /// <returns></returns>
         protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
