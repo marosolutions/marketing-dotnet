@@ -31,7 +31,7 @@ namespace Maropost.Api
             }
             if (accountId <= 0)
             {
-                throw new ArgumentException("accountId must be greater than 0.")
+                throw new ArgumentException("accountId must be greater than 0.");
             }
 
             AccountId = accountId;
