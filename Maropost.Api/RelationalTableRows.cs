@@ -10,6 +10,10 @@ namespace Maropost.Api
 {
     public class RelationalTableRows : _BaseApi
     {
+        /// <param name="accountId">required</param>
+        /// <param name="authToken">required</param>
+        /// <param name="httpClient">must be non-null</param>
+        /// <exception cref="ArgumentException" />
         public RelationalTableRows(int accountId, string authToken, string tableName, HttpClient httpClient, string baseUrl = null)
             : base(accountId, authToken, tableName, httpClient, baseUrl) { }
         /// <summary>

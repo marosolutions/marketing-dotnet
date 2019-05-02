@@ -8,6 +8,10 @@ namespace Maropost.Api
 {
     public class AbTestCampaigns : _BaseApi
     {
+        /// <param name="accountId">required</param>
+        /// <param name="authToken">required</param>
+        /// <param name="httpClient">must be non-null</param>
+        /// <exception cref="ArgumentException" />
         public AbTestCampaigns(int accountId, string authToken, HttpClient httpClient)
             : base(accountId, authToken, "campaigns", httpClient)
         { }

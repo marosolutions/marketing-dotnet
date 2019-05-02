@@ -11,6 +11,10 @@ namespace Maropost.Api
 {
     public class ProductsAndRevenue : _BaseApi
     {
+        /// <param name="accountId">required</param>
+        /// <param name="authToken">required</param>
+        /// <param name="httpClient">must be non-null</param>
+        /// <exception cref="ArgumentException" />
         public ProductsAndRevenue(int accountId, string authToken, HttpClient httpClient)
             : base(accountId, authToken, "orders", httpClient)
         { }

@@ -10,6 +10,10 @@ namespace Maropost.Api
 {
     public class Reports : _BaseApi
     {
+        /// <param name="accountId">required</param>
+        /// <param name="authToken">required</param>
+        /// <param name="httpClient">must be non-null</param>
+        /// <exception cref="ArgumentException" />
         public Reports(int accountId, string authToken, HttpClient httpClient)
             : base(accountId, authToken, "reports", httpClient) { }
         /// <summary>

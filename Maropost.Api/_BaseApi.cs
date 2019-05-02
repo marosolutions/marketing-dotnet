@@ -22,12 +22,22 @@ namespace Maropost.Api
         /// <param name="urlPathRoot">url path to be appended on base url</param>
         /// <param name="httpClient">http client object</param>
         /// <param name="baseUrl">base url to be override that user wants to be used as</param>
+        /// <exception cref="ArgumentException" />
         public _BaseApi(int accountId, string authToken, string urlPathRoot, HttpClient httpClient, string baseUrl = null)
         {
+            if (string.IsNullOrEmpty(authToken))
+            {
+                throw new ArgumentException("authToken must be provided.");
+            }
+            if (accountId <= 0)
+            {
+                throw new ArgumentException("accountId must be greater than 0.")
+            }
+
             AccountId = accountId;
             AuthToken = authToken;
             UrlPathRoot = urlPathRoot;
-            HttpClient = httpClient;
+            HttpClient = httpClient ?? throw new ArgumentException("httpClient must be non-null.");
             BaseUrl = baseUrl;
         }
         /// <summary>
@@ -42,7 +52,7 @@ namespace Maropost.Api
             string url = string.IsNullOrEmpty(BaseUrl) ? $"https://api.maropost.com/accounts/{AccountId}/" : string.Format(BaseUrl, AccountId);
             if (string.IsNullOrEmpty(overrideResource))
             {
-                url += string.IsNullOrEmpty(UrlPathRoot) ? "" : $"{UrlPathRoot}";
+                url += string.IsNullOrEmpty(UrlPathRoot) ? "" : UrlPathRoot;
                 url += string.IsNullOrEmpty(resource) ? "" : $"/{resource}";
             }
             else

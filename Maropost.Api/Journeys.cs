@@ -6,6 +6,10 @@ namespace Maropost.Api
 {
     public class Journeys : _BaseApi
     {
+        /// <param name="accountId">required</param>
+        /// <param name="authToken">required</param>
+        /// <param name="httpClient">must be non-null</param>
+        /// <exception cref="ArgumentException" />
         public Journeys(int accountId, string authToken, HttpClient httpClient)
             : base(accountId, authToken, "journeys", httpClient)
         { }
