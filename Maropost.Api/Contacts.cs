@@ -1,8 +1,8 @@
 ﻿using Maropost.Api.Dto;
 using Maropost.Api.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -20,10 +20,10 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="email">email address of the contact to be retrived</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetForEmail(string email)
+        public async Task<IOperationResult<dynamic>> GetForEmail(string email)
         {
             var keyValuePair = new KeyValueList { { "contact[email]", email } };
-            var result = base.Get("email", keyValuePair);
+            var result = await base.Get("email", keyValuePair);
             return result;
         }
         /// <summary>
@@ -32,10 +32,10 @@ namespace Maropost.Api
         /// <param name="contactId">contact id of a contact</param>
         /// <param name="page">total page</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetOpens(int contactId, int page)
+        public async Task<IOperationResult<dynamic>> GetOpens(int contactId, int page)
         {
             var resource = $"{contactId}/open_report";
-            var result = base.Get(resource, new KeyValueList { { "page", page.ToString() } });
+            var result = await base.Get(resource, new KeyValueList { { "page", page.ToString() } });
             return result;
         }
         /// <summary>
@@ -44,10 +44,10 @@ namespace Maropost.Api
         /// <param name="contactId">contact id of a contact</param>
         /// <param name="page">total page</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetClicks(int contactId, int page)
+        public async Task<IOperationResult<dynamic>> GetClicks(int contactId, int page)
         {
             var resource = $"{contactId}/click_report";
-            var result = base.Get(resource, new KeyValueList { { "page", page.ToString() } });
+            var result = await base.Get(resource, new KeyValueList { { "page", page.ToString() } });
             return result;
         }
         /// <summary>
@@ -56,10 +56,10 @@ namespace Maropost.Api
         /// <param name="listId">list id of a contact with in list</param>
         /// <param name="page">total page</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetForList(int listId, int page)
+        public async Task<IOperationResult<dynamic>> GetForList(int listId, int page)
         {
             var overrideResource = $"lists/{listId}";
-            var result = base.Get("contacts", new KeyValueList { { "page", page.ToString() } }, overrideResource);
+            var result = await base.Get("contacts", new KeyValueList { { "page", page.ToString() } }, overrideResource);
             return result;
         }
         /// <summary>
@@ -68,10 +68,10 @@ namespace Maropost.Api
         /// <param name="listId">list id of a contact</param>
         /// <param name="contactId">contact id of contact</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetContactForList(int listId, int contactId)
+        public async Task<IOperationResult<dynamic>> GetContactForList(int listId, int contactId)
         {
             var overrideResource = $"lists/{listId}";
-            var result = base.Get($"contacts/{contactId}", null, overrideResource);
+            var result = await base.Get($"contacts/{contactId}", null, overrideResource);
             return result;
         }
         /// <summary>
@@ -90,7 +90,7 @@ namespace Maropost.Api
         /// <param name="removeFromDNM">removeFromDNM flag</param>
         /// <param name="subscribe">subscribe flag</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> CreateOrUpdateForList(int listId,
+        public async Task<IOperationResult<dynamic>> CreateOrUpdateForList(int listId,
                                                                string email,
                                                                string firstName = null,
                                                                string lastName = null,
@@ -118,16 +118,16 @@ namespace Maropost.Api
                 subscribe
             };
             string overrideResource = $"lists/{listId}";
-            var getResult = this.GetForEmail(email);
+            var getResult = await this.GetForEmail(email);
             if (getResult.Success)
             {
                 int? contactId = getResult.ResultData["id"];
                 if (contactId != null)
                 {
-                    return base.Put($"contacts/{contactId}", null, contact, overrideResource);
+                    return await base.Put($"contacts/{contactId}", null, contact, overrideResource);
                 }
             }
-            return base.Post("contacts", null, contact, overrideResource);
+            return await base.Post("contacts", null, contact, overrideResource);
         }
         /// <summary>
         /// Update contact for selected list and contact
@@ -146,7 +146,7 @@ namespace Maropost.Api
         /// <param name="removeFromDNM">removeFromDNM flag</param>
         /// <param name="subscribe">subscribe flag</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> UpdateForListAndContact(int listId,
+        public async Task<IOperationResult<dynamic>> UpdateForListAndContact(int listId,
                                                                  string contactId,
                                                                  string email,
                                                                  string firstName = null,
@@ -175,7 +175,7 @@ namespace Maropost.Api
                 subscribe
             };
             string overrideResource = $"lists/{listId}";
-            return base.Put($"contacts/{contactId}", null, contact, overrideResource);
+            return await base.Put($"contacts/{contactId}", null, contact, overrideResource);
         }
         /// <summary>
         /// Create or update contact by email
@@ -192,7 +192,7 @@ namespace Maropost.Api
         /// <param name="removeFromDNM">removeFromDNM flag</param>
         /// <param name="subscribe">subscribe flag</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> CreateOrUpdateContact(string email,
+        public async Task<IOperationResult<dynamic>> CreateOrUpdateContact(string email,
                                                                string firstName = null,
                                                                string lastName = null,
                                                                string phone = null,
@@ -218,16 +218,16 @@ namespace Maropost.Api
                 removeFromDNM,
                 subscribe
             };
-            var getResult = this.GetForEmail(email);
+            var getResult = await this.GetForEmail(email);
             if (getResult.Success)
             {
                 int? contactId = getResult.ResultData["id"];
                 if (contactId != null)
                 {
-                    return base.Put($"{contactId}", null, contact);
+                    return await base.Put($"{contactId}", null, contact);
                 }
             }
-            return base.Post("", null, contact);
+            return await base.Post("", null, contact);
         }
         /// <summary>
         /// Create or update contact for list and workflows
@@ -247,7 +247,7 @@ namespace Maropost.Api
         /// <param name="unsubscribeWorkflowIds">array of unsubscribe work flow ids array of int</param>
         /// <param name="unsubscribeCampaign">unsubscribe campaign</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> CreateOrUpdateForListAndWorkflows(string email,
+        public async Task<IOperationResult<dynamic>> CreateOrUpdateForListAndWorkflows(string email,
                                                                            string firstName = null,
                                                                            string lastName = null,
                                                                            string phone = null,
@@ -283,26 +283,26 @@ namespace Maropost.Api
                 removeFromDNM,
                 options
             };
-            var getResult = this.GetForEmail(email);
+            var getResult = await this.GetForEmail(email);
             if (getResult.Success)
             {
                 int? contactId = getResult.ResultData["id"];
                 if (contactId != null)
                 {
-                    return base.Put($"{contactId}", null, contact);
+                    return await base.Put($"{contactId}", null, contact);
                 }
             }
-            return base.Post("", null, contact);
+            return await base.Post("", null, contact);
         }
         /// <summary>
         /// Delete contact from all provide lists
         /// </summary>
         /// <param name="email">email address of contact</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteFromAllLists(string email)
+        public async Task<IOperationResult<dynamic>> DeleteFromAllLists(string email)
         {
             var keyValuePair = new KeyValueList { { "contact[email]", email } };
-            return base.Delete("delete_all", keyValuePair);
+            return await base.Delete("delete_all", keyValuePair);
         }
         /// <summary>
         /// Delete contact from list
@@ -310,24 +310,24 @@ namespace Maropost.Api
         /// <param name="contactId">contact id of contact</param>
         /// <param name="listIds">list id of contact</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteFromLists(int contactId, int[] listIds = null)
+        public async Task<IOperationResult<dynamic>> DeleteFromLists(int contactId, int[] listIds = null)
         {
             var keyValuePair = new KeyValueList();
             if (listIds != null)
             {
                 keyValuePair.Add("list_ids", string.Join(",", listIds));
             }
-            return base.Delete($"{contactId}", keyValuePair);
+            return await base.Delete($"{contactId}", keyValuePair);
         }
         /// <summary>
         /// Delete contact for uid
         /// </summary>
         /// <param name="uid">uid of contact</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteContactForUid(string uid)
+        public async Task<IOperationResult<dynamic>> DeleteContactForUid(string uid)
         {
             var keyValuePair = new KeyValueList { { "uid", uid } };
-            return base.Delete("delete_all", keyValuePair);
+            return await base.Delete("delete_all", keyValuePair);
         }
         /// <summary>
         /// Delete list of contact from provided list id and contact
@@ -335,10 +335,10 @@ namespace Maropost.Api
         /// <param name="listId">list id of contact</param>
         /// <param name="contactId">contact id of contact</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteListContact(int listId, int contactId)
+        public async Task<IOperationResult<dynamic>> DeleteListContact(int listId, int contactId)
         {
             var overrideResource = $"lists/{listId}";
-            return base.Delete($"contacts/{contactId}", null, null, overrideResource);
+            return await base.Delete($"contacts/{contactId}", null, null, overrideResource);
         }
         /// <summary>
         /// Unsubscribe all contacts with provided field
@@ -346,10 +346,10 @@ namespace Maropost.Api
         /// <param name="contactFieldValue">field value</param>
         /// <param name="contactFieldName">field name default is email</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> UnsubscribeAll(string contactFieldValue, string contactFieldName = "email")
+        public async Task<IOperationResult<dynamic>> UnsubscribeAll(string contactFieldValue, string contactFieldName = "email")
         {
             var keyValuePair = new KeyValueList { { $"contact[{contactFieldName}]", contactFieldValue } };
-            return base.Put("unsubscribe_all", keyValuePair);
+            return await base.Put("unsubscribe_all", keyValuePair);
         }
     }
 }

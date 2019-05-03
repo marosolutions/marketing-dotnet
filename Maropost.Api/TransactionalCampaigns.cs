@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Net.Http;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -21,9 +21,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="page">page #. (>= 1)</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Get(int page)
+        public async Task<IOperationResult<dynamic>> Get(int page)
         {
-            var result = base.Get("", new KeyValueList { { "page", $"{page}" } });
+            var result = await base.Get("", new KeyValueList { { "page", $"{page}" } });
             return result;
         }
         /// <summary>
@@ -41,17 +41,17 @@ namespace Maropost.Api
         /// <param name="language">ISO 639-1 language code</param>
         /// <param name="ctags">array of campaign tags</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Create(string name,
-                                                string subject,
-                                                string preheader,
-                                                string fromName,
-                                                string fromEmail,
-                                                string replyTo,
-                                                int contentId,
-                                                bool emailPreviewLink,
-                                                string address,
-                                                string language,
-                                                object[] ctags)
+        public async Task<IOperationResult<dynamic>> Create(string name,
+                                               string subject,
+                                               string preheader,
+                                               string fromName,
+                                               string fromEmail,
+                                               string replyTo,
+                                               int contentId,
+                                               bool emailPreviewLink,
+                                               string address,
+                                               string language,
+                                               object[] ctags)
         {
             var campaign = new ExpandoObject() as IDictionary<string, object>;
             campaign.Add("name", name);
@@ -69,7 +69,7 @@ namespace Maropost.Api
                 campaign.Add("add_ctags", ctags);
             }
             var campaignObject = new { campaign };
-            var result = base.Post("", null, campaignObject);
+            var result = await base.Post("", null, campaignObject);
             return result;
         }
         /// <summary>
@@ -101,7 +101,7 @@ namespace Maropost.Api
         /// <param name="tags">associative array where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All keys must be strings. All values must be non-null scalars.</param>
         /// <param name="ctags">campaign tags. Must be a simple array of scalar values.</param>
         /// <returns>data property contains information about the newly created campaign.</returns>
-        public IOperationResult<dynamic> SendEmail(int campaignId,
+        public async Task<IOperationResult<dynamic>> SendEmail(int campaignId,
                                                    int? contentId = null,
                                                    string contentName = null,
                                                    string contentHtmlPart = null,
@@ -244,7 +244,7 @@ namespace Maropost.Api
                 emailRecord.Add("add_ctags", ctags);
             }
             var requestObj = new { email = emailRecord };
-            var result = base.Post("deliver", null, requestObj, "emails");
+            var result = await base.Post("deliver", null, requestObj, "emails");
             return result;
         }
     }

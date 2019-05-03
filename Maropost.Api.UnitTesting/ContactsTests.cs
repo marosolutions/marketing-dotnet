@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Maropost.Api.UnitTesting
@@ -8,13 +7,13 @@ namespace Maropost.Api.UnitTesting
     public class ContactsTests : _BaseTests
     {
         [Fact]
-        public void GetForList()
+        public async Task GetForList()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
             //Act
             int listId = 1;
-            var result = api.GetForList(listId, 1);
+            var result = await api.GetForList(listId, 1);
             //Assert
             int accountId = result.ResultData[0]["account_id"];
             int id = result.ResultData[0]["id"];
@@ -26,15 +25,15 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetForEmail()
+        public async Task GetForEmail()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
             int listId = 1;
-            var resultList = api.GetForList(listId, 1);
+            var resultList = await api.GetForList(listId, 1);
             string email = resultList.ResultData[0]["email"];
             //Act
-            var result = api.GetForEmail(email);
+            var result = await api.GetForEmail(email);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -48,15 +47,15 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetOpens()
+        public async Task GetOpens()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
             int listId = 1;
-            var resultList = api.GetForList(listId, 1);
+            var resultList = await api.GetForList(listId, 1);
             int contactId = resultList.ResultData[0]["id"];
             //Act
-            var result = api.GetOpens(contactId, 1);
+            var result = await api.GetOpens(contactId, 1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -69,13 +68,13 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetClicks()
+        public async Task GetClicks()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
             int contactId = 5;//TO DO
             //Act
-            var result = api.GetClicks(contactId, 1);
+            var result = await api.GetClicks(contactId, 1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -88,15 +87,15 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetContactForList()
+        public async Task GetContactForList()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
             int listId = 1;
-            var resultList = api.GetForList(listId, 1);
+            var resultList = await api.GetForList(listId, 1);
             int contactId = resultList.ResultData[0]["id"];
             //Act
-            var result = api.GetContactForList(listId, contactId);
+            var result = await api.GetContactForList(listId, contactId);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -108,7 +107,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void CreateOrUpdateForList_Create()
+        public async Task CreateOrUpdateForList_Create()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -117,12 +116,12 @@ namespace Maropost.Api.UnitTesting
             var tags = new[] { "tag1", "tag2", "tag3" };
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
             //Act
-            var createResult = api.CreateOrUpdateForList(1, email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
+            var createResult = await api.CreateOrUpdateForList(1, email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
             //Assert
             Assert.True(createResult.Success);
             Assert.True(string.IsNullOrEmpty(createResult.ErrorMessage));
             Assert.Null(createResult.Exception);
-            var getResult = api.GetForEmail(email);
+            var getResult = await api.GetForEmail(email);
             string resultEmail = getResult.ResultData["email"];
             string resultFirstName = getResult.ResultData["first_name"];
             Assert.Equal("dotnet_test_fm", resultFirstName);
@@ -130,7 +129,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void CreateOrUpdateForList_Update()
+        public async Task CreateOrUpdateForList_Update()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -140,12 +139,12 @@ namespace Maropost.Api.UnitTesting
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
             var createResult = api.CreateOrUpdateForList(1, email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
             //Act
-            var updateResult = api.CreateOrUpdateForList(1, email, "dotnet_test_fm_update", "dotnet_test_lm_update", "9999999999", "5555555555", null, customFields, tags, removeTags, true, true);
+            var updateResult = await api.CreateOrUpdateForList(1, email, "dotnet_test_fm_update", "dotnet_test_lm_update", "9999999999", "5555555555", null, customFields, tags, removeTags, true, true);
             //Assert
             Assert.True(updateResult.Success);
             Assert.True(string.IsNullOrEmpty(updateResult.ErrorMessage));
             Assert.Null(updateResult.Exception);
-            var getResult = api.GetForEmail(email);
+            var getResult = await api.GetForEmail(email);
             string resultEmail = getResult.ResultData["email"];
             string resultFirstName = getResult.ResultData["first_name"];
             string resultLastName = getResult.ResultData["last_name"];
@@ -154,7 +153,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void UpdateForListAndContact()
+        public async Task UpdateForListAndContact()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -162,15 +161,15 @@ namespace Maropost.Api.UnitTesting
             var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
             var tags = new[] { "tag1", "tag2", "tag3" };
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
-            var createResult = api.CreateOrUpdateForList(1, email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
+            var createResult = await api.CreateOrUpdateForList(1, email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
             string contactId = createResult.ResultData["id"];
             //Act
-            var updateResult = api.UpdateForListAndContact(1, $"{contactId}", email, "dotnet_test_fm_update", "dotnet_test_lm_update", "9999999999", "5555555555", null, customFields, tags, removeTags, true, true);
+            var updateResult = await api.UpdateForListAndContact(1, $"{contactId}", email, "dotnet_test_fm_update", "dotnet_test_lm_update", "9999999999", "5555555555", null, customFields, tags, removeTags, true, true);
             //Assert
             Assert.True(updateResult.Success);
             Assert.True(string.IsNullOrEmpty(updateResult.ErrorMessage));
             Assert.Null(updateResult.Exception);
-            var getResult = api.GetForEmail(email);
+            var getResult = await api.GetForEmail(email);
             string resultEmail = getResult.ResultData["email"];
             string resultFirstName = getResult.ResultData["first_name"];
             string resultLastName = getResult.ResultData["last_name"];
@@ -179,7 +178,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void CreateOrUpdateContact_Create()
+        public async Task CreateOrUpdateContact_Create()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -188,12 +187,12 @@ namespace Maropost.Api.UnitTesting
             var tags = new[] { "tag1", "tag2", "tag3" };
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
             //Act
-            var createResult = api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
+            var createResult = await api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
             //Assert
             Assert.True(createResult.Success);
             Assert.True(string.IsNullOrEmpty(createResult.ErrorMessage));
             Assert.Null(createResult.Exception);
-            var getResult = api.GetForEmail(email);
+            var getResult = await api.GetForEmail(email);
             string resultEmail = getResult.ResultData["email"];
             string resultFirstName = getResult.ResultData["first_name"];
             Assert.Equal("dotnet_test_fm", resultFirstName);
@@ -201,7 +200,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void CreateOrUpdateContact_Update()
+        public async Task CreateOrUpdateContact_Update()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -209,14 +208,14 @@ namespace Maropost.Api.UnitTesting
             var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
             var tags = new[] { "tag1", "tag2", "tag3" };
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
-            var createResult = api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
+            var createResult = await api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
             //Act
-            var updateResult = api.CreateOrUpdateContact(email, "dotnet_test_fm_update", "dotnet_test_lm_update", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
+            var updateResult = await api.CreateOrUpdateContact(email, "dotnet_test_fm_update", "dotnet_test_lm_update", "9999999999", "5555555555", null, customFields, tags, removeTags, false, false);
             //Assert
             Assert.True(updateResult.Success);
             Assert.True(string.IsNullOrEmpty(updateResult.ErrorMessage));
             Assert.Null(updateResult.Exception);
-            var getResult = api.GetForEmail(email);
+            var getResult = await api.GetForEmail(email);
             string resultEmail = getResult.ResultData["email"];
             string resultFirstName = getResult.ResultData["first_name"];
             string resultLastName = getResult.ResultData["last_name"];
@@ -226,7 +225,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void CreateOrUpdateForListAndWorkflows_Create()
+        public async Task CreateOrUpdateForListAndWorkflows_Create()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -237,12 +236,12 @@ namespace Maropost.Api.UnitTesting
             var subscribeListIds = new[] { 21, 94, 95 };
             var unsubscribeWorkflowIds = new[] { 7, 45 };
             //Act
-            var createResult = api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
+            var createResult = await api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
             //Assert
             Assert.True(createResult.Success);
             Assert.True(string.IsNullOrEmpty(createResult.ErrorMessage));
             Assert.Null(createResult.Exception);
-            var getResult = api.GetForEmail(email);
+            var getResult = await api.GetForEmail(email);
             string resultEmail = getResult.ResultData["email"];
             string resultFirstName = getResult.ResultData["first_name"];
             string resultLastName = getResult.ResultData["last_name"];
@@ -252,7 +251,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void CreateOrUpdateForListAndWorkflows_Update()
+        public async Task CreateOrUpdateForListAndWorkflows_Update()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -262,14 +261,14 @@ namespace Maropost.Api.UnitTesting
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
             var subscribeListIds = new[] { 21, 94, 95 };
             var unsubscribeWorkflowIds = new[] { 7, 45 };
-            var createResult = api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
+            var createResult = await api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
             //Act
-            var updateResult = api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm_update", "dotnet_test_lm_update", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
+            var updateResult = await api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm_update", "dotnet_test_lm_update", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
             //Assert
             Assert.True(updateResult.Success);
             Assert.True(string.IsNullOrEmpty(updateResult.ErrorMessage));
             Assert.Null(updateResult.Exception);
-            var getResult = api.GetForEmail(email);
+            var getResult = await api.GetForEmail(email);
             string resultEmail = getResult.ResultData["email"];
             string resultFirstName = getResult.ResultData["first_name"];
             string resultLastName = getResult.ResultData["last_name"];
@@ -279,7 +278,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void DeleteFromAllLists()
+        public async Task DeleteFromAllLists()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -289,10 +288,10 @@ namespace Maropost.Api.UnitTesting
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
             var subscribeListIds = new[] { 21, 94, 95 };
             var unsubscribeWorkflowIds = new[] { 7, 45 };
-            var createResult = api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
+            var createResult = await api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
             int contactId = createResult.ResultData["id"];
             //Act
-            var deleteResult = api.DeleteFromAllLists(email);
+            var deleteResult = await api.DeleteFromAllLists(email);
             //Assert
             Assert.True(deleteResult.Success);
             Assert.True(string.IsNullOrEmpty(deleteResult.ErrorMessage));
@@ -300,7 +299,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void DeleteFromLists()
+        public async Task DeleteFromLists()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -310,10 +309,10 @@ namespace Maropost.Api.UnitTesting
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
             var subscribeListIds = new[] { 21, 94, 95 };
             var unsubscribeWorkflowIds = new[] { 7, 45 };
-            var createResult = api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
+            var createResult = await api.CreateOrUpdateForListAndWorkflows(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", null, customFields, tags, removeTags, false, subscribeListIds, new int[0], unsubscribeWorkflowIds);
             int contactId = createResult.ResultData["id"];
             //Act
-            var deleteResult = api.DeleteFromLists(contactId, new[] { 1 });
+            var deleteResult = await api.DeleteFromLists(contactId, new[] { 1 });
             //Assert
             Assert.True(deleteResult.Success);
             Assert.True(string.IsNullOrEmpty(deleteResult.ErrorMessage));
@@ -321,7 +320,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void DeleteContactForUid()
+        public async Task DeleteContactForUid()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -329,11 +328,11 @@ namespace Maropost.Api.UnitTesting
             var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
             var tags = new[] { "tag1", "tag2", "tag3" };
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
-            var createResult = api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
-            var getResult = api.GetForEmail(email);
+            var createResult = await api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
+            var getResult = await api.GetForEmail(email);
             string uid = getResult.ResultData["uid"];
             //Act
-            var deleteResult = api.DeleteContactForUid(uid);
+            var deleteResult = await api.DeleteContactForUid(uid);
             //Assert
             Assert.True(deleteResult.Success);
             Assert.True(string.IsNullOrEmpty(deleteResult.ErrorMessage));
@@ -341,7 +340,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void DeleteListContact()
+        public async Task DeleteListContact()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -349,10 +348,10 @@ namespace Maropost.Api.UnitTesting
             var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
             var tags = new[] { "tag1", "tag2", "tag3" };
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
-            var createResult = api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
+            var createResult = await api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
             int contactId = createResult.ResultData["id"];
             //Act
-            var deleteResult = api.DeleteListContact(1, contactId);
+            var deleteResult = await api.DeleteListContact(1, contactId);
             //Assert
             Assert.True(deleteResult.Success);
             Assert.True(string.IsNullOrEmpty(deleteResult.ErrorMessage));
@@ -360,7 +359,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void UnsubscribeAll()
+        public async Task UnsubscribeAll()
         {
             //Arrange
             var api = new Contacts(AccountId, AuthToken, HttpClient);
@@ -368,9 +367,9 @@ namespace Maropost.Api.UnitTesting
             var customFields = new { custom_field_1 = true, custom_field_2 = "abc", custom_field_3 = 123 };
             var tags = new[] { "tag1", "tag2", "tag3" };
             var removeTags = new[] { "remove_tag1", "remove_tag2", "remove_tag3" };
-            var createResult = api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
+            var createResult = await api.CreateOrUpdateContact(email, "dotnet_test_fm", "dotnet_test_lm", "9999999999", "5555555555", "xxx123", customFields, tags, removeTags, false, false);
             //Act
-            var unsubscribeResult = api.UnsubscribeAll(email);
+            var unsubscribeResult = await api.UnsubscribeAll(email);
             //Assert
             Assert.True(unsubscribeResult.Success);
             Assert.True(string.IsNullOrEmpty(unsubscribeResult.ErrorMessage));

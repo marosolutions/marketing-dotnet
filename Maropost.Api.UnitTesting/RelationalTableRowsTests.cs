@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Maropost.Api.UnitTesting
 {
-    public class RelationalTableRowsTest : _BaseTests
+    public class RelationalTableRowsTests : _BaseTests
     {
         private string tableName = "phpunit_testing_for_api";
         private string baseUrl = "https://rdb.maropost.com/{0}/";
         [Fact]
-        public void Get()
+        public async Task Get()
         {
             //Arrange
             var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
             //Act
-            var result = api.Get();
+            var result = await api.Get();
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -24,14 +24,14 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void Show()
+        public async Task Show()
         {
             //Arrange
             var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
-            var getResult = api.Get();
+            var getResult =await api.Get();
             string email = getResult.ResultData["records"][0]["email"];
             //Act
-            var result = api.Show("email", email);
+            var result = await api.Show("email", email);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -42,7 +42,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void Create()
+        public async Task Create()
         {
             //Arrange
             var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
@@ -54,7 +54,7 @@ namespace Maropost.Api.UnitTesting
                 { "lastName", "test_lastName" }
             };
             //Act
-            var result = api.Create(keyValuePair);
+            var result = await api.Create(keyValuePair);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -65,7 +65,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void Update()
+        public async Task Update()
         {
             //Arrange
             var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
@@ -76,7 +76,7 @@ namespace Maropost.Api.UnitTesting
                 { "firstName", "test_firstName" },
                 { "lastName", "test_lastName" }
             };
-            var createResult = api.Create(keyValuePair);
+            var createResult = await api.Create(keyValuePair);
             var keyValuePairUpdate = new Dictionary<string, object>
             {
                 { "email", $"{email}" },
@@ -84,7 +84,7 @@ namespace Maropost.Api.UnitTesting
                 { "lastName", "test_lastName_update" }
             };
             //Act
-            var result = api.Update(keyValuePairUpdate);
+            var result = await api.Update(keyValuePairUpdate);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -93,7 +93,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void Upsert_Create()
+        public async Task Upsert_Create()
         {
             //Arrange
             var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
@@ -105,7 +105,7 @@ namespace Maropost.Api.UnitTesting
                 { "lastName", "test_lastName" }
             };
             //Act
-            var result = api.Upsert(keyValuePair);
+            var result = await api.Upsert(keyValuePair);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -116,7 +116,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void Upsert_Update()
+        public async Task Upsert_Update()
         {
             //Arrange
             var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
@@ -127,7 +127,7 @@ namespace Maropost.Api.UnitTesting
                 { "firstName", "test_firstName" },
                 { "lastName", "test_lastName" }
             };
-            var createResult = api.Create(keyValuePair);
+            var createResult = await api.Create(keyValuePair);
             var keyValuePairUpdate = new Dictionary<string, object>
             {
                 { "email", $"{email}" },
@@ -135,7 +135,7 @@ namespace Maropost.Api.UnitTesting
                 { "lastName", "test_lastName_update" }
             };
             //Act
-            var result = api.Upsert(keyValuePairUpdate);
+            var result = await api.Upsert(keyValuePairUpdate);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -144,7 +144,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void Delete()
+        public async Task Delete()
         {
             //Arrange
             var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
@@ -155,9 +155,9 @@ namespace Maropost.Api.UnitTesting
                 { "firstName", "test_firstName" },
                 { "lastName", "test_lastName" }
             };
-            var createResult = api.Create(keyValuePair);
+            var createResult = await api.Create(keyValuePair);
             //Act
-            var result = api.Delete("email", email);
+            var result = await api.Delete("email", email);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));

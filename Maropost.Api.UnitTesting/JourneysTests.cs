@@ -1,20 +1,17 @@
-﻿using Maropost.Api.Dto;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace Maropost.Api.UnitTesting
 {
-    public class JourneysTest : _BaseTests
+    public class JourneysTests : _BaseTests
     {
         [Fact]
-        public void Get()
+        public async Task Get()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.Get(1);
+            var result = await api.Get(1);
             //Assert
             int accountId = result.ResultData[0]["account_id"];
             Assert.True(result.Success);
@@ -24,16 +21,16 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetCampaigns()
+        public async Task GetCampaigns()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             //Act
             foreach (var resultData in getResult.ResultData)
             {
                 int journeyId = resultData["id"];
-                var result = api.GetCampaigns(journeyId, 1);
+                var result = await api.GetCampaigns(journeyId, 1);
                 //Assert
                 if (result.Success && result.ResultData.Count > 0)
                 {
@@ -48,16 +45,16 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetContacts()
+        public async Task GetContacts()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             //Act
             foreach (var resultData in getResult.ResultData)
             {
                 int journeyId = resultData["id"];
-                var result = api.GetContacts(journeyId, 1);
+                var result = await api.GetContacts(journeyId, 1);
                 //Assert
                 if (result.Success && result.ResultData.Count > 0)
                 {
@@ -74,13 +71,13 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void StopAll()
+        public async Task StopAll()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             int journeyId = getResult.ResultData[0]["id"];
-            var contactResult = api.GetContacts(journeyId, 1);
+            var contactResult = await api.GetContacts(journeyId, 1);
             int contactId = 0;
             string email = "";
             string uid = "";
@@ -95,7 +92,7 @@ namespace Maropost.Api.UnitTesting
                 }
             }
             //Act
-            var result = api.StopAll(contactId, email, uid, 1);
+            var result = await api.StopAll(contactId, email, uid, 1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -103,22 +100,22 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void PauseJourneyForContact()
+        public async Task PauseJourneyForContact()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             int journeyId = 0, contactId = 0;
             bool isTested = false;
             foreach (var resultData in getResult.ResultData)
             {
                 journeyId = resultData["id"];
-                var contactResult = api.GetContacts(journeyId, 1);
+                var contactResult = await api.GetContacts(journeyId, 1);
                 foreach (var contact in contactResult.ResultData)
                 {
                     contactId = contact["contact_id"];
                     //Act
-                    var pauseResult = api.PauseJourneyForContact(journeyId, contactId);
+                    var pauseResult = await api.PauseJourneyForContact(journeyId, contactId);
                     if (pauseResult.Success)
                     {
                         //Assert
@@ -136,22 +133,22 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void PauseJourneyForUid()
+        public async Task PauseJourneyForUid()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             int journeyId = 0;
             bool isTested = false;
             foreach (var resultData in getResult.ResultData)
             {
                 journeyId = resultData["id"];
-                var contactResult = api.GetContacts(journeyId, 1);
+                var contactResult = await api.GetContacts(journeyId, 1);
                 foreach (var contact in contactResult.ResultData)
                 {
                     string uid = resultData["uid"];
                     //Act
-                    var pauseResult = api.PauseJourneyForUid(journeyId, uid);
+                    var pauseResult = await api.PauseJourneyForUid(journeyId, uid);
                     if (pauseResult.Success)
                     {
                         //Assert
@@ -169,22 +166,22 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void ResetJourneyForContact()
+        public async Task ResetJourneyForContact()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             int journeyId = 0, contactId = 0;
             bool isTested = false;
             foreach (var resultData in getResult.ResultData)
             {
                 journeyId = resultData["id"];
-                var contactResult = api.GetContacts(journeyId, 1);
+                var contactResult = await api.GetContacts(journeyId, 1);
                 foreach (var contact in contactResult.ResultData)
                 {
                     contactId = contact["contact_id"];
                     //Act
-                    var pauseResult = api.ResetJourneyForContact(journeyId, contactId);
+                    var pauseResult = await api.ResetJourneyForContact(journeyId, contactId);
                     if (pauseResult.Success)
                     {
                         //Assert
@@ -202,22 +199,22 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void ResetJourneyForUid()
+        public async Task ResetJourneyForUid()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             int journeyId = 0;
             bool isTested = false;
             foreach (var resultData in getResult.ResultData)
             {
                 journeyId = resultData["id"];
-                var contactResult = api.GetContacts(journeyId, 1);
+                var contactResult = await api.GetContacts(journeyId, 1);
                 foreach (var contact in contactResult.ResultData)
                 {
                     string uid = resultData["uid"];
                     //Act
-                    var pauseResult = api.ResetJourneyForUid(journeyId, uid);
+                    var pauseResult = await api.ResetJourneyForUid(journeyId, uid);
                     if (pauseResult.Success)
                     {
                         //Assert
@@ -235,22 +232,22 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void StartJourneyForContact()
+        public async Task StartJourneyForContact()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             int journeyId = 0, contactId = 0;
             bool isTested = false;
             foreach (var resultData in getResult.ResultData)
             {
                 journeyId = resultData["id"];
-                var contactResult = api.GetContacts(journeyId, 1);
+                var contactResult = await api.GetContacts(journeyId, 1);
                 foreach (var contact in contactResult.ResultData)
                 {
                     contactId = contact["contact_id"];
                     //Act
-                    var pauseResult = api.StartJourneyForContact(journeyId, contactId);
+                    var pauseResult = await api.StartJourneyForContact(journeyId, contactId);
                     if (pauseResult.Success)
                     {
                         //Assert
@@ -268,22 +265,22 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void StartJourneyForUid()
+        public async Task StartJourneyForUid()
         {
             //Arrange
             var api = new Journeys(AccountId, AuthToken, HttpClient);
-            var getResult = api.Get(1);
+            var getResult = await api.Get(1);
             int journeyId = 0;
             bool isTested = false;
             foreach (var resultData in getResult.ResultData)
             {
                 journeyId = resultData["id"];
-                var contactResult = api.GetContacts(journeyId, 1);
+                var contactResult = await api.GetContacts(journeyId, 1);
                 foreach (var contact in contactResult.ResultData)
                 {
                     string uid = resultData["uid"];
                     //Act
-                    var pauseResult = api.StartJourneyForUid(journeyId, uid);
+                    var pauseResult = await api.StartJourneyForUid(journeyId, uid);
                     if (pauseResult.Success)
                     {
                         //Assert

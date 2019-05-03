@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -87,7 +88,7 @@ namespace Maropost.Api
         /// <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
         /// <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
         /// <returns></returns>
-        protected IOperationResult<dynamic> Get(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, string overrideUrlPathRoot = null)
+        protected async Task<IOperationResult<dynamic>> Get(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, string overrideUrlPathRoot = null)
         {
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -97,14 +98,14 @@ namespace Maropost.Api
             HttpResponseMessage apiResponse;
             try
             {
-                apiResponse = HttpClient.SendAsync(request).Result;
-                var data = apiResponse.Content.ReadAsStringAsync().Result;
-                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                apiResponse = await HttpClient.SendAsync(request);
             }
             catch (Exception e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
+            var data = apiResponse.Content.ReadAsStringAsync().Result;
+            responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
         /// <summary>
@@ -115,7 +116,7 @@ namespace Maropost.Api
         /// <param name="obj">object to used as request body</param>
         /// <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
         /// <returns></returns>
-        protected IOperationResult<dynamic> Post(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
+        protected async Task<IOperationResult<dynamic>> Post(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
@@ -127,14 +128,14 @@ namespace Maropost.Api
             HttpResponseMessage apiResponse;
             try
             {
-                apiResponse = HttpClient.SendAsync(request).Result;
-                var data = apiResponse.Content.ReadAsStringAsync().Result;
-                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                apiResponse = await HttpClient.SendAsync(request);
             }
-            catch (Exception e)
+            catch (HttpRequestException e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
+            var data = apiResponse.Content.ReadAsStringAsync().Result;
+            responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
         /// <summary>
@@ -145,7 +146,7 @@ namespace Maropost.Api
         /// <param name="obj">object to used as request body</param>
         /// <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
         /// <returns></returns>
-        protected IOperationResult<dynamic> Put(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
+        protected async Task<IOperationResult<dynamic>> Put(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
@@ -157,21 +158,15 @@ namespace Maropost.Api
             HttpResponseMessage apiResponse;
             try
             {
-                apiResponse = HttpClient.SendAsync(request).Result;
-                var data = apiResponse.Content.ReadAsStringAsync().Result;
-                try
-                {
-                    responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-                }
-                catch
-                {
-                    responseBody = data;
-                }
+                apiResponse = await HttpClient.SendAsync(request);
             }
             catch (Exception e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
+            var data = apiResponse.Content.ReadAsStringAsync().Result;
+            try { responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data); }
+            catch { responseBody = data; }
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
         /// <summary>
@@ -182,7 +177,7 @@ namespace Maropost.Api
         /// <param name="obj">object to used as request body</param>
         /// <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
         /// <returns></returns>
-        protected IOperationResult<dynamic> Delete(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
+        protected async Task<IOperationResult<dynamic>> Delete(string resource, IEnumerable<KeyValuePair<string, object>> querystringParams = null, object obj = null, string overrideUrlPathRoot = null)
         {
             dynamic responseBody = null;
             var url = $"{GetUrl(resource, overrideUrlPathRoot)}.json{GetQueryString(querystringParams)}";
@@ -194,21 +189,15 @@ namespace Maropost.Api
             HttpResponseMessage apiResponse;
             try
             {
-                apiResponse = HttpClient.SendAsync(request).Result;
-                var data = apiResponse.Content.ReadAsStringAsync().Result;
-                try
-                {
-                    responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-                }
-                catch
-                {
-                    responseBody = data;
-                }
+                apiResponse = await HttpClient.SendAsync(request);
             }
             catch (Exception e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
+            var data = apiResponse.Content.ReadAsStringAsync().Result;
+            try { responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data); }
+            catch { responseBody = data; }
             return new OperationResult<dynamic>(responseBody, apiResponse, "");
         }
     }

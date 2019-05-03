@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -21,9 +22,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="id">report ID</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Get(int page)
+        public async Task<IOperationResult<dynamic>> Get(int page)
         {
-            var result = base.Get("", new KeyValueList { { "page", $"{page}" } });
+            var result = await base.Get("", new KeyValueList { { "page", $"{page}" } });
             return result;
         }
         /// <summary>
@@ -31,9 +32,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="id">report id</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetReport(int id)
+        public async Task<IOperationResult<dynamic>> GetReport(int id)
         {
-            var result = base.Get($"{id}");
+            var result = await base.Get($"{id}");
             return result;
         }
 
@@ -49,7 +50,7 @@ namespace Maropost.Api
         /// <param name="uid">filters by uid</param>
         /// <param name="per">determines how many records per request to receive</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetOpens(int page,
+        public async Task<IOperationResult<dynamic>> GetOpens(int page,
                                                   object[] fields = null,
                                                   DateTime? from = null,
                                                   DateTime? to = null,
@@ -73,7 +74,7 @@ namespace Maropost.Api
             {
                 queryString.Add(new KeyValuePair<string, object>(openParam.Key, openParam.Value));
             }
-            var result = base.Get("opens", queryString);
+            var result = await base.Get("opens", queryString);
             return result;
         }
         /// <summary>
@@ -88,7 +89,7 @@ namespace Maropost.Api
         /// <param name="uid">Gets Clicks for provided uid</param>
         /// <param name="per">Gets the specified number of records</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetClicks(int page,
+        public async Task<IOperationResult<dynamic>> GetClicks(int page,
                                                    object[] fields = null,
                                                    DateTime? from = null,
                                                    DateTime? to = null,
@@ -112,7 +113,7 @@ namespace Maropost.Api
             {
                 queryString.Add(new KeyValuePair<string, object>(openParam.Key, openParam.Value));
             }
-            var result = base.Get("clicks", queryString);
+            var result = await base.Get("clicks", queryString);
             return result;
         }
         /// <summary>
@@ -128,7 +129,7 @@ namespace Maropost.Api
         /// <param name="type">Gets Bounces for specific type</param>
         /// <param name="per">Gets the specified number of records</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetBounce(int page,
+        public async Task<IOperationResult<dynamic>> GetBounce(int page,
                                                    object[] fields = null,
                                                    DateTime? from = null,
                                                    DateTime? to = null,
@@ -154,7 +155,7 @@ namespace Maropost.Api
             {
                 queryString.Add(new KeyValuePair<string, object>(openParam.Key, openParam.Value));
             }
-            var result = base.Get("bounces", queryString);
+            var result = await base.Get("bounces", queryString);
             return result;
         }
         /// <summary>
@@ -169,7 +170,7 @@ namespace Maropost.Api
         /// <param name="uid">Gets Unsubscribes for provided uid</param>
         /// <param name="per">Gets the specified number of records</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetUnsubscribes(int page,
+        public async Task<IOperationResult<dynamic>> GetUnsubscribes(int page,
                                                          object[] fields = null,
                                                          DateTime? from = null,
                                                          DateTime? to = null,
@@ -193,7 +194,7 @@ namespace Maropost.Api
             {
                 queryString.Add(new KeyValuePair<string, object>(openParam.Key, openParam.Value));
             }
-            var result = base.Get("unsubscribes", queryString);
+            var result = await base.Get("unsubscribes", queryString);
             return result;
         }
         /// <summary>
@@ -208,7 +209,7 @@ namespace Maropost.Api
         /// <param name="uid">Gets Complaints for provided uid</param>
         /// <param name="per">Gets the specified number of records</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetComplaints(int page,
+        public async Task<IOperationResult<dynamic>> GetComplaints(int page,
                                                        object[] fields = null,
                                                        DateTime? from = null,
                                                        DateTime? to = null,
@@ -232,7 +233,7 @@ namespace Maropost.Api
             {
                 queryString.Add(new KeyValuePair<string, object>(openParam.Key, openParam.Value));
             }
-            var result = base.Get("complaints", queryString);
+            var result = await base.Get("complaints", queryString);
             return result;
         }
         /// <summary>
@@ -244,7 +245,7 @@ namespace Maropost.Api
         /// <param name="to">gets the mentioned number of reports</param>
         /// <param name="per">page #. (>= 1)</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetAbReports(string name,
+        public async Task<IOperationResult<dynamic>> GetAbReports(string name,
                                                       int page,
                                                       DateTime? from = null,
                                                       DateTime? to = null,
@@ -262,7 +263,7 @@ namespace Maropost.Api
             {
                 queryString.Add(new KeyValuePair<string, object>(openParam.Key, openParam.Value));
             }
-            var result = base.Get("ab_reports", queryString);
+            var result = await base.Get("ab_reports", queryString);
             return result;
         }
         /// <summary>
@@ -270,10 +271,10 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="page">page #. (>= 1)</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetJourney(int page)
+        public async Task<IOperationResult<dynamic>> GetJourney(int page)
         {
             var keyValuePair = new KeyValueList { { "page", $"{page}" } };
-            var result = base.Get("journeys", keyValuePair);
+            var result = await base.Get("journeys", keyValuePair);
             return result;
         }
     }

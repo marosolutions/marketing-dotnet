@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Net.Http;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -20,9 +20,9 @@ namespace Maropost.Api
         /// Gets the record from the relational table
         /// </summary>
         /// <returns></returns>
-        public IOperationResult<dynamic> Get()
+        public async Task<IOperationResult<dynamic>> Get()
         {
-            var result = base.Get("");
+            var result = await base.Get("");
             return result;
         }
         /// <summary>
@@ -31,12 +31,12 @@ namespace Maropost.Api
         /// <param name="idFieldName">name of the feld representing the unique identifier (eg; id, email)</param>
         /// <param name="idFieldVlaue">value of the identifier field for the record to get</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Show(string idFieldName, string idFieldVlaue)
+        public async Task<IOperationResult<dynamic>> Show(string idFieldName, string idFieldVlaue)
         {
             var fieldValuePair = new ExpandoObject() as IDictionary<string, object>;
             fieldValuePair.Add(idFieldName, idFieldVlaue);
             var record = new { record = fieldValuePair };
-            var result = base.Post("show", null, record);
+            var result = await base.Post("show", null, record);
             return result;
         }
         /// <summary>
@@ -44,7 +44,7 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="keyValues">list of field name/values for the record to be updated</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Create(IDictionary<string, object> keyValues)
+        public async Task<IOperationResult<dynamic>> Create(IDictionary<string, object> keyValues)
         {
             var records = new ExpandoObject() as IDictionary<string, object>;
             foreach (var keyValue in keyValues)
@@ -52,7 +52,7 @@ namespace Maropost.Api
                 records.Add(keyValue.Key, keyValue.Value);
             }
             var requestRecords = new { record = records };
-            var result = base.Post("create", null, requestRecords);
+            var result = await base.Post("create", null, requestRecords);
             return result;
         }
         /// <summary>
@@ -63,7 +63,7 @@ namespace Maropost.Api
         /// NOTE: Any datetime strings must be in on of the three formats: "MM/dd/yyyy", "yyyy-MM-dd" or "yyyy-MM-ddThh:mm:ssTZD"
         /// </param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Update(IDictionary<string, object> keyValues)
+        public async Task<IOperationResult<dynamic>> Update(IDictionary<string, object> keyValues)
         {
             var records = new ExpandoObject() as IDictionary<string, object>;
             foreach (var keyValue in keyValues)
@@ -71,7 +71,7 @@ namespace Maropost.Api
                 records.Add(keyValue.Key, keyValue.Value);
             }
             var requestRecords = new { record = records };
-            var result = base.Post("update", null, requestRecords);
+            var result = await base.Post("update", null, requestRecords);
             return result;
         }
         /// <summary>
@@ -82,7 +82,7 @@ namespace Maropost.Api
         /// NOTE: Any datetime strings must be in on of the three formats: "MM/dd/yyyy", "yyyy-MM-dd" or "yyyy-MM-ddThh:mm:ssTZD"
         /// </param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Upsert(IDictionary<string, object> keyValues)
+        public async Task<IOperationResult<dynamic>> Upsert(IDictionary<string, object> keyValues)
         {
             var records = new ExpandoObject() as IDictionary<string, object>;
             foreach (var keyValue in keyValues)
@@ -90,7 +90,7 @@ namespace Maropost.Api
                 records.Add(keyValue.Key, keyValue.Value);
             }
             var requestRecords = new { record = records };
-            var result = base.Post("upsert", null, requestRecords);
+            var result = await base.Post("upsert", null, requestRecords);
             return result;
         }
         /// <summary>
@@ -99,12 +99,12 @@ namespace Maropost.Api
         /// <param name="idField">name of the field representing the unique identifier (eg; id, email)</param>
         /// <param name="idFieldValue">value of the identifier field for the record to delete</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Delete(string idField, object idFieldValue)
+        public async Task<IOperationResult<dynamic>> Delete(string idField, object idFieldValue)
         {
             var records = new ExpandoObject() as IDictionary<string, object>;
             records.Add(idField, idFieldValue);
             var requestRecords = new { record = records };
-            var result = base.Delete("delete", null, requestRecords);
+            var result = await base.Delete("delete", null, requestRecords);
             return result;
         }
     }

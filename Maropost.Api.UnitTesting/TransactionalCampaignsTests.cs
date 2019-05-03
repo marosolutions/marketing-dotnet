@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Maropost.Api.UnitTesting
@@ -16,12 +17,12 @@ namespace Maropost.Api.UnitTesting
         private const int SEND_CAMPAIGN_ID = 1;
 
         [Fact]
-        public void Get()
+        public async Task Get()
         {
             //Arrange
             var api = new TransactionalCampaigns(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.Get(1);
+            var result = await api.Get(1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -32,13 +33,13 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void Create()
+        public async Task Create()
         {
             //Arrange
             var api = new TransactionalCampaigns(AccountId, AuthToken, HttpClient);
             string campaignName = $"unitTest_name_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
             //Act
-            var result = api.Create(campaignName, "unitTest_subject", "unitTest_preheader", SEND_SENDER_NAME, SEND_SENDER_EMAIL, SEND_SENDER_REPLYTO, SEND_CONTENT_ID, false, "32 Koteshowr, Kathmandu, Nepal", "en", new[] { "tag1", "tag2" });
+            var result = await api.Create(campaignName, "unitTest_subject", "unitTest_preheader", SEND_SENDER_NAME, SEND_SENDER_EMAIL, SEND_SENDER_REPLYTO, SEND_CONTENT_ID, false, "32 Koteshowr, Kathmandu, Nepal", "en", new[] { "tag1", "tag2" });
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -50,7 +51,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void SendEmail()
+        public async Task SendEmail()
         {
             //Arrange
             var api = new TransactionalCampaigns(AccountId, AuthToken, HttpClient);
@@ -65,7 +66,7 @@ namespace Maropost.Api.UnitTesting
                 { "field2", "value2" }
             };
             //Act
-            var result = api.SendEmail(SEND_CAMPAIGN_ID, null, "test content", "<h2>Custom HTML</h2>", "Test Content Text",
+            var result = await api.SendEmail(SEND_CAMPAIGN_ID, null, "test content", "<h2>Custom HTML</h2>", "Test Content Text",
                                        null, null, true, 1, SEND_RECIPIENT, SEND_RECIPIENT_FIRST_NAME, SEND_RECIPIENT_LAST_NAME,
                                        customFields, null, SEND_SENDER_NAME, SEND_SENDER_REPLYTO, "Test Subject", SEND_SENDER_EMAIL,
                                        "Test Sender Address", tags, new[] { "ctag1", "ctag2" });
@@ -76,12 +77,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void SendEmail_BothContentIdContentFields()
+        public async Task SendEmail_BothContentIdContentFields()
         {
             //Arrange
             var api = new TransactionalCampaigns(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.SendEmail(SEND_CAMPAIGN_ID, 162, "test content", null, null, null, null, true, null, SEND_RECIPIENT, SEND_RECIPIENT_FIRST_NAME, SEND_RECIPIENT_LAST_NAME);
+            var result = await api.SendEmail(SEND_CAMPAIGN_ID, 162, "test content", null, null, null, null, true, null, SEND_RECIPIENT, SEND_RECIPIENT_FIRST_NAME, SEND_RECIPIENT_LAST_NAME);
             //Assert
             Assert.False(result.Success);
             Assert.False(string.IsNullOrEmpty(result.ErrorMessage));

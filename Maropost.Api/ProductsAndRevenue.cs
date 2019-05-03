@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Net.Http;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -23,9 +23,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="id">order id to filter</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetOrder(int id)
+        public async Task<IOperationResult<dynamic>> GetOrder(int id)
         {
-            var result = base.Get("find", new KeyValueList { { "where[id]", $"{id}" } });
+            var result = await base.Get("find", new KeyValueList { { "where[id]", $"{id}" } });
             return result;
         }
         /// <summary>
@@ -33,9 +33,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="originalOrderId">original order id to filter</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetOrderForOriginalOrderId(string originalOrderId)
+        public async Task<IOperationResult<dynamic>> GetOrderForOriginalOrderId(string originalOrderId)
         {
-            var result = base.Get(originalOrderId, null);
+            var result = await base.Get(originalOrderId, null);
             return result;
         }
         /// <summary>
@@ -58,7 +58,7 @@ namespace Maropost.Api
         /// <param name="campaignId">campaign id</param>
         /// <param name="couponCode">coupon code</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> CreateOrder(bool requireUnique,
+        public async Task<IOperationResult<dynamic>> CreateOrder(bool requireUnique,
                                                      string contactEmail,
                                                      string contactFirstName,
                                                      string contactLastName,
@@ -118,7 +118,7 @@ namespace Maropost.Api
             }
             var orderArray = new { order };
             var keyValuePair = new KeyValueList { { "unique", "true" } };
-            var result = base.Post("", keyValuePair, orderArray);
+            var result = await base.Post("", keyValuePair, orderArray);
             return result;
         }
         /// <summary>
@@ -132,7 +132,7 @@ namespace Maropost.Api
         /// <param name="campaignId">campaign id</param>
         /// <param name="couponCode">coupon code</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> UpdateOrderForOriginalOrderId(string originalOrderId,
+        public async Task<IOperationResult<dynamic>> UpdateOrderForOriginalOrderId(string originalOrderId,
                                                                        string orderDateTime,
                                                                        string orderStatus,
                                                                        object[] orderItems,
@@ -153,7 +153,7 @@ namespace Maropost.Api
                 new { order_items = orderItems }
             };
             var orderArray = new[] { order };
-            var result = base.Put(originalOrderId, null, orderArray);
+            var result = await base.Put(originalOrderId, null, orderArray);
             return result;
         }
         /// <summary>
@@ -167,7 +167,7 @@ namespace Maropost.Api
         /// <param name="campaignId">campaign id</param>
         /// <param name="couponCode">coupon code</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> UpdateOrderForOrderId(int orderId,
+        public async Task<IOperationResult<dynamic>> UpdateOrderForOrderId(int orderId,
                                                                string orderDateTime,
                                                                string orderStatus,
                                                                object[] orderItems,
@@ -189,7 +189,7 @@ namespace Maropost.Api
             };
             var orderArray = new[] { order };
             var keyValuePair = new KeyValueList { { "where[id]", $"{orderId}" } };
-            var result = base.Put("find", keyValuePair, orderArray);
+            var result = await base.Put("find", keyValuePair, orderArray);
             return result;
         }
         /// <summary>
@@ -197,9 +197,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="originalOrderId">matches the original_order_id field of the order</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteForOriginalOrderId(string originalOrderId)
+        public async Task<IOperationResult<dynamic>> DeleteForOriginalOrderId(string originalOrderId)
         {
-            var result = base.Delete(originalOrderId);
+            var result = await base.Delete(originalOrderId);
             return result;
         }
         /// <summary>
@@ -207,10 +207,10 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="id">order id</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteForOrderId(int id)
+        public async Task<IOperationResult<dynamic>> DeleteForOrderId(int id)
         {
             var keyValuePair = new KeyValueList { { "where[id]", $"{id}" } };
-            var result = base.Delete("find", keyValuePair);
+            var result = await base.Delete("find", keyValuePair);
             return result;
         }
         /// <summary>
@@ -220,7 +220,7 @@ namespace Maropost.Api
         /// <param name="originalOrderId">matches the original_order_id field of the order</param>
         /// <param name="productIds">the product(s) to delete from the order</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteProductsForOriginalOrderId(string originalOrderId,
+        public async Task<IOperationResult<dynamic>> DeleteProductsForOriginalOrderId(string originalOrderId,
                                                                           object[] productIds)
         {
             var productIdsValidate = productIds.ValidateProductIds();
@@ -229,7 +229,7 @@ namespace Maropost.Api
                 return productIdsValidate;
             }
             var keyValuePair = new KeyValueList { { "product_id", string.Join(",", productIds) } };
-            return base.Delete(originalOrderId, keyValuePair);
+            return await base.Delete(originalOrderId, keyValuePair);
         }
         /// <summary>
         /// Deletes the specified product(s) from a complete eCommerce order if the product(s) is cancelled or returned,
@@ -238,7 +238,7 @@ namespace Maropost.Api
         /// <param name="id">order id</param>
         /// <param name="productIds">the product(s) to delete from the order</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> DeleteProductsForOrderId(int id,
+        public async Task<IOperationResult<dynamic>> DeleteProductsForOrderId(int id,
                                                                   object[] productIds)
         {
             var productIdsValidate = productIds.ValidateProductIds();
@@ -247,7 +247,7 @@ namespace Maropost.Api
                 return productIdsValidate;
             }
             var keyValuePair = new KeyValueList { { "product_id", string.Join(",", productIds) }, { "where[id]", $"{id}" } };
-            return base.Delete("find", keyValuePair);
+            return await base.Delete("find", keyValuePair);
         }
     }
 }

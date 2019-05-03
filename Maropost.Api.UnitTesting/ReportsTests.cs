@@ -1,17 +1,18 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Maropost.Api.UnitTesting
 {
-    public class ReportsTest : _BaseTests
+    public class ReportsTests : _BaseTests
     {
         [Fact]
-        public void Get()
+        public async Task Get()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.Get(1);
+            var result = await api.Get(1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -20,12 +21,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetReport()
+        public async Task GetReport()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.GetReport(19);
+            var result = await api.GetReport(19);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -34,12 +35,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetOpens_WithPage()
+        public async Task GetOpens_WithPage()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.GetOpens(1);
+            var result = await api.GetOpens(1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -48,13 +49,13 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetOpens_WithFields()
+        public async Task GetOpens_WithFields()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             var fields = new[] { "email", "first_name", "last_name" };
             //Act
-            var result = api.GetOpens(1, fields);
+            var result = await api.GetOpens(1, fields);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -69,7 +70,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetOpens_WithParams()
+        public async Task GetOpens_WithParams()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
@@ -79,7 +80,7 @@ namespace Maropost.Api.UnitTesting
             var unique = true;
             var per = 4;
             //Act
-            var result = api.GetOpens(1, fields, from, to, unique, null, null, per);
+            var result = await api.GetOpens(1, fields, from, to, unique, null, null, per);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -97,12 +98,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetClicks_WithPage()
+        public async Task GetClicks_WithPage()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.GetClicks(1);
+            var result = await api.GetClicks(1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -111,13 +112,13 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetClicks_WithFields()
+        public async Task GetClicks_WithFields()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             var fields = new[] { "email", "first_name", "last_name" };
             //Act
-            var result = api.GetClicks(1, fields);
+            var result = await api.GetClicks(1, fields);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -132,7 +133,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetClicks_WithParams()
+        public async Task GetClicks_WithParams()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
@@ -143,7 +144,7 @@ namespace Maropost.Api.UnitTesting
             var per = 4;
 
             //Act
-            var result = api.GetClicks(1, fields, from, to, unique, null, null, per);
+            var result = await api.GetClicks(1, fields, from, to, unique, null, null, per);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -161,12 +162,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetBounce_WithPage()
+        public async Task GetBounce_WithPage()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.GetBounce(1);
+            var result = await api.GetBounce(1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -175,7 +176,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetBounce_WithParams()
+        public async Task GetBounce_WithParams()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
@@ -187,7 +188,7 @@ namespace Maropost.Api.UnitTesting
             var per = 4;
 
             //Act
-            var result = api.GetBounce(1, fields, from, to, unique, null, null, type, per);
+            var result = await api.GetBounce(1, fields, from, to, unique, null, null, type, per);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -199,12 +200,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetUnsubscribes_WithPage()
+        public async Task GetUnsubscribes_WithPage()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.GetUnsubscribes(1);
+            var result = await api.GetUnsubscribes(1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -213,7 +214,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetUnsubscribes_WithParams()
+        public async Task GetUnsubscribes_WithParams()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
@@ -223,7 +224,7 @@ namespace Maropost.Api.UnitTesting
             var unique = true;
             var per = 4;
             //Act
-            var result = api.GetUnsubscribes(1, fields, from, to, unique, null, null, per);
+            var result = await api.GetUnsubscribes(1, fields, from, to, unique, null, null, per);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -235,12 +236,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetComplaints_WithPage()
+        public async Task GetComplaints_WithPage()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.GetComplaints(1);
+            var result = await api.GetComplaints(1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -249,7 +250,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetComplaints_WithParams()
+        public async Task GetComplaints_WithParams()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
@@ -259,7 +260,7 @@ namespace Maropost.Api.UnitTesting
             var unique = true;
             var per = 4;
             //Act
-            var result = api.GetComplaints(1, fields, from, to, unique, null, null, per);
+            var result = await api.GetComplaints(1, fields, from, to, unique, null, null, per);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -271,12 +272,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetAbReports_WithNameAndPage()
+        public async Task GetAbReports_WithNameAndPage()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.GetAbReports("Test", 1);
+            var result = await api.GetAbReports("Test", 1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -285,7 +286,7 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetAbReports_WithParams()
+        public async Task GetAbReports_WithParams()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
@@ -293,7 +294,7 @@ namespace Maropost.Api.UnitTesting
             var to = DateTime.Parse("2018-06-28");
             var per = 4;
             //Act
-            var result = api.GetAbReports("Test", 1, from, to, per);
+            var result = await api.GetAbReports("Test", 1, from, to, per);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -305,12 +306,12 @@ namespace Maropost.Api.UnitTesting
         }
 
         [Fact]
-        public void GetJourney()
+        public async Task GetJourney()
         {
             //Arrange
             var api = new Reports(AccountId, AuthToken, HttpClient);
             //Act
-            var result = api.GetJourney(1);
+            var result = await api.GetJourney(1);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));

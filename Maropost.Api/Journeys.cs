@@ -1,6 +1,7 @@
 ﻿using Maropost.Api.Dto;
 using Maropost.Api.Helpers;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -18,9 +19,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="page">page >= 1</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Get(int page)
+        public async Task<IOperationResult<dynamic>> Get(int page)
         {
-            var result = Get(null, new KeyValueList { { "page", $"{page}" } });
+            var result = await Get(null, new KeyValueList { { "page", $"{page}" } });
             return result;
         }
         /// <summary>
@@ -29,9 +30,9 @@ namespace Maropost.Api
         /// <param name="journeyId">journeyid integer value</param>
         /// <param name="page">page >= 1</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetCampaigns(int journeyId, int page)
+        public async Task<IOperationResult<dynamic>> GetCampaigns(int journeyId, int page)
         {
-            var result = Get($"{journeyId}/journey_campaigns", new KeyValueList { { "page", $"{page}" } });
+            var result = await Get($"{journeyId}/journey_campaigns", new KeyValueList { { "page", $"{page}" } });
             return result;
         }
         /// <summary>
@@ -40,9 +41,9 @@ namespace Maropost.Api
         /// <param name="journeyId">journeyid integer value</param>
         /// <param name="page">page >= 1</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetContacts(int journeyId, int page)
+        public async Task<IOperationResult<dynamic>> GetContacts(int journeyId, int page)
         {
-            var result = Get($"{journeyId}/journey_contacts", new KeyValueList { { "page", $"{page}" } });
+            var result = await Get($"{journeyId}/journey_contacts", new KeyValueList { { "page", $"{page}" } });
             return result;
         }
         /// <summary>
@@ -53,7 +54,7 @@ namespace Maropost.Api
         /// <param name="uid">this filter is ignored if null</param>
         /// <param name="page">page >= 1</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> StopAll(int contactId, string recipientEmail, string uid, int page)
+        public async Task<IOperationResult<dynamic>> StopAll(int contactId, string recipientEmail, string uid, int page)
         {
             var keyValuePair = new KeyValueList { { "page", $"{page}" } };
             if (contactId > 0)
@@ -68,7 +69,7 @@ namespace Maropost.Api
             {
                 keyValuePair.Add("uid", $"{uid}");
             }
-            var result = base.Put("stop_all_journeys", keyValuePair);
+            var result = await base.Put("stop_all_journeys", keyValuePair);
             return result;
         }
         /// <summary>
@@ -77,9 +78,9 @@ namespace Maropost.Api
         /// <param name="journeyId">journey id of contact to pause for</param>
         /// <param name="contactId">contact id of contact to pause for</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> PauseJourneyForContact(int journeyId, int contactId)
+        public async Task<IOperationResult<dynamic>> PauseJourneyForContact(int journeyId, int contactId)
         {
-            var result = base.Put($"{journeyId}/stop/{contactId}", null);
+            var result = await base.Put($"{journeyId}/stop/{contactId}", null);
             return result;
         }
         /// <summary>
@@ -88,9 +89,9 @@ namespace Maropost.Api
         /// <param name="journeyId">journey id of contact to pause for</param>
         /// <param name="uid">uid of contact to pause for</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> PauseJourneyForUid(int journeyId, string uid)
+        public async Task<IOperationResult<dynamic>> PauseJourneyForUid(int journeyId, string uid)
         {
-            var result = base.Put($"{journeyId}/stop/uid", new KeyValueList { { "uid", $"{uid}" } });
+            var result = await base.Put($"{journeyId}/stop/uid", new KeyValueList { { "uid", $"{uid}" } });
             return result;
         }
         /// <summary>
@@ -100,9 +101,9 @@ namespace Maropost.Api
         /// <param name="journeyId">journey id of contact to reset for</param>
         /// <param name="contactId">contact id of contact to reset for</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> ResetJourneyForContact(int journeyId, int contactId)
+        public async Task<IOperationResult<dynamic>> ResetJourneyForContact(int journeyId, int contactId)
         {
-            var result = base.Put($"{journeyId}/reset/{contactId}", null);
+            var result = await base.Put($"{journeyId}/reset/{contactId}", null);
             return result;
         }
         /// <summary>
@@ -112,9 +113,9 @@ namespace Maropost.Api
         /// <param name="journeyId">journey id of contact to reset for</param>
         /// <param name="uid">uid of contact to reset for</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> ResetJourneyForUid(int journeyId, string uid)
+        public async Task<IOperationResult<dynamic>> ResetJourneyForUid(int journeyId, string uid)
         {
-            var result = base.Put($"{journeyId}/reset/uid", new KeyValueList { { "uid", $"{uid}" } });
+            var result = await base.Put($"{journeyId}/reset/uid", new KeyValueList { { "uid", $"{uid}" } });
             return result;
         }
         /// <summary>
@@ -125,9 +126,9 @@ namespace Maropost.Api
         /// <param name="journeyId">journey id of contact to restart a journey for</param>
         /// <param name="contactId">contact id of contact to restart a journey for</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> StartJourneyForContact(int journeyId, int contactId)
+        public async Task<IOperationResult<dynamic>> StartJourneyForContact(int journeyId, int contactId)
         {
-            var result = base.Put($"{journeyId}/start/{contactId}", null);
+            var result = await base.Put($"{journeyId}/start/{contactId}", null);
             return result;
         }
         /// <summary>
@@ -138,9 +139,9 @@ namespace Maropost.Api
         /// <param name="journeyId">journey id of contact to restart a journey for</param>
         /// <param name="uid">uid of contact to restart a journey for</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> StartJourneyForUid(int journeyId, string uid)
+        public async Task<IOperationResult<dynamic>> StartJourneyForUid(int journeyId, string uid)
         {
-            var result = base.Put($"{journeyId}/start/uid", new KeyValueList { { "uid", $"{uid}" } });
+            var result = await base.Put($"{journeyId}/start/uid", new KeyValueList { { "uid", $"{uid}" } });
             return result;
         }
     }

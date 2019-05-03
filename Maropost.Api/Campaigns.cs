@@ -1,6 +1,7 @@
 ﻿using Maropost.Api.Dto;
 using Maropost.Api.Helpers;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -18,9 +19,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> Get(int page)
+        public async Task<IOperationResult<dynamic>> Get(int page)
         {
-            var result = Get(null, new KeyValueList { { "page", page.ToString() } });
+            var result = await Get(null, new KeyValueList { { "page", page.ToString() } });
             return result;
         }
         /// <summary>
@@ -28,9 +29,9 @@ namespace Maropost.Api
         /// </summary>
         /// <param name="id">id of campaign to get campaign details</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetCampaign(int id)
+        public async Task<IOperationResult<dynamic>> GetCampaign(int id)
         {
-            var result = base.Get(id.ToString());
+            var result = await base.Get(id.ToString());
             return result;
         }
         /// <summary>
@@ -39,9 +40,9 @@ namespace Maropost.Api
         /// <param name="id">id of campaign to get bounce reports of campaign</param>
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetBounceReports(int id, int page)
+        public async Task<IOperationResult<dynamic>> GetBounceReports(int id, int page)
         {
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/bounce_report");
+            var result = await base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/bounce_report");
             return result;
         }
         /// <summary>
@@ -51,14 +52,14 @@ namespace Maropost.Api
         /// <param name="page">total number of pages of dta to be loaded</param>
         /// <param name="unique">determinies whether to get unique click reports</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetClickReports(int id, int page, bool? unique = null)
+        public async Task<IOperationResult<dynamic>> GetClickReports(int id, int page, bool? unique = null)
         {
             var keyValuePair = new KeyValueList { { "page", $"{page}" } };
             if (unique != null && unique == true)
             {
                 keyValuePair.Add("unique", $"{unique}");
             }
-            var result = base.Get(null, keyValuePair, $"campaigns/{id}/click_report");
+            var result = await base.Get(null, keyValuePair, $"campaigns/{id}/click_report");
             return result;
         }
         /// <summary>
@@ -67,9 +68,9 @@ namespace Maropost.Api
         /// <param name="id">id of campaign to get complaint reports of campaign</param>
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetComplaintReports(int id, int page)
+        public async Task<IOperationResult<dynamic>> GetComplaintReports(int id, int page)
         {
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/complaint_report");
+            var result = await base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/complaint_report");
             return result;
         }
         /// <summary>
@@ -78,9 +79,9 @@ namespace Maropost.Api
         /// <param name="id">id of campaign to get delivered reports of campaign</param>
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetDeliveredReports(int id, int page)
+        public async Task<IOperationResult<dynamic>> GetDeliveredReports(int id, int page)
         {
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/delivered_report");
+            var result = await base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/delivered_report");
             return result;
         }
         /// <summary>
@@ -89,9 +90,9 @@ namespace Maropost.Api
         /// <param name="id">id of campaign to get delivered reports of campaign</param>
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetHardBounceReports(int id, int page)
+        public async Task<IOperationResult<dynamic>> GetHardBounceReports(int id, int page)
         {
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/hard_bounce_report");
+            var result = await base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/hard_bounce_report");
             return result;
         }
         /// <summary>
@@ -101,14 +102,14 @@ namespace Maropost.Api
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <param name="unique">determines whether to get unique reports of campaign</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetLinkReports(int id, int page, bool? unique = null)
+        public async Task<IOperationResult<dynamic>> GetLinkReports(int id, int page, bool? unique = null)
         {
             var keyValuePair = new KeyValueList { { "page", $"{page}" } };
             if (unique != null && unique == true)
             {
                 keyValuePair.Add("unique", $"{unique}");
             }
-            var result = base.Get(null, keyValuePair, $"campaigns/{id}/link_report");
+            var result = await base.Get(null, keyValuePair, $"campaigns/{id}/link_report");
             return result;
         }
         /// <summary>
@@ -118,14 +119,14 @@ namespace Maropost.Api
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <param name="unique">determines whether to get unique reports of campaign</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetOpenReports(int id, int page, bool? unique = null)
+        public async Task<IOperationResult<dynamic>> GetOpenReports(int id, int page, bool? unique = null)
         {
             var keyValuePair = new KeyValueList { { "page", $"{page}" } };
             if (unique != null && unique == true)
             {
                 keyValuePair.Add("unique", $"{unique}");
             }
-            var result = base.Get(null, keyValuePair, $"campaigns/{id}/open_report");
+            var result = await base.Get(null, keyValuePair, $"campaigns/{id}/open_report");
             return result;
         }
         /// <summary>
@@ -134,9 +135,9 @@ namespace Maropost.Api
         /// <param name="id">id of campaign to get soft bounce reports of campaign</param>
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetSoftBounceReports(int id, int page)
+        public async Task<IOperationResult<dynamic>> GetSoftBounceReports(int id, int page)
         {
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/soft_bounce_report");
+            var result = await base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/soft_bounce_report");
             return result;
         }
         /// <summary>
@@ -145,9 +146,9 @@ namespace Maropost.Api
         /// <param name="id">id of campaign to get unsubscribe reports of campaign</param>
         /// <param name="page">total number of pages of data to be loaded</param>
         /// <returns></returns>
-        public IOperationResult<dynamic> GetUnsubscribeReports(int id, int page)
+        public async Task<IOperationResult<dynamic>> GetUnsubscribeReports(int id, int page)
         {
-            var result = base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/unsubscribe_report");
+            var result = await base.Get(null, new KeyValueList { { "page", page.ToString() } }, $"campaigns/{id}/unsubscribe_report");
             return result;
         }
     }

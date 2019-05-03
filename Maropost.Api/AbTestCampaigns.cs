@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Maropost.Api
 {
@@ -44,14 +45,14 @@ namespace Maropost.Api
         /// <param name="cTags"></param>
         /// <param name="segments"></param>
         /// <returns></returns>
-        public IOperationResult<dynamic> CreateAbTest(string name,
+        public async Task<IOperationResult<dynamic>> CreateAbTest(string name,
                                                       string fromEmail,
                                                       string replyTo,
                                                       string address,
                                                       string language,
-                                                      string campaignGroupAttributes,
+                                                      object[] campaignGroupAttributes,
                                                       string commit,
-                                                      DateTime sendAt,
+                                                      string sendAt,
                                                       int? brandId = null,
                                                       object[] suppressedListIds = null,
                                                       object[] suppressedSegmentIds = null,
@@ -81,7 +82,7 @@ namespace Maropost.Api
             records.Add("ctags", cTags);
             records.Add("segments", segments);
             records = records.DiscardNullAndEmptyValues();
-            var result = base.Post("ab_test", null, records);
+            var result = await base.Post("ab_test", null, records);
             return result;
         }
     }
