@@ -21,9 +21,9 @@ To use a service, first instantiate it, providing your Maropost AccountId
 and Auth Token. For example, to get your list of reports using the Reports
 service, execute:
 
-    var reports = new Maropost.Api.Reports(myAccountId, myAuthToken);
+    var reports = new Maropost.Api.Reports(myAccountId, myAuthToken, myHttpClient);
     var result = reports.Get();
-    if (result.isSuccess) {
+    if (result.Success) {
         myReports = result.ResultData;
     }
 
@@ -37,8 +37,8 @@ If `Success` is `false`, then `ErrorMessage` will contain information, and
 `Exception` *might* contain an exception, depending upon the reason for
 failure. If `Exception` is not `null`, then `Success` will always be `false`.
 
-The object might also contains one property, `ResultData` (dynamic), which contains whatever
-data the operation itself provides. Some operations, such as `delete()`
+The object might also contain one property, `ResultData` (dynamic), which contains whatever
+data the operation itself provides. Some operations, such as `Delete()`
 operations, might not provide any data.
 
 # Specific APIs
@@ -50,7 +50,7 @@ The specific APIs contained are:
 - [Contacts](#contacts)
 - [Journeys](#journeys)
 - [Product and Revenue](#product-and-revenue)
-- [Relational Tables](#relational-tables)
+- [Relational Table Rows](#relational-tables-rows)
 - [Reports](#reports)
 
 ## Campaigns
@@ -478,16 +478,19 @@ The specific APIs contained are:
      - `id`: Maropost order_id
      - `productIds`: the product(s) to delete from the order
 
-## Relational Tables
+## Relational Table Rows
 
 ### Instantiation:
-Unlike the other services, the constructor for this requires a third
+Unlike the other services, the constructor for this requires a fourth
 parameter: `tableName`. So for example:
 
-    new Maropost.Api.RelationalTableRows(int accountId, string authToken, HttpClient httpClient, string tableName)
+    new Maropost.Api.RelationalTableRows(myAccountId, myAuthToken, myHttpClient, "someTableName")
 
 `tableName` sets which relational table the service's operations should act against.
-To switch tables, you do not need to re-instantiate the service.
+To switch tables, you do not need to re-instantiate the service. Simply update the `TableName` property of the instance:
+
+    var rows = new Maropost.Api.RelationalTableRows(myId, myToken, myHttpClient, "table1");
+	rows.TableName = "table2";
 
 ### Available functions:
 
