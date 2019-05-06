@@ -60,48 +60,48 @@ The specific APIs contained are:
 
 ### Available methods:
 
- - `public IOperationResult<dynamic> Get(int page)`
+ - `public async Task<IOperationResult<dynamic>> Get(int page)`
    - returns the list of campaigns for the account
    - `page`: page # (>= 1). Up to 200 records returned per page.
- - `public IOperationResult<dynamic> GetCampaign(int id)`
+ - `public async Task<IOperationResult<dynamic>> GetCampaign(int id)`
    - returns the given campaign
    - `id: campaign id`
- - `public IOperationResult<dynamic> GetBounceReports(int id, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetBounceReports(int id, int page)`
    - returns the list of bounce reports for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
- - `public IOperationResult<dynamic> GetClickReports(int id, int page, bool? unique = null)`
+ - `public async Task<IOperationResult<dynamic>> GetClickReports(int id, int page, bool? unique = null)`
    - returns the list of click reports for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
    - `unique`: `true` = get for unique contacts. Otherwise, `false`. 
- - `public IOperationResult<dynamic> GetComplaintReports(int id, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetComplaintReports(int id, int page)`
    - returns the list of complaint reports for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
- - `public IOperationResult<dynamic> GetDeliveredReports(int id, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetDeliveredReports(int id, int page)`
    - returns the list of delivered reports for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
- - `public IOperationResult<dynamic> GetHardBounceReports(int id, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetHardBounceReports(int id, int page)`
    - returns the list of hard bounces for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
- - `public IOperationResult<dynamic> GetLinkReports(int id, int page, bool? unique = null)`
+ - `public async Task<IOperationResult<dynamic>> GetLinkReports(int id, int page, bool? unique = null)`
    - returns the list of link reports for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
    - `unique`: `true` = get for unique contacts. Otherwise, `false`. 
- - `public IOperationResult<dynamic> GetOpenReports(int id, int page, bool? unique = null)`
+ - `public async Task<IOperationResult<dynamic>> GetOpenReports(int id, int page, bool? unique = null)`
    - returns the list of open reports for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
    - `unique`: `true` = get for unique contacts. Otherwise, `false`. 
- - `public IOperationResult<dynamic> GetSoftBounceReports(int id, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetSoftBounceReports(int id, int page)`
    - returns the list of soft bounce reports for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
- - `public IOperationResult<dynamic> GetUnsubscribeReports(int id, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetUnsubscribeReports(int id, int page)`
    - returns the list of unsubscribe reports for the given campaign ID
    - `id: campaign id`
    - `page`: page # (>= 1). Up to 200 records returned per page.
@@ -112,7 +112,7 @@ The specific APIs contained are:
     new Maropost.Api.AbTestCampaigns(int accountId, string authToken, HttpClient httpClient)
 
 ### Available Methods:
- - `public IOperationResult<dynamic> CreateAbTest(string name, string fromEmail, string replyTo, string address, string language, string campaignGroupAttributes,`
+ - `public async Task<IOperationResult<dynamic>> CreateAbTest(string name, string fromEmail, string replyTo, string address, string language, string campaignGroupAttributes,`
                                                   `string commit, DateTime sendAt, int? brandId = null, object[] suppressedListIds = null, object[] suppressedSegmentIds = null,`
                                                   `object[] suppressedJourneyIds = null, int? emailPreviewLink = null, string decidedBy = null, object[] lists = null,`
                                                   `object[] cTags = null, object[] segments = null)`
@@ -143,10 +143,10 @@ The specific APIs contained are:
     new Maropost.Api.TransactionalCampaigns(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
- - `public IOperationResult<dynamic> Get(int page)`
+ - `public async Task<IOperationResult<dynamic>> Get(int page)`
      * returns the list of Transaction Campaigns
    - `page`: page # (>= 1). Up to 200 records returned per page.
- - `public IOperationResult<dynamic> Create(string name, string subject, string preheader, string fromName, string fromEmail, string replyTo,`
+ - `public async Task<IOperationResult<dynamic>> Create(string name, string subject, string preheader, string fromName, string fromEmail, string replyTo,`
                                            `int contentId, bool emailPreviewLink, string address, string language, object[] ctags)`
      * Creates a Transactional Campaign
      - `name` campaign name
@@ -161,7 +161,7 @@ The specific APIs contained are:
      - `language` ISO 639-1 language code
      - `ctags` array of campaign tags
 
- - `public IOperationResult<dynamic> SendEmail(int campaignId, int? contentId = null, string contentName = null, string contentHtmlPart = null, string contentTextPart = null,`
+ - `public async Task<IOperationResult<dynamic>> SendEmail(int campaignId, int? contentId = null, string contentName = null, string contentHtmlPart = null, string contentTextPart = null,`
                                               `int? sendAtHour = null, int? sendAtMinute = null, bool? ignoreDnm = null, int? contactId = null, string recipientEmail = null,`
                                               `string recipientFirstName = null, string recipientLastName = null, IDictionary<object, object> recipientCustomFields = null,`
                                               `string bccEmail = null, string fromName = null, string fromEmail = null, string subject = null, string replyTo = null,`
@@ -197,31 +197,31 @@ The specific APIs contained are:
 
 ### Available methods:
 
- - `public IOperationResult<dynamic> GetForEmail(string email)`
+ - `public async Task<IOperationResult<dynamic>> GetForEmail(string email)`
    * Gets the contact according to email address 
    - `email`: email address of the contact
 
- - `public IOperationResult<dynamic> GetOpens(int contactId, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetOpens(int contactId, int page)`
    * Gets the list of opens for the specified contact
    - `contactId`: contact id of contact to for which the contact is being retrieved
    - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `public IOperationResult<dynamic> GetClicks(int contactId, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetClicks(int contactId, int page)`
    * Gets the list of clicks for the specified contact
    - `contactId`: contact id of contact to for which the contact is being retrieved
    - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `public IOperationResult<dynamic> GetForList(int listId, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetForList(int listId, int page)`
    * Gets the list of contacts for the specified list
    - `listId`: ID of the list to which the contact being retrieved
    - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `public IOperationResult<dynamic> GetContactForList(int listId, int contactId)`
+ - `public async Task<IOperationResult<dynamic>> GetContactForList(int listId, int contactId)`
    - Gets the specified contact from the specified list
    - `listId`: ID of the list to which the contact is being retrieved
    - `contactId`: contact id of contact to for which the contact is being retrieved
 
- - `public IOperationResult<dynamic> CreateOrUpdateForList(int listId, string email, string firstName = null, string lastName = null, string phone = null,`
+ - `public async Task<IOperationResult<dynamic>> CreateOrUpdateForList(int listId, string email, string firstName = null, string lastName = null, string phone = null,`
 														  `string fax = null, string uid = null, object customField = null, object addTags = null,`
 														  `object removeTags = null, bool removeFromDNM = true, bool subscribe = true)`
      * Creates a contact within a list. Updates if previous contact is matched by email
@@ -239,7 +239,7 @@ The specific APIs contained are:
      - `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM)
      - `subscribe`: set this true to subscribe contact to the list; false otherwise
   
- - `public IOperationResult<dynamic> UpdateForListAndContact(int listId, string contactId, string email, string firstName = null, string lastName = null, string phone = null, string fax = null,`
+ - `public async Task<IOperationResult<dynamic>> UpdateForListAndContact(int listId, string contactId, string email, string firstName = null, string lastName = null, string phone = null, string fax = null,`
 															`string uid = null, object customField = null, object addTags = null, object removeTags = null, bool removeFromDNM = true, bool subscribe = true)`
      * Creates a contact within a list. Updates if previous contact is matched by email.
      - `listId`: ID of the list for which the contact is being created
@@ -255,7 +255,7 @@ The specific APIs contained are:
      - `removeFromDNM`: Set this true to subscribe contact to the list, and remove it from DNM.
      - `subscribe`: true to subscribe the contact to the list; false otherwise.
 
- - `public IOperationResult<dynamic> CreateOrUpdateContact(string email, string firstName = null, string lastName = null, string phone = null, string fax = null, string uid = null,`
+ - `public async Task<IOperationResult<dynamic>> CreateOrUpdateContact(string email, string firstName = null, string lastName = null, string phone = null, string fax = null, string uid = null,`
 														  `object customField = null, object addTags = null, object removeTags = null, bool removeFromDNM = true, bool subscribe = true)`
      * Creates a contact without a list. Updates if already existing email is passed.
      - `contactId`: ID of the contact
@@ -271,7 +271,7 @@ The specific APIs contained are:
      - `removeFromDNM`: set this true to subscribe contact to the list, and remove it from DNM
 	 - `subscribe`: true to subscribe the contact to the list; false otherwise.
 
- - `public IOperationResult<dynamic> CreateOrUpdateForListAndWorkflows(string email, string firstName = null, string lastName = null, string phone = null, string fax = null, string uid = null,`
+ - `public async Task<IOperationResult<dynamic>> CreateOrUpdateForListAndWorkflows(string email, string firstName = null, string lastName = null, string phone = null, string fax = null, string uid = null,`
 																	  `object customField = null, object addTags = null, object removeTags = null, bool removeFromDNM = false, int[] subscribeListIds = null,`
 																	  `int[] unsubscribeListIds = null, int[] unsubscribeWorkflowIds = null, string unsubscribeCampaign = null)`
      * Creates or updates Contact
@@ -292,25 +292,25 @@ The specific APIs contained are:
      - `unsubscribeWorkflowIds`: simple array of list of IDs of workflows to unsubscribe the contact from
      - `unsubscribeCampaign`: campaignID to unsubscribe the contact from
 
- - `public IOperationResult<dynamic> DeleteFromAllLists(string email)`
+ - `public async Task<IOperationResult<dynamic>> DeleteFromAllLists(string email)`
      * Deletes specified contact from all lists
      - `email`: email address of the contact
 
- - `public IOperationResult<dynamic> DeleteFromLists(int contactId, int[] listIds = null)`
+ - `public async Task<IOperationResult<dynamic>> DeleteFromLists(int contactId, int[] listIds = null)`
      * Deletes the specified contact from the specified lists
      - `contactId`: id of the contact
      - `listIds`: simple array of ids of the lists
 
- - `public IOperationResult<dynamic> DeleteContactForUid(string uid)`
+ - `public async Task<IOperationResult<dynamic>> DeleteContactForUid(string uid)`
      * Deletes contact having the specified UID
 	 - `uid`: UID of the Contact for which the contact is being deleted
 
- - `public IOperationResult<dynamic> DeleteListContact(int listId, int contactId)`
+ - `public async Task<IOperationResult<dynamic>> DeleteListContact(int listId, int contactId)`
      * Deletes specified contact from the specified list
 	 - `listId`: ID of the list for which the contact is being deleted
 	 - `contactId`: contact id of the list for which the contact is being deleted
 
- - `public IOperationResult<dynamic> UnsubscribeAll(string contactFieldValue, string contactFieldName = "email")`
+ - `public async Task<IOperationResult<dynamic>> UnsubscribeAll(string contactFieldValue, string contactFieldName = "email")`
      * Unsubscribes contact having the specified field name/value.
      - `contactFieldValue`: the value of the field for the contact(s) being unsubscribed
      - `contactFieldName`: the name of the field being checked for the value. At present, the accepted field names are: 'email' or 'uid'
@@ -323,38 +323,38 @@ The specific APIs contained are:
 
 ### Available methods:
 
- - `public IOperationResult<dynamic> Get(int page)`
+ - `public async Task<IOperationResult<dynamic>> Get(int page)`
      * Gets the list of journeys
      - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `public IOperationResult<dynamic> GetCampaigns(int journeyId, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetCampaigns(int journeyId, int page)`
      * Gets the list of all campaigns for the specified journey
 	 - `journeyId`: get campaigns filtered with journeyid
      - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `public IOperationResult<dynamic> GetContacts(int journeyId, int page)`
+ - `public async Task<IOperationResult<dynamic>> GetContacts(int journeyId, int page)`
      * Gets the list of all contacts for the specified journey
 	 - `journeyId`: get contacts filtered with journeyid
      - `page` : page # (>= 1). Up to 200 records returned per page.
 
- - `public IOperationResult<dynamic> StopAll(int contactId, string recipientEmail, string uid, int page)`
+ - `public async Task<IOperationResult<dynamic>> StopAll(int contactId, string recipientEmail, string uid, int page)`
      * Stops all journeys, filtered for the matching parameters
      - `contactId`: this filter ignored unless greater than 0
      - `recipientEmail`: this filter ignored if null
      - `uid`: this filter ignored if null
 	 - `page`: page # (>= 1). Up to 200 record returned per page.
 
- - `public IOperationResult<dynamic> PauseJourneyForContact(int journeyId, int contactId)`
+ - `public async Task<IOperationResult<dynamic>> PauseJourneyForContact(int journeyId, int contactId)`
      * Pause the specified journey for the specified contact
 	 - `journeyId`: pause journey for speficied journey id
 	 - `contactId`: pause journey for speficied contact id
 
- - `public IOperationResult<dynamic> PauseJourneyForUid(int journeyId, string uid)`
+ - `public async Task<IOperationResult<dynamic>> PauseJourneyForUid(int journeyId, string uid)`
      * Pause the specified journey for the contact having the specified UID
 	 - `journeyId`: pause journey for specified journey id
 	 - `uid`: pause journey for speficified uid
 
- - `public IOperationResult<dynamic> ResetJourneyForContact(int journeyId, int contactId)`
+ - `public async Task<IOperationResult<dynamic>> ResetJourneyForContact(int journeyId, int contactId)`
      * Reset the specified journey for the specified active/paused contact. Resetting a contact to the beginning of the journeys will result in sending of the same journey campaigns as originally sent.
 	 - `journeyId`: reset journey for contact with specified journey id
 	 - `contactId`: reset journey for specified contact id
@@ -369,17 +369,17 @@ The specific APIs contained are:
 	 - `journeyId`: start journey for contact with specified journey id
 	 - `contactId`: start journey for specified journey id
 
- - `public IOperationResult<dynamic> ResetJourneyForUid(int journeyId, string uid)`
+ - `public async Task<IOperationResult<dynamic>> ResetJourneyForUid(int journeyId, string uid)`
      * Restarts a journey for a paused contact having the specified UID. Adds a new contact in journey. Retriggers the journey for a contact who has finished its journey once. (To retrigger, *make sure* that "Retrigger Journey" option is enabled.)
 	 - `journeyId`: reset journey for specified journey id
 	 - `uid`: reste journey for specified uid
 
- - `public IOperationResult<dynamic> StartJourneyForContact(int journeyId, int contactId)`
+ - `public async Task<IOperationResult<dynamic>> StartJourneyForContact(int journeyId, int contactId)`
 	* Starts a journey for contact having specified journeyId
 	- `journeyId`: start journey for specified journey id
 	- `contactId`: contact id of contact to start journey
 
- - `public IOperationResult<dynamic> StartJourneyForUid(int journeyId, string uid)`
+ - `public async Task<IOperationResult<dynamic>> StartJourneyForUid(int journeyId, string uid)`
 	* Starts a journey for contact having specified uid and journeyId
 	- 'journeyId': journey id to start journey
 	- 'uid': uid of contact to start journey
@@ -392,12 +392,12 @@ The specific APIs contained are:
 
 ### Available methods:
 
- - `public IOperationResult<dynamic> GetOrder(int id)`
+ - `public async Task<IOperationResult<dynamic>> GetOrder(int id)`
      * Gets the specified order
- - `public IOperationResult<dynamic> GetOrderForOriginalOrderId(string originalOrderId)`
+ - `public async Task<IOperationResult<dynamic>> GetOrderForOriginalOrderId(string originalOrderId)`
      * Gets the specified order
 
- - `public IOperationResult<dynamic> CreateOrder(bool requireUnique,`
+ - `public async Task<IOperationResult<dynamic>> CreateOrder(bool requireUnique,`
                                                 `string contactEmail,`
                                                 `string contactFirstName,`
                                                 `string contactLastName,`
@@ -431,7 +431,7 @@ The specific APIs contained are:
      - `campaignId`: campaign id
      - `couponCode`: coupon code
 
- - `public IOperationResult<dynamic> UpdateOrderForOriginalOrderId(string originalOrderId,`
+ - `public async Task<IOperationResult<dynamic>> UpdateOrderForOriginalOrderId(string originalOrderId,`
                                                                   `string orderDateTime,`
                                                                   `string orderStatus,`
                                                                   `object[] orderItems,`
@@ -444,7 +444,7 @@ The specific APIs contained are:
      - `orderItems`: campaign id
      - `couponCode`: coupon code
 
- - `public IOperationResult<dynamic> UpdateOrderForOrderId(int orderId,`
+ - `public async Task<IOperationResult<dynamic>> UpdateOrderForOrderId(int orderId,`
                                                           `string orderDateTime,`
                                                           `string orderStatus,`
                                                           `object[] orderItems,`
@@ -458,21 +458,21 @@ The specific APIs contained are:
      - `campaignId`: campaign id
      - `couponCode`: coupon code
     
- - `public IOperationResult<dynamic> DeleteForOriginalOrderId(string originalOrderId)`
+ - `public async Task<IOperationResult<dynamic>> DeleteForOriginalOrderId(string originalOrderId)`
      * Deletes the complete eCommerce order if the order is cancelled or returned
      - `originalOrderId` matches the original_order_id field of the order
 
- - `public IOperationResult<dynamic> DeleteForOrderId(int id)`
+ - `public async Task<IOperationResult<dynamic>> DeleteForOrderId(int id)`
      * Deletes the complete eCommerce order if the order is cancelled or returned using Maropost order id
      - `id`: Maropost order_id
 
- - `public IOperationResult<dynamic> DeleteProductsForOriginalOrderId(string originalOrderId,`
+ - `public async Task<IOperationResult<dynamic>> DeleteProductsForOriginalOrderId(string originalOrderId,`
                                                                      `object[] productIds)`
      * Deletes the specified product(s) from a complete eCommerce order if the product(s) is cancelled or returned
      - `originalOrderId`: matches the original_order_id field of the order
      - `productIds`: the product(s) to delete from the order
 
- - `public IOperationResult<dynamic> DeleteProductsForOrderId(int id,`
+ - `public async Task<IOperationResult<dynamic>> DeleteProductsForOrderId(int id,`
                                                              `object[] productIds)`
      * Deletes the specified product(s) from a complete eCommerce order if the product(s) is cancelled or returned
      - `id`: Maropost order_id
@@ -484,22 +484,21 @@ The specific APIs contained are:
 Unlike the other services, the constructor for this requires a third
 parameter: `tableName`. So for example:
 
-    new Maropost.Api.RelationalTableRows(int accountId, string authToken, string tableName, HttpClient httpClient, string baseUrl = null)
+    new Maropost.Api.RelationalTableRows(int accountId, string authToken, HttpClient httpClient, string tableName)
 
 `tableName` sets which relational table the service's operations should act against.
 To switch tables, you do not need to re-instantiate the service.
-`baseUrl` is nullable.
 
 ### Available functions:
 
- - `public IOperationResult<dynamic> Get()`
+ - `public async Task<IOperationResult<dynamic>> Get()`
      * Gets the records of the Relational Table
 
- - `public IOperationResult<dynamic> Show(string idFieldName, string idFieldVlaue)`
+ - `public async Task<IOperationResult<dynamic>> Show(string idFieldName, string idFieldVlaue)`
      * Gets the specified record from the Relational Table
      * `id`: ID of the existing record you wish to read
 
- - `public IOperationResult<dynamic> Create(IDictionary<string, object> keyValues)`
+ - `public async Task<IOperationResult<dynamic>> Create(IDictionary<string, object> keyValues)`
      * Adds a record to the Relational Table
      * `keyValues`: Multiple `Dictionary<stringm object>` objects, for the
      record to be created, each item consisting of two fields:
@@ -509,7 +508,7 @@ To switch tables, you do not need to re-instantiate the service.
          "YYYY-MM-DD", or "YYYY-MM-DDThh:mm:ssTZD".
        - NOTE: One of the KeyValues must represent the unique identifier.
 
- - `public IOperationResult<dynamic> Update(IDictionary<string, object> keyValues)`
+ - `public async Task<IOperationResult<dynamic>> Update(IDictionary<string, object> keyValues)`
      * Updates a record in the Relational Table.
      * `keyValues`: Multiple `Dictionary<stringm object>` objects, for the
      record to be created, each item consisting of two fields:
@@ -519,7 +518,7 @@ To switch tables, you do not need to re-instantiate the service.
          "YYYY-MM-DD", or "YYYY-MM-DDThh:mm:ssTZD".
        - NOTE: One of the KeyValues must represent the unique identifier.
 
- - `public IOperationResult<dynamic> Upsert(IDictionary<string, object> keyValues)`
+ - `public async Task<IOperationResult<dynamic>> Upsert(IDictionary<string, object> keyValues)`
      * Creates or updates a record in the Relational Table.
      * `keyValues`: Multiple `Dictionary<stringm object>` objects, for the
      record to be created, each item consisting of two fields:
@@ -529,7 +528,7 @@ To switch tables, you do not need to re-instantiate the service.
          "YYYY-MM-DD", or "YYYY-MM-DDThh:mm:ssTZD".
        - NOTE: One of the KeyValues must represent the unique identifier.
 
- - `public IOperationResult<dynamic> Delete(string idField, object idFieldValue)`
+ - `public async Task<IOperationResult<dynamic>> Delete(string idField, object idFieldValue)`
      * Deletes the given record of the Relational Table
      * `idField` name of the field representing the unique identifier (E.g., "id", "email")
      * `idFieldValue` value of the identifier field, for the record to delete.
@@ -541,15 +540,15 @@ To switch tables, you do not need to re-instantiate the service.
     new Maropost.Api.Reports(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
- - `public IOperationResult<dynamic> Get(int page)`
+ - `public async Task<IOperationResult<dynamic>> Get(int page)`
    - returns the list of reports
    - `page`: page # (>= 1). Up to 200 records returned per page.
 
- - `public IOperationResult<dynamic> GetReport(int id)`
+ - `public async Task<IOperationResult<dynamic>> GetReport(int id)`
    - Gets the list of reports
    - `id`: report ID
 
- - `public IOperationResult<dynamic> GetOpens(int page,`
+ - `public async Task<IOperationResult<dynamic>> GetOpens(int page,`
                                              `object[] fields = null,`
                                              `DateTime? from = null,`
                                              `DateTime? to = null,`
@@ -567,7 +566,7 @@ To switch tables, you do not need to re-instantiate the service.
    * `uid`: filters by uid
    * `per`: determines how many records per request to receive
 
- - `public IOperationResult<dynamic> GetClicks(int page,`
+ - `public async Task<IOperationResult<dynamic>> GetClicks(int page,`
                                               `object[] fields = null,`
                                               `DateTime? from = null,`
                                               `DateTime? to = null,`
@@ -585,7 +584,7 @@ To switch tables, you do not need to re-instantiate the service.
    * `uid`: gets Clicks for provided uid
    * `per`: gets the specified number of records
 
- - `public IOperationResult<dynamic> GetBounce(int page,`
+ - `public async Task<IOperationResult<dynamic>> GetBounce(int page,`
                                               `object[] fields = null,`
                                               `DateTime? from = null,`
                                               `DateTime? to = null,`
@@ -604,7 +603,7 @@ To switch tables, you do not need to re-instantiate the service.
    * `uid`: gets Bounces for provided uid
    * `per`: gets the specified number of records
 
- - ` public IOperationResult<dynamic> GetUnsubscribes(int page,`
+ - ` public async Task<IOperationResult<dynamic>> GetUnsubscribes(int page,`
                                                      `object[] fields = null,`
                                                      `DateTime? from = null,`
                                                      `DateTime? to = null,`
@@ -622,7 +621,7 @@ To switch tables, you do not need to re-instantiate the service.
    * `uid` gets Unsubscribes for provided uid
    * `per` gets the specified number of records
 
- - `public IOperationResult<dynamic> GetComplaints(int page,`
+ - `public async Task<IOperationResult<dynamic>> GetComplaints(int page,`
                                                   `object[] fields = null,`
                                                   `DateTime? from = null,`
                                                   `DateTime? to = null,`
@@ -640,7 +639,7 @@ To switch tables, you do not need to re-instantiate the service.
    * `uid`: gets Complaints for provided uid
    * `per`: gets the specified number of records
 
- - ` public IOperationResult<dynamic> GetAbReports(string name,`
+ - ` public async Task<IOperationResult<dynamic>> GetAbReports(string name,`
                                                   `int page,`
                                                   `DateTime? from = null,`
                                                   `DateTime? to = null,`
@@ -652,6 +651,6 @@ To switch tables, you do not need to re-instantiate the service.
    * `to`: end of date range filter
    * `per`: gets the mentioned number of reports
 
- - `public IOperationResult<dynamic> GetJourney(int page)`
+ - `public async Task<IOperationResult<dynamic>> GetJourney(int page)`
    * returns the list of all Journeys
    * `page`: page # (>= 1). Up to 200 records returned per page.
