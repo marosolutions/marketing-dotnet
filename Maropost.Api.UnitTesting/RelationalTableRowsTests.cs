@@ -8,12 +8,11 @@ namespace Maropost.Api.UnitTesting
     public class RelationalTableRowsTests : _BaseTests
     {
         private string tableName = "phpunit_testing_for_api";
-        private string baseUrl = "https://rdb.maropost.com/{0}/";
         [Fact]
         public async Task Get()
         {
             //Arrange
-            var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
+            var api = new RelationalTableRows(AccountId, AuthToken, HttpClient, tableName);
             //Act
             var result = await api.Get();
             //Assert
@@ -27,8 +26,8 @@ namespace Maropost.Api.UnitTesting
         public async Task Show()
         {
             //Arrange
-            var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
-            var getResult =await api.Get();
+            var api = new RelationalTableRows(AccountId, AuthToken, HttpClient, tableName);
+            var getResult = await api.Get();
             string email = getResult.ResultData["records"][0]["email"];
             //Act
             var result = await api.Show("email", email);
@@ -45,7 +44,7 @@ namespace Maropost.Api.UnitTesting
         public async Task Create()
         {
             //Arrange
-            var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
+            var api = new RelationalTableRows(AccountId, AuthToken, HttpClient, tableName);
             var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var keyValuePair = new Dictionary<string, object>
             {
@@ -68,7 +67,7 @@ namespace Maropost.Api.UnitTesting
         public async Task Update()
         {
             //Arrange
-            var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
+            var api = new RelationalTableRows(AccountId, AuthToken, HttpClient, tableName);
             var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var keyValuePair = new Dictionary<string, object>
             {
@@ -96,7 +95,7 @@ namespace Maropost.Api.UnitTesting
         public async Task Upsert_Create()
         {
             //Arrange
-            var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
+            var api = new RelationalTableRows(AccountId, AuthToken, HttpClient, tableName);
             var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var keyValuePair = new Dictionary<string, object>
             {
@@ -119,7 +118,7 @@ namespace Maropost.Api.UnitTesting
         public async Task Upsert_Update()
         {
             //Arrange
-            var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
+            var api = new RelationalTableRows(AccountId, AuthToken, HttpClient, tableName);
             var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var keyValuePair = new Dictionary<string, object>
             {
@@ -147,7 +146,7 @@ namespace Maropost.Api.UnitTesting
         public async Task Delete()
         {
             //Arrange
-            var api = new RelationalTableRows(AccountId, AuthToken, tableName, HttpClient, baseUrl);
+            var api = new RelationalTableRows(AccountId, AuthToken, HttpClient, tableName);
             var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var keyValuePair = new Dictionary<string, object>
             {

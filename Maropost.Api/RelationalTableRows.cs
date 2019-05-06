@@ -1,5 +1,4 @@
 ﻿using Maropost.Api.Dto;
-using Maropost.Api.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -10,11 +9,12 @@ namespace Maropost.Api
 {
     public class RelationalTableRows : _BaseApi
     {
+        private static string baseUrl = "https://rdb.maropost.com/{0}/";
         /// <param name="accountId">required</param>
         /// <param name="authToken">required</param>
         /// <param name="httpClient">must be non-null</param>
         /// <exception cref="ArgumentException" />
-        public RelationalTableRows(int accountId, string authToken, string tableName, HttpClient httpClient, string baseUrl = null)
+        public RelationalTableRows(int accountId, string authToken, HttpClient httpClient, string tableName)
             : base(accountId, authToken, tableName, httpClient, baseUrl) { }
         /// <summary>
         /// Gets the record from the relational table
