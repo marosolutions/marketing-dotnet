@@ -100,7 +100,7 @@ namespace Maropost.Api
             {
                 apiResponse = await HttpClient.SendAsync(request);
             }
-            catch (Exception e)
+            catch (HttpRequestException e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
@@ -160,7 +160,7 @@ namespace Maropost.Api
             {
                 apiResponse = await HttpClient.SendAsync(request);
             }
-            catch (Exception e)
+            catch (HttpRequestException e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
@@ -191,7 +191,7 @@ namespace Maropost.Api
             {
                 apiResponse = await HttpClient.SendAsync(request);
             }
-            catch (Exception e)
+            catch (HttpRequestException e)
             {
                 return new OperationResult<dynamic>(null, e);
             }
