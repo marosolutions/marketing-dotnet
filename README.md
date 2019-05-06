@@ -1,18 +1,10 @@
 # Summary
 
-## Package still under active development. Functionality and documentation may change without notice. ##
-
-This package provides programmatic access to several Maropost services. It 
-consists of eight services within the `Maropost.Api` namespace. Each service 
-consists of one or more functions that perform an operation against your 
-Maropost account. These functions return a result object indicating 
-success/failure, any Exceptions throw, and the resulting data.
+This provides programmatic access to several services within the Maropost API. The functions contained perform actions against your Maropost account, and they return a result object indicating success/failure, any Exceptions thrown, and the resulting data.
 
 # Installation
 
-## NuGet
-[NuGet](https://www.nuget.org/) is the standard .NET packaging system. You can find this package at 
-[https://www.nuget.org/packages/Maropost.Api]. In Visual Studio's NuGet Package Manager, you can search
+[NuGet](https://www.nuget.org/) is the standard .NET packaging system. You can find this package at https://www.nuget.org/packages/Maropost.Api. In Visual Studio's NuGet Package Manager, you can search
 for "Maropost.Api", or in the Package Manager Console, you can simply `Install-Package Maropost.Api`.
 
 # Usage
@@ -49,7 +41,7 @@ The specific APIs contained are:
 - [Contacts](#contacts)
 - [Journeys](#journeys)
 - [Product and Revenue](#product-and-revenue)
-- [Relational Table Rows](#relational-tables-rows)
+- [Relational Table Rows](#relational-table-rows)
 - [Reports](#reports)
 
 ## Campaigns
