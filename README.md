@@ -10,11 +10,10 @@ success/failure, any Exceptions throw, and the resulting data.
 
 # Installation
 
-## NuGet (Coming soon. Not yet available.)
-[NuGet](https://www.nuget.org/) is the standard .NET packaging system. Simply search for "Maropost.Api".
-
-## Install from Source
-TODO
+## NuGet
+[NuGet](https://www.nuget.org/) is the standard .NET packaging system. You can find this package at 
+[https://www.nuget.org/packages/Maropost.Api]. In Visual Studio's NuGet Package Manager, you can search
+for "Maropost.Api", or in the Package Manager Console, you can simply `Install-Package Maropost.Api`.
 
 # Usage
 To use a service, first instantiate it, providing your Maropost AccountId
