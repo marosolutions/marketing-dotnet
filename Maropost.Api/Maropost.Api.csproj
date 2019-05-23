@@ -2,15 +2,17 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <Title>Maropost API</Title>
     <Version>0.1.0</Version>
-    <RepositoryUrl>https://github.com/marosolutions/marketing-dotnet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/marosolutions/marketing-dotnet.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/marosolutions/marketing-dotnet</PackageProjectUrl>
     <Copyright>Copyright 2019, Maropost</Copyright>
     <Company>Maropost</Company>
     <Authors>Maropost</Authors>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <Description>This package provides programmatic access, within the Maropost.Api namespace, to several Maropost services. Each class consists of one or more functions that perform an operation against your Maropost account. These functions return a result object indicating success/failure, any Exceptions thrown, and the resulting data.</Description>
+    <Description>This provides programmatic access to several services within the Maropost API. The functions contained perform actions against your Maropost account, and they return a result object indicating success/failure, any Exceptions thrown, and the resulting data.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">

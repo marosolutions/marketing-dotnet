@@ -10,6 +10,19 @@ namespace Maropost.Api
     public class RelationalTableRows : _BaseApi
     {
         private static string baseUrl = "https://rdb.maropost.com/{0}/";
+
+        public string TableName
+        {
+            get
+            {
+                return UrlPathRoot;
+            }
+            set
+            {
+                UrlPathRoot = value;
+            }
+        }
+
         /// <param name="accountId">required</param>
         /// <param name="authToken">required</param>
         /// <param name="httpClient">must be non-null</param>

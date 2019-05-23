@@ -7,9 +7,11 @@
     <authors>$author$</authors>
     <owners>Maropost</owners>
     <projectUrl>https://github.com/marosolutions/marketing-dotnet</projectUrl>
+    <iconUrl>https://www.maropost.com/favicon-150x150.png</iconUrl>
+    <repository type="git" url="https://github.com/marosolutions/marketing-dotnet" />
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes></releaseNotes>
     <copyright>Copyright 2019, Maropost</copyright>
   </metadata>
 </package>
