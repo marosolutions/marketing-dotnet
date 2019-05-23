@@ -82,7 +82,8 @@ namespace Maropost.Api
             records.Add("ctags", cTags);
             records.Add("segments", segments);
             records = records.DiscardNullAndEmptyValues();
-            var result = await base.Post("ab_test", null, records);
+            var data = new { campaign = records };
+            var result = await base.Post("ab_test", null, data);
             return result;
         }
     }

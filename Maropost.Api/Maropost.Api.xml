@@ -1,0 +1,777 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Maropost.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Maropost.Api.AbTestCampaigns.#ctor(System.Int32,System.String,System.Net.Http.HttpClient)">
+            <param name="accountId">required</param>
+            <param name="authToken">required</param>
+            <param name="httpClient">must be non-null</param>
+            <exception cref="T:System.ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api.AbTestCampaigns.CreateAbTest(System.String,System.String,System.String,System.String,System.String,System.Object[],System.String,System.String,System.Nullable{System.Int32},System.Object[],System.Object[],System.Object[],System.Nullable{System.Int32},System.String,System.Object[],System.Object[],System.Object[])">
+            <summary>
+            Creates an Ab Test campaign
+            </summary>
+            <param name="name"></param>
+            <param name="fromEmail"></param>
+            <param name="replyTo"></param>
+            <param name="address"></param>
+            <param name="language">
+            Allowed value for language can be either of these:
+            ['en' for English, 'es' for Spanish, 'de' for German, 'it' for Italian, 'fr' for French, 'pt' for Portuguese, 'pl' for Polish, 'da' for Danish, 'zh' for Chinese, 'nl' for Dutch, 'sv' for Swedish, 'no' for Norwegian]
+            </param>
+            <param name="campaignGroupAttributes"></param>
+            <param name="commit">Allowed values for commit: 'Save as Draft' or 'Send Test' or 'Schedule'</param>
+            <param name="sendAt">send_at should be in "yyyy-mm-dd %H:%M:%S" where %H - Hour of the day, 24-hour clock (00..23), %M - Minute of the hour (00..59), %S - Second of the minute (00..60)</param>
+            <param name="brandId"></param>
+            <param name="suppressedListIds"></param>
+            <param name="suppressedSegmentIds"></param>
+            <param name="suppressedJourneyIds"></param>
+            <param name="emailPreviewLink"></param>
+            <param name="decidedBy">
+            Allowed values for decided_by: ('TopChoice' for Top Choices) or
+            ('Opens' for Highest Open Rate) or ('Clicks' for Highest Click Rate) or ('Manual' for Manual Selection) or
+            ('click_to_open' for Highest Click-to-Open Rate) or ('conversions' for Highest Conversion Rate)
+            </param>
+            <param name="lists"></param>
+            <param name="cTags"></param>
+            <param name="segments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.#ctor(System.Int32,System.String,System.Net.Http.HttpClient)">
+            <param name="accountId">required</param>
+            <param name="authToken">required</param>
+            <param name="httpClient">must be non-null</param>
+            <exception cref="!:ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api.Campaigns.Get(System.Int32)">
+            <summary>
+            Gets all campaigns
+            </summary>
+            <param name="page">total number of pages of data to be loaded</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetCampaign(System.Int32)">
+            <summary>
+            Gets campaign details by campaign id
+            </summary>
+            <param name="id">id of campaign to get campaign details</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetBounceReports(System.Int32,System.Int32)">
+            <summary>
+            Get bounce reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get bounce reports of campaign</param>
+            <param name="page">total number of pages of data to be loaded</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetClickReports(System.Int32,System.Int32,System.Nullable{System.Boolean})">
+            <summary>
+            Get click reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get click reprots of campaign</param>
+            <param name="page">total number of pages of dta to be loaded</param>
+            <param name="unique">determinies whether to get unique click reports</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetComplaintReports(System.Int32,System.Int32)">
+            <summary>
+            Gets complaint reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get complaint reports of campaign</param>
+            <param name="page">total number of pages of data to be loaded</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetDeliveredReports(System.Int32,System.Int32)">
+            <summary>
+            Get delivered reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get delivered reports of campaign</param>
+            <param name="page">total number of pages of data to be loaded</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetHardBounceReports(System.Int32,System.Int32)">
+            <summary>
+            Get hard bounce reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get delivered reports of campaign</param>
+            <param name="page">total number of pages of data to be loaded</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetLinkReports(System.Int32,System.Int32,System.Nullable{System.Boolean})">
+            <summary>
+            Get link reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get link reports of campaign</param>
+            <param name="page">total number of pages of data to be loaded</param>
+            <param name="unique">determines whether to get unique reports of campaign</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetOpenReports(System.Int32,System.Int32,System.Nullable{System.Boolean})">
+            <summary>
+            Get open reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get open reports of campaign</param>
+            <param name="page">total number of pages of data to be loaded</param>
+            <param name="unique">determines whether to get unique reports of campaign</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetSoftBounceReports(System.Int32,System.Int32)">
+            <summary>
+            Get soft bounce reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get soft bounce reports of campaign</param>
+            <param name="page">total number of pages of data to be loaded</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Campaigns.GetUnsubscribeReports(System.Int32,System.Int32)">
+            <summary>
+            Get unsubscribe reports by campaign id
+            </summary>
+            <param name="id">id of campaign to get unsubscribe reports of campaign</param>
+            <param name="page">total number of pages of data to be loaded</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.#ctor(System.Int32,System.String,System.Net.Http.HttpClient)">
+            <param name="accountId">required</param>
+            <param name="authToken">required</param>
+            <param name="httpClient">must be non-null</param>
+            <exception cref="T:System.ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api.Contacts.GetForEmail(System.String)">
+            <summary>
+            Get contact details for provided email address
+            </summary>
+            <param name="email">email address of the contact to be retrived</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.GetOpens(System.Int32,System.Int32)">
+            <summary>
+            Get all open contacts
+            </summary>
+            <param name="contactId">contact id of a contact</param>
+            <param name="page">total page</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.GetClicks(System.Int32,System.Int32)">
+            <summary>
+            Get all clicked contacts by contact id
+            </summary>
+            <param name="contactId">contact id of a contact</param>
+            <param name="page">total page</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.GetForList(System.Int32,System.Int32)">
+            <summary>
+            Get contact for list
+            </summary>
+            <param name="listId">list id of a contact with in list</param>
+            <param name="page">total page</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.GetContactForList(System.Int32,System.Int32)">
+            <summary>
+            Get contact for selected list
+            </summary>
+            <param name="listId">list id of a contact</param>
+            <param name="contactId">contact id of contact</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.CreateOrUpdateForList(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.Object,System.Object,System.Object,System.Boolean,System.Boolean)">
+            <summary>
+            Create or update contact for list
+            </summary>
+            <param name="listId">list id of the contact to be created</param>
+            <param name="email">email address of contact</param>
+            <param name="firstName">first name of contact</param>
+            <param name="lastName">last name of contact</param>
+            <param name="phone">phone number of contact</param>
+            <param name="fax">fax of contact</param>
+            <param name="uid">uid of contact</param>
+            <param name="customField">customfield array object eg; { custom_field_1 = true, custom_field_2 = "abc" }</param>
+            <param name="addTags">addtags array eg; { "tag1", "tag2", "tag3" }</param>
+            <param name="removeTags">remove tags array eg; { "remove_tag1", "remove_tag2", "remove_tag3" }</param>
+            <param name="removeFromDNM">removeFromDNM flag</param>
+            <param name="subscribe">subscribe flag</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.UpdateForListAndContact(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Object,System.Object,System.Object,System.Boolean,System.Boolean)">
+            <summary>
+            Update contact for selected list and contact
+            </summary>
+            <param name="listId">list id of the contact to be created</param>
+            <param name="contactId">contact id of contact</param>
+            <param name="email">email address of contact</param>
+            <param name="firstName">first name of contact</param>
+            <param name="lastName">last name of contact</param>
+            <param name="phone">phone number of contact</param>
+            <param name="fax">fax of contact</param>
+            <param name="uid">uid of contact</param>
+            <param name="customField">customfield array object eg; { custom_field_1 = true, custom_field_2 = "abc" }</param>
+            <param name="addTags">addtags array eg; { "tag1", "tag2", "tag3" }</param>
+            <param name="removeTags">remove tags array eg; { "remove_tag1", "remove_tag2", "remove_tag3" }</param>
+            <param name="removeFromDNM">removeFromDNM flag</param>
+            <param name="subscribe">subscribe flag</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.CreateOrUpdateContact(System.String,System.String,System.String,System.String,System.String,System.String,System.Object,System.Object,System.Object,System.Boolean,System.Boolean)">
+            <summary>
+            Create or update contact by email
+            </summary>
+            <param name="email">email address of contact</param>
+            <param name="firstName">first name of contact</param>
+            <param name="lastName">last name of contact</param>
+            <param name="phone">phone number of contact</param>
+            <param name="fax">fax of contact</param>
+            <param name="uid">uid of contact</param>
+            <param name="customField">customfield array object eg; { custom_field_1 = true, custom_field_2 = "abc" }</param>
+            <param name="addTags">addtags array eg; { "tag1", "tag2", "tag3" }</param>
+            <param name="removeTags">remove tags array eg; { "remove_tag1", "remove_tag2", "remove_tag3" }</param>
+            <param name="removeFromDNM">removeFromDNM flag</param>
+            <param name="subscribe">subscribe flag</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.CreateOrUpdateForListAndWorkflows(System.String,System.String,System.String,System.String,System.String,System.String,System.Object,System.Object,System.Object,System.Boolean,System.Int32[],System.Int32[],System.Int32[],System.String)">
+            <summary>
+            Create or update contact for list and workflows
+            </summary>
+            <param name="email">email address of contact</param>
+            <param name="firstName">first name of contact</param>
+            <param name="lastName">last name of contact</param>
+            <param name="phone">phone number of contact</param>
+            <param name="fax">fax of contact</param>
+            <param name="uid">uid of contact</param>
+            <param name="customField">customfield array object eg; { custom_field_1 = true, custom_field_2 = "abc" }</param>
+            <param name="addTags">addtags array eg; { "tag1", "tag2", "tag3" }</param>
+            <param name="removeTags">remove tags array eg; { "remove_tag1", "remove_tag2", "remove_tag3" }</param>
+            <param name="removeFromDNM">removeFromDNM flag</param>
+            <param name="subscribeListIds">array of subscribe list ids array of int</param>
+            <param name="unsubscribeListIds">array of unsubscribe list ids array of int</param>
+            <param name="unsubscribeWorkflowIds">array of unsubscribe work flow ids array of int</param>
+            <param name="unsubscribeCampaign">unsubscribe campaign</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.DeleteFromAllLists(System.String)">
+            <summary>
+            Delete contact from all provide lists
+            </summary>
+            <param name="email">email address of contact</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.DeleteFromLists(System.Int32,System.Int32[])">
+            <summary>
+            Delete contact from list
+            </summary>
+            <param name="contactId">contact id of contact</param>
+            <param name="listIds">list id of contact</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.DeleteContactForUid(System.String)">
+            <summary>
+            Delete contact for uid
+            </summary>
+            <param name="uid">uid of contact</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.DeleteListContact(System.Int32,System.Int32)">
+            <summary>
+            Delete list of contact from provided list id and contact
+            </summary>
+            <param name="listId">list id of contact</param>
+            <param name="contactId">contact id of contact</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Contacts.UnsubscribeAll(System.String,System.String)">
+            <summary>
+            Unsubscribe all contacts with provided field
+            </summary>
+            <param name="contactFieldValue">field value</param>
+            <param name="contactFieldName">field name default is email</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Dto.OperationResult.#ctor(System.Exception,System.String)">
+            <summary>
+            to indicate success, don't pass any arguments.
+            </summary>
+        </member>
+        <member name="T:Maropost.Api.Helpers.KeyValueList">
+            <remarks>
+            Derived from code published by phoog: https://stackoverflow.com/users/385844/phoog.
+            Originally published at https://stackoverflow.com/a/11695018/83852 under Creative Commons (cc by-sa 3.0) license.
+            </remarks>
+        </member>
+        <member name="M:Maropost.Api.Journeys.#ctor(System.Int32,System.String,System.Net.Http.HttpClient)">
+            <param name="accountId">required</param>
+            <param name="authToken">required</param>
+            <param name="httpClient">must be non-null</param>
+            <exception cref="!:ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api.Journeys.Get(System.Int32)">
+            <summary>
+            Get the list of journeys
+            </summary>
+            <param name="page">page >= 1</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.GetCampaigns(System.Int32,System.Int32)">
+            <summary>
+            Gets the list of all campaigns for the specified journey
+            </summary>
+            <param name="journeyId">journeyid integer value</param>
+            <param name="page">page >= 1</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.GetContacts(System.Int32,System.Int32)">
+            <summary>
+            Gets the list of all contacts for the specified journey
+            </summary>
+            <param name="journeyId">journeyid integer value</param>
+            <param name="page">page >= 1</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.StopAll(System.Int32,System.String,System.String,System.Int32)">
+            <summary>
+            Stops all journeys, filtered for the matching parameters
+            </summary>
+            <param name="contactId">this filter is ignored if not greater than 0</param>
+            <param name="recipientEmail">this filter is ignored if null</param>
+            <param name="uid">this filter is ignored if null</param>
+            <param name="page">page >= 1</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.PauseJourneyForContact(System.Int32,System.Int32)">
+            <summary>
+            Pause the specified journey for the contact having the specified UID
+            </summary>
+            <param name="journeyId">journey id of contact to pause for</param>
+            <param name="contactId">contact id of contact to pause for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.PauseJourneyForUid(System.Int32,System.String)">
+            <summary>
+            Pause the specified journey for the contact having the specified UID
+            </summary>
+            <param name="journeyId">journey id of contact to pause for</param>
+            <param name="uid">uid of contact to pause for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.ResetJourneyForContact(System.Int32,System.Int32)">
+            <summary>
+            Reset the specified journey for the specified active/pause contact.
+            Resettig a contact to the beginning of the journeys will result in sending of the same journey campaigns as originally sent.
+            </summary>
+            <param name="journeyId">journey id of contact to reset for</param>
+            <param name="contactId">contact id of contact to reset for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.ResetJourneyForUid(System.Int32,System.String)">
+            <summary>
+            Reset the specified journey for the active/paused contact having the specified UID.
+            Resetting a contact to the beginning of the journeys will result in sending of the same journey campaigns as originally sent.
+            </summary>
+            <param name="journeyId">journey id of contact to reset for</param>
+            <param name="uid">uid of contact to reset for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.StartJourneyForContact(System.Int32,System.Int32)">
+            <summary>
+            Restarts a journey for a paused contact. Adds a new contact in journey.
+            Retriggers the journey for a contact who has finished its journey once.
+            (TO retrigger, MAKE SURE that "Retrigger Journey option is enabled.)
+            </summary>
+            <param name="journeyId">journey id of contact to restart a journey for</param>
+            <param name="contactId">contact id of contact to restart a journey for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Journeys.StartJourneyForUid(System.Int32,System.String)">
+            <summary>
+            Restarts a journey for a paused contact having the specified UID. Adds a new contact in journey.
+            Retriggers the journey for a contact who has finished its journey once.
+            (To retrigger, MAKE SURE that "Retrigger Journey" option is enabled.)
+            </summary>
+            <param name="journeyId">journey id of contact to restart a journey for</param>
+            <param name="uid">uid of contact to restart a journey for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.#ctor(System.Int32,System.String,System.Net.Http.HttpClient)">
+            <param name="accountId">required</param>
+            <param name="authToken">required</param>
+            <param name="httpClient">must be non-null</param>
+            <exception cref="T:System.ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.GetOrder(System.Int32)">
+            <summary>
+            Gets order detais filtered with order id
+            </summary>
+            <param name="id">order id to filter</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.GetOrderForOriginalOrderId(System.String)">
+            <summary>
+            Gets order details filtered with original order id
+            </summary>
+            <param name="originalOrderId">original order id to filter</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.CreateOrder(System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,Maropost.Api.Dto.OrderItemInput[],System.Object,System.Object[],System.Object[],System.String,System.String,System.String,System.Nullable{System.Int32},System.String)">
+            <summary>
+            Create order with provided order details
+            </summary>
+            <param name="requireUnique">true to validate that the order has a unique original_order_id for the given contact</param>
+            <param name="contactEmail">email address of contact</param>
+            <param name="contactFirstName">first name of contact</param>
+            <param name="contactLastName">last name of contact</param>
+            <param name="orderDateTime">uses the format: "YYYY-MM-DDTHH:MM:SS-05:00</param>
+            <param name="orderStatus">status of order</param>
+            <param name="originalOrderId">sets the original_order_id field</param>
+            <param name="orderItems">array of Maropost.Api.Dto.OrderItemInput object</param>
+            <param name="customFields">associative array where the key (string) represents the field name and the value is the field value</param>
+            <param name="addTags">simple array of tags to add (scalar values)</param>
+            <param name="removeTags">simple array of tags to remove (scalar values)</param>
+            <param name="uid">unique id</param>
+            <param name="listIds">CSV list of IDs (e.g, "12,13")</param>
+            <param name="grandTotal">grand total</param>
+            <param name="campaignId">campaign id</param>
+            <param name="couponCode">coupon code</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.UpdateOrderForOriginalOrderId(System.String,System.String,System.String,System.Object[],System.Nullable{System.Int32},System.String)">
+            <summary>
+            Updates an existing eCommerce order using unique original_order_id if the details are changed due to partial
+            return or some other update.
+            </summary>
+            <param name="originalOrderId">matches the original_order_id field of the order</param>
+            <param name="orderDateTime">uses the format: YYYY-MM-DDTHH:MM:SS-05:00</param>
+            <param name="orderStatus">order status</param>
+            <param name="orderItems">restates the orderItems as as array of OrderItemInput objects</param>
+            <param name="campaignId">campaign id</param>
+            <param name="couponCode">coupon code</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.UpdateOrderForOrderId(System.Int32,System.String,System.String,System.Object[],System.Nullable{System.Int32},System.String)">
+            <summary>
+            Updates an existing eCommerce order using unique order_id if the details are changed due to partial return or
+            some other update.
+            </summary>
+            <param name="orderId">matches the Maropost order_id field of the order</param>
+            <param name="orderDateTime">uses the format: YYYY-MM-DDTHH:MM:SS-05:00</param>
+            <param name="orderStatus">order status</param>
+            <param name="orderItems">restates the orderItems as as array of OrderItemInput objects</param>
+            <param name="campaignId">campaign id</param>
+            <param name="couponCode">coupon code</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.DeleteForOriginalOrderId(System.String)">
+            <summary>
+            Deletes the complete eCommerce order if the order is cancelled or returned using unique original order id
+            </summary>
+            <param name="originalOrderId">matches the original_order_id field of the order</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.DeleteForOrderId(System.Int32)">
+            <summary>
+            Deletes the complete eCommerce order if the order is cancelled or returned using Maropost order id
+            </summary>
+            <param name="id">order id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.DeleteProductsForOriginalOrderId(System.String,System.Object[])">
+            <summary>
+            Deletes the specified product(s) from a complete eCommerce order if the product(s) is cancelled or returned,
+            using unique original_order_id
+            </summary>
+            <param name="originalOrderId">matches the original_order_id field of the order</param>
+            <param name="productIds">the product(s) to delete from the order</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.ProductsAndRevenue.DeleteProductsForOrderId(System.Int32,System.Object[])">
+            <summary>
+            Deletes the specified product(s) from a complete eCommerce order if the product(s) is cancelled or returned,
+            using Maropost order_id
+            </summary>
+            <param name="id">order id</param>
+            <param name="productIds">the product(s) to delete from the order</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.RelationalTableRows.#ctor(System.Int32,System.String,System.Net.Http.HttpClient,System.String)">
+            <param name="accountId">required</param>
+            <param name="authToken">required</param>
+            <param name="httpClient">must be non-null</param>
+            <exception cref="T:System.ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api.RelationalTableRows.Get">
+            <summary>
+            Gets the record from the relational table
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.RelationalTableRows.Show(System.String,System.String)">
+            <summary>
+            Gets the specified record from the relational table
+            </summary>
+            <param name="idFieldName">name of the feld representing the unique identifier (eg; id, email)</param>
+            <param name="idFieldVlaue">value of the identifier field for the record to get</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.RelationalTableRows.Create(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Adds a record to the relational table
+            </summary>
+            <param name="keyValues">list of field name/values for the record to be updated</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.RelationalTableRows.Update(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Updates a record in the relational table
+            </summary>
+            <param name="keyValues">
+            list of field name/values for the record to be updated.
+            NOTE: Any datetime strings must be in on of the three formats: "MM/dd/yyyy", "yyyy-MM-dd" or "yyyy-MM-ddThh:mm:ssTZD"
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.RelationalTableRows.Upsert(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Creates or updates a record in the Relational Table.
+            </summary>
+            <param name="keyValues">
+            list of field name/values for the record to be updated.
+            NOTE: Any datetime strings must be in on of the three formats: "MM/dd/yyyy", "yyyy-MM-dd" or "yyyy-MM-ddThh:mm:ssTZD"
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.RelationalTableRows.Delete(System.String,System.Object)">
+            <summary>
+            Deletes the given record of the relational table
+            </summary>
+            <param name="idField">name of the field representing the unique identifier (eg; id, email)</param>
+            <param name="idFieldValue">value of the identifier field for the record to delete</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Reports.#ctor(System.Int32,System.String,System.Net.Http.HttpClient)">
+            <param name="accountId">required</param>
+            <param name="authToken">required</param>
+            <param name="httpClient">must be non-null</param>
+            <exception cref="T:System.ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api.Reports.Get(System.Int32)">
+            <summary>
+            Gets the list of reports
+            </summary>
+            <param name="id">report ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Reports.GetReport(System.Int32)">
+            <summary>
+            Gets the list of reports by report id
+            </summary>
+            <param name="id">report id</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Reports.GetOpens(System.Int32,System.Object[],System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Boolean},System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Gets the list of open reports based on filters and fields provided
+            </summary>
+            <param name="page">page #. (>= 1)</param>
+            <param name="fields">contact field names to retrieve</param>
+            <param name="from">the beginning of date range filter</param>
+            <param name="to">the end of the date range filter</param>
+            <param name="unique">when true, gets only unique opens</param>
+            <param name="email">filters by provided email in the contact</param>
+            <param name="uid">filters by uid</param>
+            <param name="per">determines how many records per request to receive</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Reports.GetClicks(System.Int32,System.Object[],System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Boolean},System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Gets a list of click reports
+            </summary>
+            <param name="page">page #. (>= 1)</param>
+            <param name="fields">plucks these contact fields if they exist</param>
+            <param name="from">Start of specific date range filter</param>
+            <param name="to">end of date range filter</param>
+            <param name="unique">If true, gets unique records</param>
+            <param name="email">Gets Clicks for specific email</param>
+            <param name="uid">Gets Clicks for provided uid</param>
+            <param name="per">Gets the specified number of records</param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Maropost.Api.Reports.GetBounce(System.Int32,System.Object[],System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Boolean},System.String,System.String,System.String,System.Nullable{System.Int32})" -->
+        <member name="M:Maropost.Api.Reports.GetUnsubscribes(System.Int32,System.Object[],System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Boolean},System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Gets a list of Unsubscribes with provided filter constraints
+            </summary>
+            <param name="page">page #. (>= 1)</param>
+            <param name="fields">plucks these contact fields if they exist</param>
+            <param name="from">Start of specific date range filter</param>
+            <param name="to">end of date range filter</param>
+            <param name="unique">If true, gets unique records</param>
+            <param name="email">Gets Unsubscribes for specific email</param>
+            <param name="uid">Gets Unsubscribes for provided uid</param>
+            <param name="per">Gets the specified number of records</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Reports.GetComplaints(System.Int32,System.Object[],System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Boolean},System.String,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Gets a list of complaints filtered by provided params
+            </summary>
+            <param name="page">page #. (>= 1)</param>
+            <param name="fields">plucks these contact fields if they exist</param>
+            <param name="from">Start of specific date range filter</param>
+            <param name="to">end of date range filter</param>
+            <param name="unique">If true, gets unique records</param>
+            <param name="email">Gets Complaints for specific email</param>
+            <param name="uid">Gets Complaints for provided uid</param>
+            <param name="per">Gets the specified number of records</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Reports.GetAbReports(System.String,System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.Int32})">
+            <summary>
+            Gets a list of Ab Reports
+            </summary>
+            <param name="name">To get ab_reports with mentioned name</param>
+            <param name="page">Beginning of date range filter</param>
+            <param name="from">End of date range filter</param>
+            <param name="to">gets the mentioned number of reports</param>
+            <param name="per">page #. (>= 1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.Reports.GetJourney(System.Int32)">
+            <summary>
+            Gets the list of all Journeys
+            </summary>
+            <param name="page">page #. (>= 1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.TransactionalCampaigns.#ctor(System.Int32,System.String,System.Net.Http.HttpClient)">
+            <param name="accountId">required</param>
+            <param name="authToken">required</param>
+            <param name="httpClient">must be non-null</param>
+            <exception cref="T:System.ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api.TransactionalCampaigns.Get(System.Int32)">
+            <summary>
+            Gets the list of Transaction Campaigns
+            </summary>
+            <param name="page">page #. (>= 1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.TransactionalCampaigns.Create(System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Boolean,System.String,System.String,System.Object[])">
+            <summary>
+            Creates a Transactional Campaign
+            </summary>
+            <param name="name">campaign name</param>
+            <param name="subject">campaign subject</param>
+            <param name="preheader">campaign preheader</param>
+            <param name="fromName">sender name in the email</param>
+            <param name="fromEmail">sender email address</param>
+            <param name="replyTo">reply-to email address</param>
+            <param name="contentId"></param>
+            <param name="emailPreviewLink"></param>
+            <param name="address"></param>
+            <param name="language">ISO 639-1 language code</param>
+            <param name="ctags">array of campaign tags</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api.TransactionalCampaigns.SendEmail(System.Int32,System.Nullable{System.Int32},System.String,System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.Object,System.Object},System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.Object,System.Object},System.Object[])">
+            <summary>
+            Sends a transactional campaign email to a recipient. Sender's information will be automatically fetched from the
+            transactional campaign, unless provided in the function arguments.
+            </summary>
+            <param name="campaignId">must be a campaign that already exists when you call ->get(). If you don't have one, first call ->create().</param>
+            <param name="contentId">If provided, the transactional campaign's content will be replaced by this content.</param>
+            <param name="contentName">If $contentId is null, the transactional campaign's content name will be replaced by this name.</param>
+            <param name="contentHtmlPart">If $contentId is null, the transactional campaign's content HTML part will be replaced by this HTML part.</param>
+            <param name="contentTextPart">If $contentId is null, the transactional campaign's content Text part will be replaced by this Text part.</param>
+            <param name="sendAtHour">Must be 1-12. Otherwise the email will go out immediately. If the hour is less than the current hour, the email will go out the following day.</param>
+            <param name="sendAtMinute">Must be 0-60. Otherwise will be treated as 0. If the hour and minute combine to less than the current time, the email will go out the following day.</param>
+            <param name="ignoreDnm">If true, ignores the Do Not Mail list for the recipient contact.</param>
+            <param name="contactId">contact ID of the recipient.</param>
+            <param name="recipientEmail">email address. Ignored unless $contactId is null. Otherwise, it must be a well-formed email address according to FILTER_VALIDATE_EMAIL.</param>
+            <param name="recipientFirstName">recipient's first name. Ignored unless $contactId is null.</param>
+            <param name="recipientLastName">recipient's last name. Ignored unless $contactId is null.</param>
+            <param name="recipientCustomFields">
+            custom fields for the recipient. Ignored unless $contactId is null.
+            Is an associative array where the item key is the name of the custom field, and the item value is the field value.
+            All keys must be strings. All values must be non-null scalars.</param>
+            <param name="bccEmail">BCC recipient. May only pass a single email address, empty string, or null. If provided, it must be a well-formed email address according to FILTER_VALIDATE_EMAIL.</param>
+            <param name="fromName">sender's name. If $fromEmail is set, it overrides the transactional campaign default sender name. Ignored otherwise.</param>
+            <param name="fromEmail">sender's email address. Overrides the transactional campaign default sender email.</param>
+            <param name="subject">subject line of email. Overrides the transactional campaign default subject.</param>
+            <param name="replyTo">reply-to address. Overrides the transactional campaign default reply-to.</param>
+            <param name="senderAddress">physical address of sender. Overrides the transactional campaign default sender address.</param>
+            <param name="tags">associative array where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All keys must be strings. All values must be non-null scalars.</param>
+            <param name="ctags">campaign tags. Must be a simple array of scalar values.</param>
+            <returns>data property contains information about the newly created campaign.</returns>
+        </member>
+        <member name="M:Maropost.Api._BaseApi.#ctor(System.Int32,System.String,System.String,System.Net.Http.HttpClient,System.String)">
+            <summary>
+            Constructor of _BaseAPI
+            </summary>
+            <param name="accountId">account id of account currently using api</param>
+            <param name="authToken">authentication token of account</param>
+            <param name="urlPathRoot">url path to be appended on base url</param>
+            <param name="httpClient">http client object</param>
+            <param name="baseUrl">base url to be override that user wants to be used as</param>
+            <exception cref="T:System.ArgumentException" />
+        </member>
+        <member name="M:Maropost.Api._BaseApi.GetUrl(System.String,System.String)">
+            <summary>
+            Generate url from provided override resource and resource
+            base url is changed if base url is provided else it uses default url
+            </summary>
+            <param name="resource">resource to be used</param>
+            <param name="overrideResource">part of the url to be override when provided</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api._BaseApi.GetQueryString(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+            <summary>
+            Generate query string from provided key value pair
+            </summary>
+            <param name="keyValuePairs">collection of key value pair</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api._BaseApi.Get(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.String)">
+            <summary>
+            Gets data from provided url and request params
+            </summary>
+            <param name="resource">resource i.e. used to append on url</param>
+            <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
+            <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api._BaseApi.Post(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Object,System.String)">
+            <summary>
+            Post and execute requested operation
+            </summary>
+            <param name="resource">resource i.e. used to append on url</param>
+            <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
+            <param name="obj">object to used as request body</param>
+            <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api._BaseApi.Put(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Object,System.String)">
+            <summary>
+            Executes put operation for request url path
+            </summary>
+            <param name="resource">resource i.e. used to append on url</param>
+            <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
+            <param name="obj">object to used as request body</param>
+            <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
+            <returns></returns>
+        </member>
+        <member name="M:Maropost.Api._BaseApi.Delete(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Object,System.String)">
+            <summary>
+            Executes delete operation as requested
+            </summary>
+            <param name="resource">resource i.e. used to append on url</param>
+            <param name="querystringParams">query stirng params key value pair data i.e used as query string appended in url</param>
+            <param name="obj">object to used as request body</param>
+            <param name="overrideUrlPathRoot">override url path to be appended on base url if provided before resource and query string</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

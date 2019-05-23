@@ -19,9 +19,18 @@ namespace Maropost.Api.UnitTesting
             object[] campaignAttr = new[] { new { name = "Group A", content_id = "92", subject = "a", preheader = "232", from_name = "k", percentage = "2", send_at = $"{DateTime.UtcNow.AddDays(1).ToString("yyyy-MM-dd hh:mm:ss")}" },
                                             new { name = "Group B", content_id = "92", subject = "b", preheader = "232", from_name = "gg", percentage = "2", send_at = $"{DateTime.UtcNow.AddDays(1).ToString("yyyy-MM-dd hh:mm:ss")}" }};
             string sendAt = $"{DateTime.UtcNow.AddDays(1).ToString("yyyy-MM-dd hh:mm:ss")}";
+            string[] lists = new[] { "15", "24" };
+            string[] ctags = new[] { "5", "70" };
+            string[] segments = new[] { "5", "7" };
+            int brandId = 2;
+            string[] suppressListIds = new[] { "66", "63" };
+            string[] suppressSegmentIds = new[] { "34", "81" };
+            string[] suppressJourneyIds = new[] { "21", "24" };
+            int emailPreviewLink = 0;
+            string decidedBy = "TopChoice";
             string commit = "Save as Draft";
             //Act
-            var result = await api.CreateAbTest(name, fromEmail, replyTo, address, lanugage, campaignAttr, commit, sendAt);
+            var result = await api.CreateAbTest(name, fromEmail, replyTo, address, lanugage, campaignAttr, commit, sendAt, brandId, suppressListIds, suppressSegmentIds, suppressJourneyIds, emailPreviewLink, decidedBy, lists, ctags, segments);
             //Assert
             Assert.True(result.Success);
         }
