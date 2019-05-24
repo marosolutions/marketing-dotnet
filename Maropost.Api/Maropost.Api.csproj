@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <DocumentationFile>C:\Users\Santosh\Documents\Projects\Santosh\aplogic\maropost\marketing-dotnet\Maropost.Api\Maropost.Api.xml</DocumentationFile>
+    <DocumentationFile>Maropost.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
