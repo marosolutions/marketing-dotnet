@@ -15,7 +15,7 @@ namespace Maropost.Api.UnitTesting
             // Assert
             int accountId = result.ResultData[0]["account_id"];
             Assert.NotNull(result);
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
             Assert.Equal(accountId, AccountId);
@@ -58,10 +58,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetBounceReports(campaignId, 1);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -90,10 +90,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetClickReports(campaignId, 1, true);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -122,10 +122,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetClickReports(campaignId, 1, false);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -154,10 +154,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetClickReports(campaignId, 1);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -185,10 +185,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetComplaintReports(campaignId, 1);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -216,10 +216,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetDeliveredReports(campaignId, 1);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -245,17 +245,42 @@ namespace Maropost.Api.UnitTesting
                     break;
                 }
             }
-            //Act
-            var result = await api.GetHardBounceReports(campaignId, 1);
-            //Assert
-            Assert.True(result.Success);
-            Assert.Null(result.ErrorMessage);
-            Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
-            int id = result.ResultData[0]["campaign_id"];
-            int accountId = result.ResultData[0]["account_id"];
-            Assert.Equal(id, campaignId);
-            Assert.Equal(accountId, AccountId);
+            if (campaignId > 0)
+            {
+                //Act
+                var result = await api.GetHardBounceReports(campaignId, 1);
+                //Assert
+                Assert.True(result.Success, "result.Success is false");
+                Assert.Null(result.ErrorMessage);
+                Assert.Null(result.Exception);
+                Assert.True(result.ResultData.Count > 0, $"result.ResultData.Count <= 0; (1) campaignId = {campaignId}.");
+                int id = result.ResultData[0]["campaign_id"];
+                int accountId = result.ResultData[0]["account_id"];
+                Assert.Equal(id, campaignId);
+                Assert.Equal(accountId, AccountId);
+            }
+            else if (results.ResultData.Count > 0)
+            {
+                // No campaigns have a hard-bounce-report, so any campaign should either work and/or be empty,
+                // OR return an internal server error (which is a web service failure, not an API failure).
+                campaignId = results.ResultData[0]["id"];
+                var result = await api.GetHardBounceReports(campaignId, 1);
+                if (result.Success)
+                {
+                    if (result.ResultData.Count > 0)
+                    {
+                        int id = result.ResultData[0]["campaign_id"];
+                        int accountId = result.ResultData[0]["account_id"];
+                        Assert.Equal(id, campaignId);
+                        Assert.Equal(accountId, AccountId);
+                    }
+                    // else, nothing to assert. Is empty array.
+                }
+                else
+                {
+                    Assert.Contains("Internal Server Error", result.ErrorMessage);
+                }
+            }
         }
 
         [Fact]
@@ -279,10 +304,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetLinkReports(campaignId, 1, true);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             string url = result.ResultData[0]["url"];
             Assert.Equal(id, campaignId);
@@ -310,10 +335,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetLinkReports(campaignId, 1, false);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             string url = result.ResultData[0]["url"];
             Assert.Equal(id, campaignId);
@@ -341,10 +366,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetLinkReports(campaignId, 1);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             string url = result.ResultData[0]["url"];
             Assert.Equal(id, campaignId);
@@ -372,10 +397,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetOpenReports(campaignId, 1, true);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -403,10 +428,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetOpenReports(campaignId, 1, false);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -434,10 +459,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetOpenReports(campaignId, 1);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -465,10 +490,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetSoftBounceReports(campaignId, 1);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
@@ -496,10 +521,10 @@ namespace Maropost.Api.UnitTesting
             //Act
             var result = await api.GetUnsubscribeReports(campaignId, 1);
             //Assert
-            Assert.True(result.Success);
+            Assert.True(result.Success, "result.Success is false");
             Assert.Null(result.ErrorMessage);
             Assert.Null(result.Exception);
-            Assert.True(result.ResultData.Count > 0);
+            Assert.True(result.ResultData.Count > 0, "result.ResultData.Count <= 0");
             int id = result.ResultData[0]["campaign_id"];
             int accountId = result.ResultData[0]["account_id"];
             Assert.Equal(id, campaignId);
