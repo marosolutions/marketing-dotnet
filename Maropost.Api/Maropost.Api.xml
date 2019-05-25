@@ -10,7 +10,7 @@
             <param name="httpClient">must be non-null</param>
             <exception cref="T:System.ArgumentException" />
         </member>
-        <member name="M:Maropost.Api.AbTestCampaigns.CreateAbTest(System.String,System.String,System.String,System.String,System.String,System.Object[],System.String,System.String,System.Nullable{System.Int32},System.Object[],System.Object[],System.Object[],System.Nullable{System.Int32},System.String,System.Object[],System.Object[],System.Object[])">
+        <member name="M:Maropost.Api.AbTestCampaigns.CreateAbTest(System.String,System.String,System.String,System.String,Maropost.Api.Enums.Language,System.Collections.Generic.IEnumerable{Maropost.Api.Dto.CampaignGroupAttributeInput},Maropost.Api.Enums.Commit,System.DateTime,System.Nullable{System.Int32},System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IEnumerable{System.Int32},System.String,System.Nullable{Maropost.Api.Enums.DecidedBy},System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IEnumerable{System.Int32})">
             <summary>
             Creates an Ab Test campaign
             </summary>
@@ -18,23 +18,16 @@
             <param name="fromEmail"></param>
             <param name="replyTo"></param>
             <param name="address"></param>
-            <param name="language">
-            Allowed value for language can be either of these:
-            ['en' for English, 'es' for Spanish, 'de' for German, 'it' for Italian, 'fr' for French, 'pt' for Portuguese, 'pl' for Polish, 'da' for Danish, 'zh' for Chinese, 'nl' for Dutch, 'sv' for Swedish, 'no' for Norwegian]
-            </param>
+            <param name="language"></param>
             <param name="campaignGroupAttributes"></param>
-            <param name="commit">Allowed values for commit: 'Save as Draft' or 'Send Test' or 'Schedule'</param>
-            <param name="sendAt">send_at should be in "yyyy-mm-dd %H:%M:%S" where %H - Hour of the day, 24-hour clock (00..23), %M - Minute of the hour (00..59), %S - Second of the minute (00..60)</param>
+            <param name="commit"></param>
+            <param name="sendAt"></param>
             <param name="brandId"></param>
             <param name="suppressedListIds"></param>
             <param name="suppressedSegmentIds"></param>
             <param name="suppressedJourneyIds"></param>
             <param name="emailPreviewLink"></param>
-            <param name="decidedBy">
-            Allowed values for decided_by: ('TopChoice' for Top Choices) or
-            ('Opens' for Highest Open Rate) or ('Clicks' for Highest Click Rate) or ('Manual' for Manual Selection) or
-            ('click_to_open' for Highest Click-to-Open Rate) or ('conversions' for Highest Conversion Rate)
-            </param>
+            <param name="decidedBy"></param>
             <param name="lists"></param>
             <param name="cTags"></param>
             <param name="segments"></param>

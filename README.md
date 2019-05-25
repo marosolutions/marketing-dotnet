@@ -103,29 +103,15 @@ The specific APIs contained are:
     new Maropost.Api.AbTestCampaigns(int accountId, string authToken, HttpClient httpClient)
 
 ### Available Methods:
- - `public async Task<IOperationResult<dynamic>> CreateAbTest(string name, string fromEmail, string replyTo, string address, string language, string campaignGroupAttributes,`
-                                                  `string commit, DateTime sendAt, int? brandId = null, object[] suppressedListIds = null, object[] suppressedSegmentIds = null,`
-                                                  `object[] suppressedJourneyIds = null, int? emailPreviewLink = null, string decidedBy = null, object[] lists = null,`
-                                                  `object[] cTags = null, object[] segments = null)`
+ - `public async Task<IOperationResult<dynamic>> CreateAbTest(string name, string fromEmail, string replyTo, string address, Enums.Language language, IEnumerable<Dto.CampaignGroupAttributeInput> campaignGroupAttributes,`
+                                                  `Enums.Commit commit, DateTime sendAt, int? brandId = null, IEnumerable<int> suppressedListIds = null, IEnumerable<int> suppressedSegmentIds = null,`
+                                                  `IEnumerable<int> suppressedJourneyIds = null, int? emailPreviewLink = null, Enums.DecidedBy? decidedBy = null, IEnumerable<int> lists = null,`
+                                                  `IEnumerable<int> cTags = null, IEnumerable<int> segments = null)`
    * Creates an Ab Test campaign
    - `name`: name of the new campaign
    - `fromEmail`: default sender email address for campaign emails
    - `replyTo`: default reply-to email address for campaign emails
    - `address`: default physical address included on campaign emails
-   - `language`: ISO 639-1 language code (e.g, `"en"`). 2 characters.
-   - `campaignGroupsAttributes`: array of attributes. Each attribute is
-								 itself an object with the following properties (all strings):
-   - `commit`: Allowed values for commit: 'Save as Draft' or 'Send Test' or 'Schedule'
-   - `sendAt`: send_at should be in "yyyy-mm-dd %H:%M:%S" where %H - Hour of the day, 24-hour clock (00..23), %M - Minute of the hour (00..59), %S - Second of the minute (00..60)
-   - `brandId`:
-   - `supressedListIds`:
-   - `supressedSegmentIds`:
-   - `supressedJourneyIds`:
-   - `emailPreviewLink`:
-   - `decidedBy`: Allowed values for decided_by: ('TopChoice' for Top Choices) or ('Opens' for Highest Open Rate) or ('Clicks' for Highest Click Rate) or ('Manual' for Manual Selection) or ('click_to_open' for Highest Click-to-Open Rate) or ('conversions' for Highest Conversion Rate)
-   - `lists`:
-   - `cTags`:
-   - `segments`:
    
 ## Transactional Campaigns
 

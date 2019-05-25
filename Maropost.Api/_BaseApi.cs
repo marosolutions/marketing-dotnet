@@ -135,8 +135,12 @@ namespace Maropost.Api
                 return new OperationResult<dynamic>(null, e);
             }
             var data = apiResponse.Content.ReadAsStringAsync().Result;
-            responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
-            return new OperationResult<dynamic>(responseBody, apiResponse, "");
+            if (apiResponse.IsSuccessStatusCode)
+            {
+                responseBody = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+                return new OperationResult<dynamic>(responseBody, apiResponse, "");
+            }
+            return new OperationResult<dynamic>(data, e: null, errorMessage: apiResponse.ReasonPhrase);
         }
         /// <summary>
         /// Executes put operation for request url path
