@@ -29,17 +29,16 @@ namespace Maropost.Api
         /// <param name="language"></param>
         /// <param name="campaignGroupAttributes"></param>
         /// <param name="commit"></param>
-        /// <param name="sendAt"></param>
+        /// <param name="decidedBy"></param>
+        /// <param name="sendAt">must be non-null</param>
         /// <param name="brandId"></param>
         /// <param name="suppressedListIds"></param>
         /// <param name="suppressedSegmentIds"></param>
         /// <param name="suppressedJourneyIds"></param>
         /// <param name="emailPreviewLink"></param>
-        /// <param name="decidedBy"></param>
         /// <param name="lists"></param>
         /// <param name="cTags"></param>
         /// <param name="segments"></param>
-        /// <returns></returns>
         public async Task<IOperationResult<dynamic>> CreateAbTest(string name,
                                                       string fromEmail,
                                                       string replyTo,
@@ -47,13 +46,13 @@ namespace Maropost.Api
                                                       Enums.Language language,
                                                       IEnumerable<CampaignGroupAttributeInput> campaignGroupAttributes,
                                                       Commit commit,
+                                                      DecidedBy decidedBy,
                                                       DateTime sendAt,
                                                       int? brandId = null,
                                                       IEnumerable<int> suppressedListIds = null,
                                                       IEnumerable<int> suppressedSegmentIds = null,
                                                       IEnumerable<int> suppressedJourneyIds = null,
                                                       string emailPreviewLink = null,
-                                                      DecidedBy? decidedBy = null,
                                                       IEnumerable<int> lists = null,
                                                       IEnumerable<int> cTags = null,
                                                       IEnumerable<int> segments = null)
@@ -71,9 +70,9 @@ namespace Maropost.Api
             records.Add("language", language.ToAbbreviation());
             records.Add("send_at", sendAt.ToString("yyyy-MM-dd H:mm:ss"));
             records.Add("commit", commit.ToFriendlyString());
-            records.Add("brand_id", brandId.ToString());
+            records.Add("decided_by", decidedBy.ToFriendlyString());
+            records.Add("brand_id", brandId?.ToString());
             records.Add("email_preview_link", emailPreviewLink);
-            records.Add("decided_by", decidedBy?.ToFriendlyString());
             records.Add("campaign_groups_attributes", campaignGroupAttributes);
             records.Add("suppressed_list_ids", suppressedListIds?.Select(id => id.ToString()));
             records.Add("suppressed_segment_ids", suppressedSegmentIds?.Select(id => id.ToString()));

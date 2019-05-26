@@ -21,7 +21,7 @@
             <param name="language"></param>
             <param name="campaignGroupAttributes"></param>
             <param name="commit"></param>
-            <param name="sendAt"></param>
+            <param name="sendAt">must be non-null</param>
             <param name="brandId"></param>
             <param name="suppressedListIds"></param>
             <param name="suppressedSegmentIds"></param>
@@ -31,7 +31,8 @@
             <param name="lists"></param>
             <param name="cTags"></param>
             <param name="segments"></param>
-            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
         </member>
         <member name="M:Maropost.Api.Campaigns.#ctor(System.Int32,System.String,System.Net.Http.HttpClient)">
             <param name="accountId">required</param>

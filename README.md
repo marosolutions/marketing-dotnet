@@ -104,14 +104,15 @@ The specific APIs contained are:
 
 ### Available Methods:
  - `public async Task<IOperationResult<dynamic>> CreateAbTest(string name, string fromEmail, string replyTo, string address, Enums.Language language, IEnumerable<Dto.CampaignGroupAttributeInput> campaignGroupAttributes,`
-                                                  `Enums.Commit commit, DateTime sendAt, int? brandId = null, IEnumerable<int> suppressedListIds = null, IEnumerable<int> suppressedSegmentIds = null,`
-                                                  `IEnumerable<int> suppressedJourneyIds = null, int? emailPreviewLink = null, Enums.DecidedBy? decidedBy = null, IEnumerable<int> lists = null,`
+                                                  `Enums.Commit commit, Enums.DecidedBy decidedBy, DateTime sendAt, int? brandId = null, IEnumerable<int> suppressedListIds = null, IEnumerable<int> suppressedSegmentIds = null,`
+                                                  `IEnumerable<int> suppressedJourneyIds = null, int? emailPreviewLink = null, IEnumerable<int> lists = null,`
                                                   `IEnumerable<int> cTags = null, IEnumerable<int> segments = null)`
    * Creates an Ab Test campaign
    - `name`: name of the new campaign
    - `fromEmail`: default sender email address for campaign emails
    - `replyTo`: default reply-to email address for campaign emails
    - `address`: default physical address included on campaign emails
+   - `sendAt`: non-null required
    
 ## Transactional Campaigns
 

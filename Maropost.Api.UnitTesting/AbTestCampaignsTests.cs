@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -22,7 +23,7 @@ namespace Maropost.Api.UnitTesting
             var lists = new[] { 15, 24 };
             var ctags = new[] { 5, 70 };
             var segments = new[] { 5, 7 };
-            int brandId = 2;
+            var brandId = 2;
             var suppressListIds = new[] { 66, 63 };
             var suppressSegmentIds = new[] { 34, 81 };
             var suppressJourneyIds = new[] { 21, 24 };
@@ -30,7 +31,27 @@ namespace Maropost.Api.UnitTesting
             var decidedBy = Enums.DecidedBy.TopChoices;
             var commit = Enums.Commit.SaveAsDraft;
             //Act
-            var result = await api.CreateAbTest(name, fromEmail, replyTo, address, language, campaignGroupAttrs, commit, sendAt, brandId, suppressListIds, suppressSegmentIds, suppressJourneyIds, emailPreviewLink, decidedBy, lists, ctags, segments);
+            var result = await api.CreateAbTest(name, fromEmail, replyTo, address, language, campaignGroupAttrs, commit, decidedBy, sendAt, brandId, suppressListIds, suppressSegmentIds, suppressJourneyIds, emailPreviewLink, lists, ctags, segments);
+            //Assert
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async Task CreateAbTest_MinimalInput()
+        {
+            //Arrange
+            var api = new AbTestCampaigns(AccountId, AuthToken, HttpClient);
+            var name = $"name_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
+            var fromEmail = $"frm_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var replyTo = $"to_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var address = "The Alternative Daily | 860 US Highway 1 | Suite 210 | North Palm Beach | FL | 33408";
+            var language = Enums.Language.English;
+            IEnumerable<Dto.CampaignGroupAttributeInput> campaignGroupAttrs = null;
+            var sendAt = DateTime.UtcNow.AddDays(1);
+            var commit = Enums.Commit.SaveAsDraft;
+            var decidedBy = Enums.DecidedBy.TopChoices;
+            //Act
+            var result = await api.CreateAbTest(name, fromEmail, replyTo, address, language, campaignGroupAttrs, commit, decidedBy, sendAt);
             //Assert
             Assert.NotNull(result);
         }
