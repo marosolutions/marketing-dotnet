@@ -13,8 +13,8 @@ namespace Maropost.Api.UnitTesting
         private const string SEND_SENDER_NAME = "user-test sender";
         private const string SEND_SENDER_EMAIL = "info@maropost.com";
         private const string SEND_SENDER_REPLYTO = "noreply@maropost.com";
-        private const int SEND_CONTENT_ID = 162;
-        private const int SEND_CAMPAIGN_ID = 1;
+        private const int SEND_CONTENT_ID = 150;
+        private const int SEND_CAMPAIGN_ID = 4961;
 
         [Fact]
         public async Task Get()
@@ -55,18 +55,22 @@ namespace Maropost.Api.UnitTesting
         {
             //Arrange
             var api = new TransactionalCampaigns(AccountId, AuthToken, HttpClient);
-            var customFields = new Dictionary<object, object>
+            var resultGet = await api.Get(1);
+            var transactionCampaignId = (int)resultGet.ResultData[0].id;
+            var contentId = (int)resultGet.ResultData[0].content_id;
+
+            var customFields = new Dictionary<string, object>
             {
                 { "city", "San Luis Obispo" },
                 { "state", "California" }
             };
-            var tags = new Dictionary<object, object>
+            var tags = new Dictionary<string, object>
             {
                 { "field1", "value1" },
                 { "field2", "value2" }
             };
             //Act
-            var result = await api.SendEmail(SEND_CAMPAIGN_ID, null, "test content", "<h2>Custom HTML</h2>", "Test Content Text",
+            var result = await api.SendEmail(transactionCampaignId, contentId, "test content", "<h2>Custom HTML</h2>", "Test Content Text",
                                        null, null, true, 1, SEND_RECIPIENT, SEND_RECIPIENT_FIRST_NAME, SEND_RECIPIENT_LAST_NAME,
                                        customFields, null, SEND_SENDER_NAME, SEND_SENDER_REPLYTO, "Test Subject", SEND_SENDER_EMAIL,
                                        "Test Sender Address", tags, new[] { "ctag1", "ctag2" });

@@ -141,9 +141,9 @@ The specific APIs contained are:
 
  - `public async Task<IOperationResult<dynamic>> SendEmail(int campaignId, int? contentId = null, string contentName = null, string contentHtmlPart = null, string contentTextPart = null,`
                                               `int? sendAtHour = null, int? sendAtMinute = null, bool? ignoreDnm = null, int? contactId = null, string recipientEmail = null,`
-                                              `string recipientFirstName = null, string recipientLastName = null, IDictionary<object, object> recipientCustomFields = null,`
+                                              `string recipientFirstName = null, string recipientLastName = null, IDictionary<string, object> recipientCustomFields = null,`
                                               `string bccEmail = null, string fromName = null, string fromEmail = null, string subject = null, string replyTo = null,`
-                                              `string senderAddress = null, IDictionary<object, object> tags = null, object[] ctags = null)`
+                                              `string senderAddress = null, IDictionary<string, object> tags = null, IEnumerable<string> ctags = null)`
      * Sends a transactional campaign email to a recipient. Sender's information will be automatically fetched from the transactional campaign, unless provided in the function arguments.
      - `campaignId`: must be a campaign that already exists when you call `$svc->get()`. If you don't have one, first call `$svc->create()`.
      - `contentId`: If provided, the transactional campaign's content will be replaced by this content.
@@ -157,14 +157,14 @@ The specific APIs contained are:
      - `recipientEmail`: email address. Ignored unless `$contactId` is null. Otherwise, it must be a well-formed email address according to `FILTER_VALIDATE_EMAIL`.
      - `recipientFirstName`: recipient's first name. Ignored unless `$contactId` is null.
      - `recipientLastName`: recipient's last name. Ignored unless `$contactId` is null.
-     - `recipientCustomFields`: custom fields for the recipient. Ignored unless `$contactId` is null. Is an associative array where the item key is the name of the custom field, and the item value is the field value. All keys must be strings. All values must be non-null scalars.
+     - `recipientCustomFields`: custom fields for the recipient. Ignored unless `$contactId` is null. Is a Dictionary where the item key is the name of the custom field, and the item value is the field value. All values must be non-null scalars.
      - `bccEmail`: BCC recipient. May only pass a single email address, empty string, or null. If provided, it must be a well-formed email address according to `FILTER_VALIDATE_EMAIL`.
      - `fromName`: sender's name. If `$fromEmail` is set, it overrides the transactional campaign default sender name. Ignored otherwise.
      - `fromEmail`: sender's email address. Overrides the transactional campaign default sender email.
      - `subject`: subject line of email. Overrides the transactional campaign default subject.
      - `replyTo`: reply-to address. Overrides the transactional campaign default reply-to.
      - `senderAddress`: physical address of sender. Overrides the transactional campaign default sender address.
-     - `tags`: associative array where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All keys must be strings. All values must be non-null scalars.
+     - `tags`: Dictionary where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All values must be non-null scalars.
      - `ctags`: campaign tags. Must be a simple array of scalar values.
      
 ## Contacts

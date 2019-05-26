@@ -408,7 +408,7 @@
             <param name="originalOrderId">original order id to filter</param>
             <returns></returns>
         </member>
-        <member name="M:Maropost.Api.ProductsAndRevenue.CreateOrder(System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.IEnumerable{Maropost.Api.Dto.OrderItemInput},System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.String,System.String,System.Nullable{System.Decimal},System.Nullable{System.Int32},System.String)">
+        <member name="M:Maropost.Api.ProductsAndRevenue.CreateOrder(System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.IEnumerable{Maropost.Api.Dto.OrderItemInput},System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String},System.String,System.String,System.Nullable{System.Decimal},System.Nullable{System.Int32},System.String)">
             <summary>
             Create order with provided order details
             </summary>
@@ -420,7 +420,7 @@
             <param name="orderStatus">status of order</param>
             <param name="originalOrderId">sets the original_order_id field</param>
             <param name="orderItems">must contain at least one orderItem</param>
-            <param name="customFields">KeyValuePairs where the key represents the field name and the value is the field value</param>
+            <param name="customFields">Dictionary Item key represents the field name and the Dictionary Item value is the field value</param>
             <param name="addTags">tags to add</param>
             <param name="removeTags">tags to remove</param>
             <param name="uid">unique id</param>
@@ -668,7 +668,7 @@
             <param name="ctags">array of campaign tags</param>
             <returns></returns>
         </member>
-        <member name="M:Maropost.Api.TransactionalCampaigns.SendEmail(System.Int32,System.Nullable{System.Int32},System.String,System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.Object,System.Object},System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.Object,System.Object},System.Object[])">
+        <member name="M:Maropost.Api.TransactionalCampaigns.SendEmail(System.Int32,System.Nullable{System.Int32},System.String,System.String,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.String,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Sends a transactional campaign email to a recipient. Sender's information will be automatically fetched from the
             transactional campaign, unless provided in the function arguments.
@@ -687,15 +687,15 @@
             <param name="recipientLastName">recipient's last name. Ignored unless $contactId is null.</param>
             <param name="recipientCustomFields">
             custom fields for the recipient. Ignored unless $contactId is null.
-            Is an associative array where the item key is the name of the custom field, and the item value is the field value.
-            All keys must be strings. All values must be non-null scalars.</param>
+            Dictionary where the item key is the name of the custom field, and the item value is the field value.
+            All values must be non-null scalars.</param>
             <param name="bccEmail">BCC recipient. May only pass a single email address, empty string, or null. If provided, it must be a well-formed email address according to FILTER_VALIDATE_EMAIL.</param>
             <param name="fromName">sender's name. If $fromEmail is set, it overrides the transactional campaign default sender name. Ignored otherwise.</param>
             <param name="fromEmail">sender's email address. Overrides the transactional campaign default sender email.</param>
             <param name="subject">subject line of email. Overrides the transactional campaign default subject.</param>
             <param name="replyTo">reply-to address. Overrides the transactional campaign default reply-to.</param>
             <param name="senderAddress">physical address of sender. Overrides the transactional campaign default sender address.</param>
-            <param name="tags">associative array where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All keys must be strings. All values must be non-null scalars.</param>
+            <param name="tags">Dictionary where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All values must be non-null scalars.</param>
             <param name="ctags">campaign tags. Must be a simple array of scalar values.</param>
             <returns>data property contains information about the newly created campaign.</returns>
         </member>

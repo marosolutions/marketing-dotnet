@@ -84,7 +84,7 @@ namespace Maropost.Api
         internal static bool IsScalar(this object value)
         {
             bool result = false;
-            if (value is string || value is double || value is int || value is bool)
+            if (value is string || value is double || value is int || value is bool || value is decimal)
             {
                 result = true;
             }

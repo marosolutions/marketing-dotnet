@@ -90,15 +90,15 @@ namespace Maropost.Api
         /// <param name="recipientLastName">recipient's last name. Ignored unless $contactId is null.</param>
         /// <param name="recipientCustomFields">
         /// custom fields for the recipient. Ignored unless $contactId is null.
-        /// Is an associative array where the item key is the name of the custom field, and the item value is the field value.
-        /// All keys must be strings. All values must be non-null scalars.</param>
+        /// Dictionary where the item key is the name of the custom field, and the item value is the field value.
+        /// All values must be non-null scalars.</param>
         /// <param name="bccEmail">BCC recipient. May only pass a single email address, empty string, or null. If provided, it must be a well-formed email address according to FILTER_VALIDATE_EMAIL.</param>
         /// <param name="fromName">sender's name. If $fromEmail is set, it overrides the transactional campaign default sender name. Ignored otherwise.</param>
         /// <param name="fromEmail">sender's email address. Overrides the transactional campaign default sender email.</param>
         /// <param name="subject">subject line of email. Overrides the transactional campaign default subject.</param>
         /// <param name="replyTo">reply-to address. Overrides the transactional campaign default reply-to.</param>
         /// <param name="senderAddress">physical address of sender. Overrides the transactional campaign default sender address.</param>
-        /// <param name="tags">associative array where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All keys must be strings. All values must be non-null scalars.</param>
+        /// <param name="tags">Dictionary where the item key is the name of the tag within the content, and the item value is the tag's replacement upon sending. All values must be non-null scalars.</param>
         /// <param name="ctags">campaign tags. Must be a simple array of scalar values.</param>
         /// <returns>data property contains information about the newly created campaign.</returns>
         public async Task<IOperationResult<dynamic>> SendEmail(int campaignId,
@@ -113,23 +113,23 @@ namespace Maropost.Api
                                                    string recipientEmail = null,
                                                    string recipientFirstName = null,
                                                    string recipientLastName = null,
-                                                   IDictionary<object, object> recipientCustomFields = null,
+                                                   IDictionary<string, object> recipientCustomFields = null,
                                                    string bccEmail = null,
                                                    string fromName = null,
                                                    string fromEmail = null,
                                                    string subject = null,
                                                    string replyTo = null,
                                                    string senderAddress = null,
-                                                   IDictionary<object, object> tags = null,
-                                                   object[] ctags = null)
+                                                   IDictionary<string, object> tags = null,
+                                                   IEnumerable<string> ctags = null)
         {
             var emailRecord = new ExpandoObject() as IDictionary<string, object>;
             emailRecord.Add("campaign_id", campaignId);
-            var contentFlag = 0;//nothing provided
+            var contentFlag = 0; //nothing provided
             if (contentId != null)
             {
                 emailRecord.Add("content_id", contentId);
-                contentFlag = 1;//contentId provided
+                contentFlag = 1; //contentId provided
             }
             if (!string.IsNullOrEmpty(contentHtmlPart) || !string.IsNullOrEmpty(contentTextPart) || !string.IsNullOrEmpty(contentName))
             {
@@ -139,7 +139,7 @@ namespace Maropost.Api
                     html_part = contentHtmlPart,
                     text_part = contentTextPart
                 });
-                contentFlag = 2;//content field(s) provided
+                contentFlag = 2; //content field(s) provided
             }
             if (contentFlag == 3)
             {
@@ -161,10 +161,6 @@ namespace Maropost.Api
                 {
                     foreach (var recipientCustomField in recipientCustomFields)
                     {
-                        if (!(recipientCustomField.Key is string))
-                        {
-                            return new OperationResult<dynamic>(null, null, "All keys in your recipientCustomFields array must be strings.");
-                        }
                         if (!recipientCustomField.Value.IsScalar())
                         {
                             return new OperationResult<dynamic>(null, null, "All values in your recipientCustomFields array must be non-null scalars (string, float, bool, int).");
@@ -221,13 +217,9 @@ namespace Maropost.Api
             {
                 foreach (var tag in tags)
                 {
-                    if (!(tag.Key is string))
-                    {
-                        return new OperationResult<dynamic>(null, null, "All keys in your tags array must be strings.");
-                    }
                     if (!tag.Value.IsScalar())
                     {
-                        return new OperationResult<dynamic>(null, null, "All values in your tags array must be non-null scalars (string, float, bool, int).");
+                        return new OperationResult<dynamic>(null, null, "All values in your tags array must be non-null scalars (string, float, decimal, bool, int).");
                     }
                 }
                 emailRecord.Add("tags", tags);
@@ -238,7 +230,7 @@ namespace Maropost.Api
                 {
                     if (!ctag.IsScalar())
                     {
-                        return new OperationResult<dynamic>(null, null, "All values in your ctags array must be non-null scalars (string, float, bool, int).");
+                        return new OperationResult<dynamic>(null, null, "All values in your ctags array must be non-null scalars (string, float, decimal, bool, int).");
                     }
                 }
                 emailRecord.Add("add_ctags", ctags);
