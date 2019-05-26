@@ -6,11 +6,11 @@ namespace Maropost.Api.Dto
 {
     public class OrderItemInput
     {
-        public OrderItemInput(string itemId, string price, string quantity, string description, string adcode, string category)
+        public OrderItemInput(int itemId, decimal price, decimal quantity, string description, string adcode, string category)
         {
-            item_id = itemId;
-            this.price = price;
-            this.quantity = quantity;
+            item_id = itemId.ToString();
+            this.price = price.ToString();
+            this.quantity = quantity.ToString();
             this.description = description;
             this.adcode = adcode;
             this.category = category;

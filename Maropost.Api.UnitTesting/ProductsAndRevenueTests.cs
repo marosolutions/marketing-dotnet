@@ -1,5 +1,6 @@
 ﻿using Maropost.Api.Dto;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,10 +13,11 @@ namespace Maropost.Api.UnitTesting
         {
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
-            string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
-            string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
+
+            var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var createResult = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
             var getResult = await api.GetOrderForOriginalOrderId(originalOrderId);
             int orderId = getResult.ResultData["id"];
@@ -37,10 +39,10 @@ namespace Maropost.Api.UnitTesting
         {
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
-            string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
-            string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
+            var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var createResult = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
             //Act
             var result = await api.GetOrderForOriginalOrderId(originalOrderId);
@@ -60,12 +62,15 @@ namespace Maropost.Api.UnitTesting
         {
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
-            string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
-            string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
+            var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var customFields = new Dictionary<string, string>();
+            customFields.Add("country", "test");
+            customFields.Add("gender", "male");
             //Act
-            var result = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
+            var result = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems, customFields);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));
@@ -83,8 +88,8 @@ namespace Maropost.Api.UnitTesting
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
             string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var createResult = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
             //Act
@@ -105,13 +110,13 @@ namespace Maropost.Api.UnitTesting
         {
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
-            string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
-            string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
+            var originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
+            var email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var createResult = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
             var getResult = await api.GetOrderForOriginalOrderId(originalOrderId);
-            int orderId = await getResult.ResultData["id"];
+            var orderId = (int)getResult.ResultData.id;
             //Act
             var result = await api.UpdateOrderForOrderId(orderId, "2019-04-24T18:05:24-04:00", "Processed", orderItems);
             //Assert
@@ -131,8 +136,8 @@ namespace Maropost.Api.UnitTesting
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
             string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var createResult = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
             //Act
@@ -149,8 +154,8 @@ namespace Maropost.Api.UnitTesting
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
             string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var createResult = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
             var getResult = await api.GetOrderForOriginalOrderId(originalOrderId);
@@ -169,8 +174,8 @@ namespace Maropost.Api.UnitTesting
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
             string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var createResult = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
             var productIds = new[] { "12", "13", "14" };
@@ -188,8 +193,8 @@ namespace Maropost.Api.UnitTesting
             //Arrange
             var api = new ProductsAndRevenue(AccountId, AuthToken, HttpClient);
             string originalOrderId = $"dotnet_test{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}";
-            var orderItems = new[] { new OrderItemInput("2","1340", "2", "test_description_2", "ad_code_2", "category_2"),
-                                     new OrderItemInput("3","1350", "3", "test_description_3", "ad_code_3", "category_3")};
+            var orderItems = new[] { new OrderItemInput(2, 1340, 2, "test_description_2", "ad_code_2", "category_2"),
+                                     new OrderItemInput(3, 1350, 3, "test_description_3", "ad_code_3", "category_3")};
             string email = $"test_email_{DateTime.UtcNow.ToString("yyyyMMddhhmmssfff")}@maropost.com";
             var createResult = await api.CreateOrder(true, email, "test_firstName", "test_lastName", "2017-10-13T18:05:24-04:00", "Processed", originalOrderId, orderItems);
             var getResult = await api.GetOrderForOriginalOrderId(originalOrderId);

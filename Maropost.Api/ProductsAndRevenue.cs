@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -48,10 +49,10 @@ namespace Maropost.Api
         /// <param name="orderDateTime">uses the format: "YYYY-MM-DDTHH:MM:SS-05:00</param>
         /// <param name="orderStatus">status of order</param>
         /// <param name="originalOrderId">sets the original_order_id field</param>
-        /// <param name="orderItems">array of Maropost.Api.Dto.OrderItemInput object</param>
-        /// <param name="customFields">associative array where the key (string) represents the field name and the value is the field value</param>
-        /// <param name="addTags">simple array of tags to add (scalar values)</param>
-        /// <param name="removeTags">simple array of tags to remove (scalar values)</param>
+        /// <param name="orderItems">must contain at least one orderItem</param>
+        /// <param name="customFields">Dictionary Item key represents the field name and the Dictionary Item value is the field value</param>
+        /// <param name="addTags">tags to add</param>
+        /// <param name="removeTags">tags to remove</param>
         /// <param name="uid">unique id</param>
         /// <param name="listIds">CSV list of IDs (e.g, "12,13")</param>
         /// <param name="grandTotal">grand total</param>
@@ -65,24 +66,23 @@ namespace Maropost.Api
                                                      string orderDateTime,
                                                      string orderStatus,
                                                      string originalOrderId,
-                                                     OrderItemInput[] orderItems,
-                                                     object customFields = null,
-                                                     object[] addTags = null,
-                                                     object[] removeTags = null,
+                                                     IEnumerable<OrderItemInput> orderItems,
+                                                     IDictionary<string, string> customFields = null,
+                                                     IEnumerable<string> addTags = null,
+                                                     IEnumerable<string> removeTags = null,
                                                      string uid = null,
                                                      string listIds = null,
-                                                     string grandTotal = null,
+                                                     decimal? grandTotal = null,
                                                      int? campaignId = null,
                                                      string couponCode = null)
         {
             if (string.IsNullOrEmpty(contactEmail))
             {
-                return new OperationResult<dynamic>(null, null, "The provided 'contactEmail' is not a well-formed email address.");
+                return new OperationResult<dynamic>(null, e: new ArgumentException("The provided 'contactEmail' is not a well-formed email address.", "contactEmail"));
             }
-            var orderItemsValidate = orderItems.ValidateOrderItems();
-            if (!orderItemsValidate.Success)
+            if (orderItems == null || orderItems.Count() == 0)
             {
-                return orderItemsValidate;
+                return new OperationResult<dynamic>(null, e: new ArgumentException("must provide at least one orderItem", "orderItems"));
             }
             var order = new ExpandoObject() as IDictionary<string, object>;
             order.Add("contact", new { email = contactEmail, first_name = contactFirstName, last_name = contactLastName });
@@ -93,19 +93,14 @@ namespace Maropost.Api
             order.Add("uid", uid);
             order.Add("campaign_id", campaignId);
             order.Add("coupon_code", couponCode);
-            order.Add("grand_total", grandTotal);
+            order.Add("grand_total", grandTotal?.ToString());
 
             if (!string.IsNullOrEmpty(listIds))
             {
                 order.Add("list_ids", listIds);
             }
-            if (customFields != null)
+            if (customFields != null && customFields.Any())
             {
-                var customFieldsValidate = customFields.ValidateCustomFields();
-                if (!customFieldsValidate.Success)
-                {
-                    return customFieldsValidate;
-                }
                 order.Add("custom_field", customFields);
             }
             if (addTags != null)
@@ -128,21 +123,20 @@ namespace Maropost.Api
         /// <param name="originalOrderId">matches the original_order_id field of the order</param>
         /// <param name="orderDateTime">uses the format: YYYY-MM-DDTHH:MM:SS-05:00</param>
         /// <param name="orderStatus">order status</param>
-        /// <param name="orderItems">restates the orderItems as as array of OrderItemInput objects</param>
+        /// <param name="orderItems">must provide at least one orderItem</param>
         /// <param name="campaignId">campaign id</param>
         /// <param name="couponCode">coupon code</param>
         /// <returns></returns>
         public async Task<IOperationResult<dynamic>> UpdateOrderForOriginalOrderId(string originalOrderId,
                                                                        string orderDateTime,
                                                                        string orderStatus,
-                                                                       object[] orderItems,
+                                                                       IEnumerable<OrderItemInput> orderItems,
                                                                        int? campaignId = null,
                                                                        string couponCode = null)
         {
-            var orderItemsValidate = orderItems.ValidateOrderItems();
-            if (!orderItemsValidate.Success)
+            if (orderItems == null || !orderItems.Any())
             {
-                return orderItemsValidate;
+                return new OperationResult<dynamic>(null, e: new ArgumentException("must provide at least one orderItem", "orderItems"));
             }
             var order = new ArrayList
             {
@@ -163,21 +157,20 @@ namespace Maropost.Api
         /// <param name="orderId">matches the Maropost order_id field of the order</param>
         /// <param name="orderDateTime">uses the format: YYYY-MM-DDTHH:MM:SS-05:00</param>
         /// <param name="orderStatus">order status</param>
-        /// <param name="orderItems">restates the orderItems as as array of OrderItemInput objects</param>
+        /// <param name="orderItems">must provide at least one orderItem</param>
         /// <param name="campaignId">campaign id</param>
         /// <param name="couponCode">coupon code</param>
         /// <returns></returns>
         public async Task<IOperationResult<dynamic>> UpdateOrderForOrderId(int orderId,
                                                                string orderDateTime,
                                                                string orderStatus,
-                                                               object[] orderItems,
+                                                               IEnumerable<OrderItemInput> orderItems,
                                                                int? campaignId = null,
                                                                string couponCode = null)
         {
-            var orderItemsValidate = orderItems.ValidateOrderItems();
-            if (!orderItemsValidate.Success)
+            if (orderItems == null || !orderItems.Any())
             {
-                return orderItemsValidate;
+                return new OperationResult<dynamic>(null, e: new ArgumentException(), errorMessage: "must provide at least one orderItem");
             }
             var order = new ArrayList
             {

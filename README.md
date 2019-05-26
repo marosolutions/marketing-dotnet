@@ -366,7 +366,7 @@ The specific APIs contained are:
 
 ### Instantiation:
 
-    new Maropost.Api.ProductsAndRevenues(int accountId, string authToken, HttpClient httpClient)
+    new Maropost.Api.ProductsAndRevenue(int accountId, string authToken, HttpClient httpClient)
 
 ### Available methods:
 
@@ -382,13 +382,13 @@ The specific APIs contained are:
                                                 `string orderDateTime,`
                                                 `string orderStatus,`
                                                 `string originalOrderId,`
-                                                `OrderItemInput[] orderItems,`
-                                                `object customFields = null,`
-                                                `object[] addTags = null,`
-                                                `object[] removeTags = null,`
+                                                `IEnumerable<OrderItemInput> orderItems,`
+                                                `IDictionary<string, string> customFields = null,`
+                                                `IEnumerable<string> addTags = null,`
+                                                `IEnumerable<string> removeTags = null,`
                                                 `string uid = null,`
                                                 `string listIds = null,`
-                                                `string grandTotal = null,`
+                                                `decimal? grandTotal = null,`
                                                 `int? campaignId = null,`
                                                 `string couponCode = null)`
      * Creates an order
@@ -399,10 +399,10 @@ The specific APIs contained are:
      - `orderDateTime`: uses the format: "YYYY-MM-DDTHH:MM:SS-05:00"
      - `orderStatus`: status of order
      - `originalOrderId`: sets the original_order_id field
-     - `orderItems` an array of \Maropost\Api\InputTypes\OrderItemInput objects.
-     - `customFields` associative array where the key (string) represents the field name and the value is the field value
-     - `addTags` simple array of tags to add (scalar values)
-     - `removeTags` simple array of tags to remove (scalar values)
+     - `orderItems`: must contain at least one orderItem.
+     - `customFields` Dictionary Item key represents the field name and the Dictionary Item value is the field value
+     - `addTags` tags to add
+     - `removeTags` tags to remove
      - `uid`: unique id
      - `listIds` CSV list of IDs (e.g, "12,13")
      - `grandTotal`: grand total
@@ -412,27 +412,28 @@ The specific APIs contained are:
  - `public async Task<IOperationResult<dynamic>> UpdateOrderForOriginalOrderId(string originalOrderId,`
                                                                   `string orderDateTime,`
                                                                   `string orderStatus,`
-                                                                  `object[] orderItems,`
+                                                                  `IEnumerable<OrderItemInput> orderItems,`
                                                                   `int? campaignId = null,`
                                                                   `string couponCode = null)`
      * Updates an existing eCommerce order using unique original_order_id if the details are changed due to partial return or some other update.
      - `originalOrderId`: matches the original_order_id field of the order
      - `orderDateTime`: uses the format: YYYY-MM-DDTHH:MM:SS-05:00
      - `orderStatus`: order status
-     - `orderItems`: campaign id
+     - `orderItems`: must contain at least one orderItem.
+     - `campaignId`: campaign id
      - `couponCode`: coupon code
 
  - `public async Task<IOperationResult<dynamic>> UpdateOrderForOrderId(int orderId,`
                                                           `string orderDateTime,`
                                                           `string orderStatus,`
-                                                          `object[] orderItems,`
+                                                          `IEnumerable<OrderItemInput> orderItems,`
                                                           `int? campaignId = null,`
                                                           `string couponCode = null)`
      * Updates an existing eCommerce order using unique order_id if the details are changed due to partial return or some other update.
      - `orderId`: matches the Maropost order_id field of the order
      - `orderDateTime`: uses the format: YYYY-MM-DDTHH:MM:SS-05:00
      - `orderStatus`: order status
-     - `orderItems`: restates the orderItems as as array of OrderItemInput objects.
+     - `orderItems`: must contain at least one orderItem.
      - `campaignId`: campaign id
      - `couponCode`: coupon code
     
