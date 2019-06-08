@@ -324,15 +324,13 @@
             <param name="page">page >= 1</param>
             <returns></returns>
         </member>
-        <member name="M:Maropost.Api.Journeys.StopAll(System.Int32,System.String,System.String,System.Int32)">
+        <member name="M:Maropost.Api.Journeys.StopAll(System.Int32,System.String,System.String)">
             <summary>
             Stops all journeys, filtered for the matching parameters
             </summary>
             <param name="contactId">this filter is ignored if not greater than 0</param>
             <param name="recipientEmail">this filter is ignored if null</param>
             <param name="uid">this filter is ignored if null</param>
-            <param name="page">page >= 1</param>
-            <returns></returns>
         </member>
         <member name="M:Maropost.Api.Journeys.PauseJourneyForContact(System.Int32,System.Int32)">
             <summary>

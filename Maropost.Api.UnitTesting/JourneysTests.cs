@@ -92,7 +92,7 @@ namespace Maropost.Api.UnitTesting
                 }
             }
             //Act
-            var result = await api.StopAll(contactId, email, uid, 1);
+            var result = await api.StopAll(contactId, email, uid);
             //Assert
             Assert.True(result.Success);
             Assert.True(string.IsNullOrEmpty(result.ErrorMessage));

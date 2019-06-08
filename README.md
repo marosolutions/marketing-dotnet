@@ -337,16 +337,6 @@ The specific APIs contained are:
 	 - `journeyId`: reset journey for contact with specified journey id
 	 - `contactId`: reset journey for specified contact id
 
- - `public function resetJourneyForUid(int journeyId, string uid)`
-     * Reset the specified journey for the active/paused contact having the specified UID. Resetting a contact to the beginning of the journeys will result in sending of the same journey campaigns as originally sent.
-	 - `journeyId`: reset journey for specified journey id
-	 - `uid`: reset journey for specified uid
-
- - `public function startJourneyForContact(int journeyId, int contactId)`
-     * Restarts a journey for a paused contact. Adds a new contact in journey. Retriggers the journey for a contact who has finished its journey once. (To retrigger, *make sure* that "Retrigger Journey" option is enabled.)
-	 - `journeyId`: start journey for contact with specified journey id
-	 - `contactId`: start journey for specified journey id
-
  - `public async Task<IOperationResult<dynamic>> ResetJourneyForUid(int journeyId, string uid)`
      * Restarts a journey for a paused contact having the specified UID. Adds a new contact in journey. Retriggers the journey for a contact who has finished its journey once. (To retrigger, *make sure* that "Retrigger Journey" option is enabled.)
 	 - `journeyId`: reset journey for specified journey id
@@ -399,7 +389,13 @@ The specific APIs contained are:
      - `orderDateTime`: uses the format: "YYYY-MM-DDTHH:MM:SS-05:00"
      - `orderStatus`: status of order
      - `originalOrderId`: sets the original_order_id field
-     - `orderItems`: must contain at least one orderItem.
+     - `orderItems`: must contain at least one OrderItemInput. When creating an OrderItemInput, do not manually set the properties. Just use the constructor, itself having the parameters:
+	     - itemId
+		 - price: price of the orderItem
+		 - quantity: quantity purchased
+		 - description: description of the product
+		 - adcode: adcode of the orderItem
+		 - category: category of the product
      - `customFields` Dictionary Item key represents the field name and the Dictionary Item value is the field value
      - `addTags` tags to add
      - `removeTags` tags to remove
@@ -583,6 +579,7 @@ To switch tables, you do not need to re-instantiate the service. Simply update t
    * `unique`: if true, gets unique records
    * `email`: gets Bounces for specific email
    * `uid`: gets Bounces for provided uid
+   * 'type`: if provided, should be either "soft", or "hard".
    * `per`: gets the specified number of records
 
  - ` public async Task<IOperationResult<dynamic>> GetUnsubscribes(int page,`

@@ -52,11 +52,9 @@ namespace Maropost.Api
         /// <param name="contactId">this filter is ignored if not greater than 0</param>
         /// <param name="recipientEmail">this filter is ignored if null</param>
         /// <param name="uid">this filter is ignored if null</param>
-        /// <param name="page">page >= 1</param>
-        /// <returns></returns>
-        public async Task<IOperationResult<dynamic>> StopAll(int contactId, string recipientEmail, string uid, int page)
+        public async Task<IOperationResult<dynamic>> StopAll(int contactId, string recipientEmail, string uid)
         {
-            var keyValuePair = new KeyValueList { { "page", $"{page}" } };
+            var keyValuePair = new KeyValueList();
             if (contactId > 0)
             {
                 keyValuePair.Add("contact_id", $"{contactId}");
