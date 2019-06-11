@@ -284,6 +284,45 @@
             <param name="contactFieldName">field name default is email</param>
             <returns></returns>
         </member>
+        <member name="M:Maropost.Api.Dto.CampaignGroupAttributeInput.#ctor(System.String,System.Int32,System.String,System.String,System.String,System.Int32,System.DateTime)">
+            <param name="name">name of the group</param>
+            <param name="contentId">content ID</param>
+            <param name="subject">subject line of emails</param>
+            <param name="preheader"></param>
+            <param name="fromName">"from name" on emails</param>
+            <param name="percentage">percentage of emails that should be sent with these settings</param>
+            <param name="sendAt">DateTime to send this group</param>
+        </member>
+        <member name="P:Maropost.Api.Dto.CampaignGroupAttributeInput.name">
+            <summary>
+            name of the group
+            </summary>
+        </member>
+        <member name="P:Maropost.Api.Dto.CampaignGroupAttributeInput.content_id">
+            <summary>
+            content ID
+            </summary>
+        </member>
+        <member name="P:Maropost.Api.Dto.CampaignGroupAttributeInput.subject">
+            <summary>
+            subject line of emails
+            </summary>
+        </member>
+        <member name="P:Maropost.Api.Dto.CampaignGroupAttributeInput.from_name">
+            <summary>
+            "from name" on emails
+            </summary>
+        </member>
+        <member name="P:Maropost.Api.Dto.CampaignGroupAttributeInput.percentage">
+            <summary>
+            percentage of emails that should be sent with these settings
+            </summary>
+        </member>
+        <member name="P:Maropost.Api.Dto.CampaignGroupAttributeInput.send_at">
+            <summary>
+            DateTime to send this group
+            </summary>
+        </member>
         <member name="M:Maropost.Api.Dto.OperationResult.#ctor(System.Exception,System.String)">
             <summary>
             to indicate success, don't pass any arguments.

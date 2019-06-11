@@ -112,7 +112,19 @@ The specific APIs contained are:
    - `fromEmail`: default sender email address for campaign emails
    - `replyTo`: default reply-to email address for campaign emails
    - `address`: default physical address included on campaign emails
-   - `sendAt`: non-null required
+   - `language`: 
+   - `campaignGroupAttributes`: Dto.CampaignGroupAttributeInput objects. Use the constructor to create instances.
+   - `commit`: enum: SaveAsDraft, SendTest, or Schedule
+   - `decidedBy`: enum: TopChoices, HighestOpenRate, HighestClickRate, ManualSelection, HighestClickToOpenRate, or HighestConversionRate
+   - `sendAt`: DateTime to begin the campaign
+   - `brandId`: brand ID
+   - `suppressedListIds`: list IDs to suppress
+   - `suppressedSegmentIds`: segment IDs to suppress
+   - `suppressedJourneyIds`: journey IDs to suppress
+   - `emailPreviewLink`: 1 (true) to email the preview link. 0 otherwise.
+   - `lists`: list IDs to target
+   - `cTags`: tags
+   - `segments`: segment IDs to target
    
 ## Transactional Campaigns
 
@@ -204,7 +216,6 @@ The specific APIs contained are:
 														  `object removeTags = null, bool removeFromDNM = true, bool subscribe = true)`
      * Creates a contact within a list. Updates if previous contact is matched by email
      - `listId`: ID of the list to which the contact being updated belongs
-     - `contactId`: ID of the contact being updated
      - `email`: Email address for the contact to be updated
      - `firstName`: first name of Contact
      - `lastName`: last name of Contact
@@ -315,12 +326,11 @@ The specific APIs contained are:
 	 - `journeyId`: get contacts filtered with journeyid
      - `page` : page # (>= 1). Up to 200 records returned per page.
 
- - `public async Task<IOperationResult<dynamic>> StopAll(int contactId, string recipientEmail, string uid, int page)`
+ - `public async Task<IOperationResult<dynamic>> StopAll(int contactId, string recipientEmail, string uid)`
      * Stops all journeys, filtered for the matching parameters
      - `contactId`: this filter ignored unless greater than 0
      - `recipientEmail`: this filter ignored if null
      - `uid`: this filter ignored if null
-	 - `page`: page # (>= 1). Up to 200 record returned per page.
 
  - `public async Task<IOperationResult<dynamic>> PauseJourneyForContact(int journeyId, int contactId)`
      * Pause the specified journey for the specified contact
